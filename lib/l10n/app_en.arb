@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "appTitle": "HAJEDI CENTER",
+  "welcome": "Welcome",
+  "login": "Login",
+  "logout": "Logout",
+  "settings": "Settings",
+  "choose_language": "Choose language",
+  "lang_english": "English",
+  "lang_kinyarwanda": "Kinyarwanda"
+}
