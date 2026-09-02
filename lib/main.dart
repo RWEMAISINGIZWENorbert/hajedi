@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hajedi/bloc/locale/locale_cubit.dart';
 import 'package:hajedi/bloc/theme/theme_bloc.dart';
 import 'package:hajedi/bloc/theme/theme_state.dart';
+import 'package:hajedi/core/network/sync_manager.dart';
 import 'package:hajedi/core/theme/theme.dart';
 import 'package:hajedi/l10n/app_localizations.dart';
 import 'package:hajedi/l10n/fallback_localizations.dart';
@@ -11,6 +12,7 @@ import 'package:hajedi/screens/dashboard/main_screen.dart';
 import 'package:hajedi/screens/settings/choose_language.dart';
 import 'package:hajedi/screens/settings/settings.dart';
 import 'package:hajedi/utils/hive_registry.dart';
+import 'package:hive/hive.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -23,7 +25,7 @@ void main() async {
             (await getApplicationDocumentsDirectory()).path,
           ),
   );
-  
+  SyncManager(Hive.box('syncQueue')).start();
   await HiveRegistry.init();
   runApp(const MyApp());
 }

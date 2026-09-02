@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hajedi/core/helpers/sync_queue.dart';
 import 'package:hajedi/data/user.dart';
 import 'package:hive/hive.dart';
 
@@ -52,10 +53,15 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
       if (!exists) {
         await _userBox.put(user.id, user);
+
+        await SyncQueue.enqueue(
+          entityType: 'user',
+          operationType: 'create',
+          payload: user.toJson(),
+        );
       }
 
-      final users = _userBox.values.toList();
-      emit(UsersLoadedState(users: users));
+      emit(UsersLoadedState(users: _userBox.values.toList()));
     } catch (e) {
       emit(RequestFailureState(message: e.toString()));
     }
@@ -68,9 +74,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     emit(UsersLoadingState());
 
     try {
-      final current = _userBox.get(event.userId);
+      final existing = _userBox.get(event.userId);
 
-      if (current == null) {
+      if (existing == null) {
         throw Exception('User not found locally');
       }
 
@@ -82,8 +88,13 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
       await _userBox.put(event.userId, updated);
 
-      final users = _userBox.values.toList();
-      emit(UsersLoadedState(users: users));
+      await SyncQueue.enqueue(
+        entityType: 'user',
+        operationType: 'update',
+        payload: updated.toJson(),
+      );
+
+      emit(UsersLoadedState(users: _userBox.values.toList()));
     } catch (e) {
       emit(RequestFailureState(message: e.toString()));
     }
@@ -96,10 +107,19 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     emit(UsersLoadingState());
 
     try {
-      await _userBox.delete(event.userId);
+      final user = _userBox.get(event.userId);
 
-      final users = _userBox.values.toList();
-      emit(UsersLoadedState(users: users));
+      if (user != null) {
+        await _userBox.delete(event.userId);
+
+        await SyncQueue.enqueue(
+          entityType: 'user',
+          operationType: 'delete',
+          payload: {'id': event.userId},
+        );
+      }
+
+      emit(UsersLoadedState(users: _userBox.values.toList()));
     } catch (e) {
       emit(RequestFailureState(message: e.toString()));
     }
@@ -112,12 +132,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     emit(UsersLoadingState());
 
     try {
-      final pendingUsers = _userBox.values
-          .where((user) => !user.isSynced)
-          .toList();
+      final pendingUsers = _userBox.values.where((user) => !user.isSynced).toList();
 
-      // this is where you call repository later
-      // for now just mark them synced locally
       for (final user in pendingUsers) {
         final updated = user.copyWith(isSynced: true, updatedAt: DateTime.now());
         await _userBox.put(user.id, updated);
