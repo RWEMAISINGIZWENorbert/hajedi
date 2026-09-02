@@ -12,6 +12,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   UserBloc(this._repository) : super(UserInitial()) {
     on<LoadUsers>(_loadUsers);
     on<LoadUser>(_loadUser);
+    on<RegisterUser>(_registerUser);
     on<UpdateUser>(_updateUser);
     on<RemoveUser>(_removeUser);
   }
@@ -49,6 +50,28 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     }
   }
 
+  Future<void> _registerUser(
+    RegisterUser event,
+    Emitter<UserState> emit,
+  ) async {
+    emit(UsersLoadingState());
+
+    try {
+      final newUser = User(
+        id: '',
+        name: event.name,
+        role: event.role,
+        password: event.password,
+      );
+
+      await _repository.registerUser(newUser);
+
+      emit(RequestSuccessfullyState(message: 'User registered successfully'));
+    } catch (e) {
+      emit(RequestFailureState(message: e.toString()));
+    }
+  }
+
   Future<void> _updateUser(
     UpdateUser event,
     Emitter<UserState> emit,
@@ -56,7 +79,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     emit(UsersLoadingState());
 
     try {
-      
       await _repository.updateUser(
         event.userId,
         name: event.name,

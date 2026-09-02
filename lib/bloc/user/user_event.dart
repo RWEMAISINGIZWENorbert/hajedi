@@ -11,6 +11,18 @@ class LoadUser extends UserEvent {
   LoadUser({required this.userId});
 }
 
+class RegisterUser extends UserEvent {
+  final String name;
+  final String role;
+  final String password;
+
+  RegisterUser({
+    required this.name,
+    required this.role,
+    required this.password,
+  });
+}
+
 class UpdateUser extends UserEvent {
   final String userId;
   final String? name;
