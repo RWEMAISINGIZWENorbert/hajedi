@@ -60,7 +60,7 @@ class _MainScreenState extends State<MainScreen> {
         bottomNavigationBar: MyBottomAppBar(
           currentIndex: _currentIndex,
           onItemTapped: _onItemTapped,
-          isAdmin: _isAdmin!,
+          isAdmin: _isAdmin,
         ),
       ),
     );
