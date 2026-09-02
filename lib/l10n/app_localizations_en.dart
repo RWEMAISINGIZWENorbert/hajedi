@@ -31,4 +31,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lang_kinyarwanda => 'Kinyarwanda';
+
+  @override
+  String get home => 'Ahabanza';
+
+  @override
+  String get products => 'Ibicuruzwa';
+
+  @override
+  String get reports => 'Raporo';
+
+  @override
+  String get users => 'Abakozi';
 }

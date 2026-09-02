@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hajedi/bloc/locale/locale_cubit.dart';
 import 'package:hajedi/bloc/theme/theme_bloc.dart';
 import 'package:hajedi/bloc/theme/theme_state.dart';
 import 'package:hajedi/core/theme/theme.dart';
 import 'package:hajedi/l10n/app_localizations.dart';
 import 'package:hajedi/l10n/fallback_localizations.dart';
+import 'package:hajedi/screens/dashboard/main_screen.dart';
 import 'package:hajedi/screens/settings/choose_language.dart';
 import 'package:hajedi/screens/settings/settings.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -45,8 +45,9 @@ class MyApp extends StatelessWidget {
                   routes: {
                      '/choose-language': (context) => const ChooseLanguage(),
                      '/settings': (context) => const Settings(),
+                     '/dashboard': (context) => const MainScreen(),
                   },
-                  // initialRoute: '/settings',
+                  initialRoute: '/dashboard',
                   theme: lightTheme,
                   darkTheme: darkTheme,
                   // themeMode: ThemeMode.dark,
@@ -66,9 +67,6 @@ class MyApp extends StatelessWidget {
                       );
                       return isSupported ? locale : const Locale('en');
                     },
-                  // home: Scaffold(
-                  //   body: const Center(child: Text('HAJEDI CENTER')),
-                  // ),
                   home: const Settings(),
                 );
 

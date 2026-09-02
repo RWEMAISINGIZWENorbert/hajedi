@@ -7,5 +7,13 @@
   "settings": "Settings",
   "choose_language": "Choose language",
   "lang_english": "English",
-  "lang_kinyarwanda": "Kinyarwanda"
+  "lang_kinyarwanda": "Kinyarwanda",
+  "home": "Home",
+  "products": "Products",
+  "reports": "Reports",
+  "users": "Users",
+  "home": "Ahabanza",
+  "products": "Ibicuruzwa",
+  "reports": "Raporo",
+  "users": "Abakozi"
 }

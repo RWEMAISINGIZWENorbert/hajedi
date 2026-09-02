@@ -145,6 +145,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Kinyarwanda'**
   String get lang_kinyarwanda;
+
+  /// No description provided for @home.
+  ///
+  /// In en, this message translates to:
+  /// **'Ahabanza'**
+  String get home;
+
+  /// No description provided for @products.
+  ///
+  /// In en, this message translates to:
+  /// **'Ibicuruzwa'**
+  String get products;
+
+  /// No description provided for @reports.
+  ///
+  /// In en, this message translates to:
+  /// **'Raporo'**
+  String get reports;
+
+  /// No description provided for @users.
+  ///
+  /// In en, this message translates to:
+  /// **'Abakozi'**
+  String get users;
 }
 
 class _AppLocalizationsDelegate
