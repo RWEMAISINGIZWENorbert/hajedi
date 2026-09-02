@@ -10,6 +10,7 @@ import 'package:hajedi/l10n/fallback_localizations.dart';
 import 'package:hajedi/screens/dashboard/main_screen.dart';
 import 'package:hajedi/screens/settings/choose_language.dart';
 import 'package:hajedi/screens/settings/settings.dart';
+import 'package:hajedi/utils/hive_registry.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -22,6 +23,8 @@ void main() async {
             (await getApplicationDocumentsDirectory()).path,
           ),
   );
+  
+  await HiveRegistry.init();
   runApp(const MyApp());
 }
 
