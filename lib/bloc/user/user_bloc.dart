@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hajedi/data/user.dart';
-import 'package:hajedi/repository/user_repository.dart';
+import 'package:hive/hive.dart';
 
 part 'user_event.dart';
 part 'user_state.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
-  final UserRepository _repository;
+  final Box<User> _userBox;
 
-  UserBloc(this._repository) : super(UserInitial()) {
+  UserBloc(this._userBox) : super(UserInitial()) {
     on<LoadUsers>(_loadUsers);
-    on<LoadUser>(_loadUser);
-    on<RegisterUser>(_registerUser);
-    on<UpdateUser>(_updateUser);
-    on<RemoveUser>(_removeUser);
+    on<AddUserLocal>(_addUserLocal);
+    on<UpdateUserLocal>(_updateUserLocal);
+    on<DeleteUserLocal>(_deleteUserLocal);
+    on<SyncUsers>(_syncUsers);
   }
 
   Future<void> _loadUsers(
@@ -24,83 +24,106 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     emit(UsersLoadingState());
 
     try {
-      final users = await _repository.getAllUsers();
+      final users = _userBox.values.toList();
       emit(UsersLoadedState(users: users));
     } catch (e) {
       emit(RequestFailureState(message: e.toString()));
     }
   }
 
-  Future<void> _loadUser(
-    LoadUser event,
+  Future<void> _addUserLocal(
+    AddUserLocal event,
     Emitter<UserState> emit,
   ) async {
     emit(UsersLoadingState());
 
     try {
-      final users = await _repository.getAllUsers();
-      final user = users.firstWhere(
-        (u) => u.id == event.userId,
-        orElse: () => throw Exception('User not found'),
+      final user = event.user.copyWith(
+        isSynced: false,
+        updatedAt: DateTime.now(),
       );
 
-      emit(UsersLoadedState(users: [user]));
+      final exists = _userBox.values.any(
+        (storedUser) =>
+            storedUser.id == user.id ||
+            storedUser.name.trim().toLowerCase() ==
+                user.name.trim().toLowerCase(),
+      );
+
+      if (!exists) {
+        await _userBox.put(user.id, user);
+      }
+
+      final users = _userBox.values.toList();
+      emit(UsersLoadedState(users: users));
     } catch (e) {
       emit(RequestFailureState(message: e.toString()));
     }
   }
 
-  Future<void> _registerUser(
-    RegisterUser event,
+  Future<void> _updateUserLocal(
+    UpdateUserLocal event,
     Emitter<UserState> emit,
   ) async {
     emit(UsersLoadingState());
 
     try {
-      final newUser = User(
-        id: '',
-        name: event.name,
-        role: event.role,
-        password: event.password,
+      final current = _userBox.get(event.userId);
+
+      if (current == null) {
+        throw Exception('User not found locally');
+      }
+
+      final updated = event.user.copyWith(
+        id: event.userId,
+        isSynced: false,
+        updatedAt: DateTime.now(),
       );
 
-      await _repository.registerUser(newUser);
+      await _userBox.put(event.userId, updated);
 
-      emit(RequestSuccessfullyState(message: 'User registered successfully'));
+      final users = _userBox.values.toList();
+      emit(UsersLoadedState(users: users));
     } catch (e) {
       emit(RequestFailureState(message: e.toString()));
     }
   }
 
-  Future<void> _updateUser(
-    UpdateUser event,
+  Future<void> _deleteUserLocal(
+    DeleteUserLocal event,
     Emitter<UserState> emit,
   ) async {
     emit(UsersLoadingState());
 
     try {
-      await _repository.updateUser(
-        event.userId,
-        name: event.name,
-        role: event.role,
-        password: event.password,
-      );
+      await _userBox.delete(event.userId);
 
-      emit(RequestSuccessfullyState(message: 'User updated successfully'));
+      final users = _userBox.values.toList();
+      emit(UsersLoadedState(users: users));
     } catch (e) {
       emit(RequestFailureState(message: e.toString()));
     }
   }
 
-  Future<void> _removeUser(
-    RemoveUser event,
+  Future<void> _syncUsers(
+    SyncUsers event,
     Emitter<UserState> emit,
   ) async {
     emit(UsersLoadingState());
 
     try {
-      await _repository.removeUser(event.userId);
-      emit(RequestSuccessfullyState(message: 'User removed successfully'));
+      final pendingUsers = _userBox.values
+          .where((user) => !user.isSynced)
+          .toList();
+
+      // this is where you call repository later
+      // for now just mark them synced locally
+      for (final user in pendingUsers) {
+        final updated = user.copyWith(isSynced: true, updatedAt: DateTime.now());
+        await _userBox.put(user.id, updated);
+      }
+
+      emit(UsersLoadedState(users: _userBox.values.toList()));
     } catch (e) {
       emit(RequestFailureState(message: e.toString()));
     }

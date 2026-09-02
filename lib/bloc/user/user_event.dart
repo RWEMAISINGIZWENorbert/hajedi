@@ -5,40 +5,26 @@ abstract class UserEvent {}
 
 class LoadUsers extends UserEvent {}
 
-class LoadUser extends UserEvent {
-  final String userId;
+class AddUserLocal extends UserEvent {
+  final User user;
 
-  LoadUser({required this.userId});
+  AddUserLocal({required this.user});
 }
 
-class RegisterUser extends UserEvent {
-  final String name;
-  final String role;
-  final String password;
-
-  RegisterUser({
-    required this.name,
-    required this.role,
-    required this.password,
-  });
-}
-
-class UpdateUser extends UserEvent {
+class UpdateUserLocal extends UserEvent {
   final String userId;
-  final String? name;
-  final String? role;
-  final String? password;
+  final User user;
 
-  UpdateUser({
+  UpdateUserLocal({
     required this.userId,
-    this.name,
-    this.role,
-    this.password,
+    required this.user,
   });
 }
 
-class RemoveUser extends UserEvent {
+class DeleteUserLocal extends UserEvent {
   final String userId;
 
-  RemoveUser({required this.userId});
+  DeleteUserLocal({required this.userId});
 }
+
+class SyncUsers extends UserEvent {}
