@@ -6,6 +6,7 @@ import 'package:hajedi/bloc/locale/locale_cubit.dart';
 import 'package:hajedi/bloc/theme/theme_bloc.dart';
 import 'package:hajedi/bloc/theme/theme_state.dart';
 import 'package:hajedi/bloc/user/user_bloc.dart';
+import 'package:hajedi/core/network/sync_coordinator.dart';
 import 'package:hajedi/core/network/sync_manager.dart';
 import 'package:hajedi/core/theme/theme.dart';
 import 'package:hajedi/l10n/app_localizations.dart';
@@ -17,6 +18,7 @@ import 'package:hajedi/screens/settings/choose_language.dart';
 import 'package:hajedi/screens/settings/settings.dart';
 import 'package:hajedi/utils/auth_utils.dart';
 import 'package:hajedi/utils/hive_registry.dart';
+import 'package:hajedi/widgets/loading.dart';
 import 'package:hive/hive.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
@@ -35,16 +37,24 @@ void main() async {
   // await HiveRegistry.clearALlBoxes();
   await dotenv.load(fileName: ".env");
 
-  final syncManager = SyncManager(Hive.box('syncQueue'));
+  final syncManager = SyncManager(
+    Hive.box('syncQueue'),
+    Hive.box('users')
+  );
 
   await syncManager.start();
 
-  runApp(MyApp(syncManager: syncManager));
+  final syncCoordinator = SyncCoordinator(syncManager);
+  syncCoordinator.start();
+
+  runApp(MyApp(syncManager: syncManager, syncCoordinator: syncCoordinator));
 }
 
 class MyApp extends StatelessWidget {
   final SyncManager syncManager;
-  const MyApp({super.key, required this.syncManager});
+  final SyncCoordinator syncCoordinator;
+
+  const MyApp({super.key, required this.syncManager, required this.syncCoordinator});
 
   // This widget is the root of your application.
   @override
@@ -110,7 +120,7 @@ class AuthGate extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
             body: Center(
-              child: CircularProgressIndicator(),
+              child: Loading(),
             ),
           );
         }

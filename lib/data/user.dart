@@ -44,21 +44,23 @@ class User extends HiveObject {
     final serverId = json['id'] ?? json['_id'] ?? '';
     final localClientId = json['clientId'] ?? serverId;
 
-    return User(
-      id: serverId.toString(),
-      clientId: localClientId.toString(),
-      name: json['name'] ?? '',
-      role: json['role'] ?? 'employee',
-      password: json['password'] ?? '',
-      isSynced: json['isSynced'] ?? true,
-      createdAt: json['createdAt'] != null
-          ? DateTime.tryParse(json['createdAt'].toString()) ?? DateTime.now()
-          : DateTime.now(),
-      updatedAt: json['updatedAt'] != null
-          ? DateTime.tryParse(json['updatedAt'].toString()) ?? DateTime.now()
-          : DateTime.now(),
-    );
-  }
+  return User(
+    id: serverId.toString(),
+    clientId: localClientId.toString(),
+    name: json['name']?.toString() ?? '',
+    role: json['role']?.toString() ?? 'employee',
+    password: json['password']?.toString() ?? '',
+    isSynced: json['isSynced'] as bool? ?? true,
+    createdAt: json['createdAt'] != null
+        ? DateTime.tryParse(json['createdAt'].toString()) ??
+            DateTime.now()
+        : DateTime.now(),
+    updatedAt: json['updatedAt'] != null
+        ? DateTime.tryParse(json['updatedAt'].toString()) ??
+            DateTime.now()
+        : DateTime.now(),
+  );
+}
 
   Map<String, dynamic> toJson() {
     return {

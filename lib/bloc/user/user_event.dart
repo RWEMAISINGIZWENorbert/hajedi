@@ -12,19 +12,19 @@ class AddUserLocal extends UserEvent {
 }
 
 class UpdateUserLocal extends UserEvent {
-  final String userId;
+  final String clientId;
   final User user;
 
   UpdateUserLocal({
-    required this.userId,
+    required this.clientId,
     required this.user,
   });
 }
 
 class DeleteUserLocal extends UserEvent {
-  final String userId;
+  final String clientId;
 
-  DeleteUserLocal({required this.userId});
+  DeleteUserLocal({required this.clientId});
 }
 
 class SyncUsers extends UserEvent {}

@@ -65,7 +65,7 @@ Future<dynamic> showUserBottomSheetModal(
                     if (user != null) {
                       // Update existing customer
                       context.read<UserBloc>().add(
-                        UpdateUserLocal(userId: user.id, user: savedUser),
+                        UpdateUserLocal(clientId: user.clientId, user: savedUser),
                       );
                       showAnimatedSnackBar(context, "User Updated Successfully");
                     } else {

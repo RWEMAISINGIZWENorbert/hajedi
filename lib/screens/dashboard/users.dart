@@ -77,7 +77,7 @@ class _UsersState extends State<Users> {
                           title: loc.delete_user,
                           content: loc.are_you_sure_delete_user,
                           onConfirm: () {
-                            context.read<UserBloc>().add(DeleteUserLocal(userId: user.id));
+                            context.read<UserBloc>().add(DeleteUserLocal(clientId: user.clientId));
                             Navigator.of(context).pop(); // Close the dialog
                           },
                         );

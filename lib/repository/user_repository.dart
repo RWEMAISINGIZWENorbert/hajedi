@@ -123,4 +123,37 @@ class UserRepository {
 
     throw Exception(data['message'] ?? 'Failed to remove user');
   }
+
+  Future<Map<String, dynamic>> getUserChanges({
+    String? since,
+  }) async {
+    final query = since == null
+        ? ''
+        : '?since=${Uri.encodeQueryComponent(since)}';
+
+    final url = Uri.parse(
+      '$_baseUrl/auth/users/changes$query',
+    );
+
+    final token = await AuthUtils.getToken();
+
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        if (token != null) 'Authorization': 'Bearer $token',
+      },
+    );
+
+    final data = jsonDecode(response.body) as Map<String, dynamic>;
+
+    if (response.statusCode == 200) {
+      return data;
+    }
+
+    throw Exception(
+      data['message'] ?? 'Failed to fetch user changes',
+    );
+  } 
+
 } 

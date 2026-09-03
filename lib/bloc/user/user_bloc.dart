@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hajedi/core/helpers/sync_queue.dart';
@@ -12,12 +14,24 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   final Box<User> _userBox;
   final SyncManager _syncManager;
 
+  StreamSubscription<BoxEvent>? _userBoxSubscription;
+
   UserBloc(this._userBox, this._syncManager) : super(UserInitial()) {
     on<LoadUsers>(_loadUsers);
     on<AddUserLocal>(_addUserLocal);
     on<UpdateUserLocal>(_updateUserLocal);
     on<DeleteUserLocal>(_deleteUserLocal);
     on<SyncUsers>(_syncUsers);
+
+    _userBoxSubscription = _userBox.watch().listen((event) {
+      add(LoadUsers());
+    });
+  }
+
+  @override
+  Future<void> close() async {
+    await _userBoxSubscription?.cancel();
+    return super.close();
   }
 
   Future<void> _loadUsers(
@@ -54,7 +68,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       );
 
       if (!exists) {
-        await _userBox.put(user.id, user);
+        await _userBox.put(user.clientId, user);
 
         await SyncQueue.enqueue(
           entityType: 'user',
@@ -76,19 +90,19 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     emit(UsersLoadingState());
 
     try {
-      final existing = _userBox.get(event.userId);
+      final existing = _userBox.get(event.clientId);
 
       if (existing == null) {
         throw Exception('User not found locally');
       }
 
       final updated = event.user.copyWith(
-        id: event.userId,
+        id: event.clientId,
         isSynced: false,
         updatedAt: DateTime.now(),
       );
 
-      await _userBox.put(event.userId, updated);
+      await _userBox.put(event.clientId, updated);
 
       await SyncQueue.enqueue(
         entityType: 'user',
@@ -110,15 +124,15 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     emit(UsersLoadingState());
 
     try {
-      final user = _userBox.get(event.userId);
+      final user = _userBox.get(event.clientId);
 
       if (user != null) {
-        await _userBox.delete(event.userId);
+        await _userBox.delete(event.clientId);
 
         await SyncQueue.enqueue(
           entityType: 'user',
           operationType: 'delete',
-          payload: {'id': event.userId},
+          payload: {'id': event.clientId, 'clientId': event.clientId},
         );
       }
       await _syncManager.syncIfConnected();
@@ -139,7 +153,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
       for (final user in pendingUsers) {
         final updated = user.copyWith(isSynced: true, updatedAt: DateTime.now());
-        await _userBox.put(user.id, updated);
+        await _userBox.put(user.clientId, updated);
       }
 
       emit(UsersLoadedState(users: _userBox.values.toList()));

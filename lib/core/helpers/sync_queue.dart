@@ -27,10 +27,21 @@ class SyncQueue {
   }
 
   static List<SyncQueueItem> getPending() {
-    return box.values
-        .where((item) => item.status == 'pending' || item.status == 'failed')
-        .toList();
-  }
+  final items = box.values
+      .where(
+        (item) =>
+            item.status == 'pending' ||
+            item.status == 'failed',
+      )
+      .toList();
+
+  items.sort(
+    (first, second) =>
+        first.createdAt.compareTo(second.createdAt),
+  );
+
+  return items;
+}
 
   static Future<void> markSyncing(String id) async {
     final index = box.values.toList().indexWhere((item) => item.id == id);
