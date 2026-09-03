@@ -28,11 +28,19 @@ class SyncManager {
       }
     });
 
-    final result = await connectivity.checkConnectivity();
-    if (!result.contains(ConnectivityResult.none)) {
-      await syncPending();
-    }
+    await syncIfConnected();
   }
+
+  Future<void> syncIfConnected() async {
+     final connectivity = Connectivity();
+     final result = await connectivity.checkConnectivity();
+
+     final hasConnection = !result.contains(ConnectivityResult.none);
+
+     if (hasConnection) {
+      await syncPending();
+     }
+  } 
 
   Future<void> stop() async {
     await _subscription?.cancel();

@@ -35,12 +35,16 @@ void main() async {
   // await HiveRegistry.clearALlBoxes();
   await dotenv.load(fileName: ".env");
 
-  SyncManager(Hive.box('syncQueue')).start();
-  runApp(const MyApp());
+  final syncManager = SyncManager(Hive.box('syncQueue'));
+
+  await syncManager.start();
+
+  runApp(MyApp(syncManager: syncManager));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final SyncManager syncManager;
+  const MyApp({super.key, required this.syncManager});
 
   // This widget is the root of your application.
   @override
@@ -49,7 +53,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => LocaleCubit()),
         BlocProvider(create: (_) => ThemeBloc()),
-        BlocProvider(create: (context) => UserBloc(Hive.box('users'))),
+        BlocProvider(create: (context) => UserBloc(Hive.box('users'), syncManager)),
         BlocProvider(create: (_) => AuthBloc(authRepository: AuthRepository(),)), 
         ],
       child: BlocBuilder<LocaleCubit, Locale?>(

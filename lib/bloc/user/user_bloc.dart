@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hajedi/core/helpers/sync_queue.dart';
+import 'package:hajedi/core/network/sync_manager.dart';
 import 'package:hajedi/data/user.dart';
 import 'package:hive/hive.dart';
 
@@ -9,8 +10,9 @@ part 'user_state.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
   final Box<User> _userBox;
+  final SyncManager _syncManager;
 
-  UserBloc(this._userBox) : super(UserInitial()) {
+  UserBloc(this._userBox, this._syncManager) : super(UserInitial()) {
     on<LoadUsers>(_loadUsers);
     on<AddUserLocal>(_addUserLocal);
     on<UpdateUserLocal>(_updateUserLocal);
@@ -60,7 +62,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           payload: user.toJson(),
         );
       }
-
+      await _syncManager.syncIfConnected();
       emit(UsersLoadedState(users: _userBox.values.toList()));
     } catch (e) {
       emit(RequestFailureState(message: e.toString()));
@@ -94,6 +96,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         payload: updated.toJson(),
       );
 
+      await _syncManager.syncIfConnected();
       emit(UsersLoadedState(users: _userBox.values.toList()));
     } catch (e) {
       emit(RequestFailureState(message: e.toString()));
@@ -118,7 +121,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           payload: {'id': event.userId},
         );
       }
-
+      await _syncManager.syncIfConnected();
       emit(UsersLoadedState(users: _userBox.values.toList()));
     } catch (e) {
       emit(RequestFailureState(message: e.toString()));
