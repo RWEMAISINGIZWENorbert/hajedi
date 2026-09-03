@@ -16,6 +16,7 @@ import 'package:hajedi/screens/auth/sign_in.dart';
 import 'package:hajedi/screens/dashboard/main_screen.dart';
 import 'package:hajedi/screens/settings/choose_language.dart';
 import 'package:hajedi/screens/settings/settings.dart';
+import 'package:hajedi/utils/auth_utils.dart';
 import 'package:hajedi/utils/hive_registry.dart';
 import 'package:hive/hive.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -63,7 +64,6 @@ class MyApp extends StatelessWidget {
                      '/dashboard': (context) => const MainScreen(),
                      '/sign-in': (context) => const SignIn(),
                   },
-                  initialRoute: '/sign-in',
                   theme: lightTheme,
                   darkTheme: darkTheme,
                   // themeMode: ThemeMode.dark,
@@ -83,13 +83,40 @@ class MyApp extends StatelessWidget {
                       );
                       return isSupported ? locale : const Locale('en');
                     },
-                  home: const MainScreen(),
+                  home: const AuthGate(),
                 );
 
             },
           );
         },
       ),
+    );
+  }
+}
+
+
+class AuthGate extends StatelessWidget {
+  const AuthGate({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<bool>(
+      future: AuthUtils.isAuthenticated(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+
+        if (snapshot.data == true) {
+          return const MainScreen();
+        }
+
+        return const SignIn();
+      },
     );
   }
 }

@@ -34,6 +34,22 @@ class AuthUtils {
 
      await preferences.remove('token');
      await preferences.remove('user_data');
-   } 
+  } 
+
+  static Future<bool> isAuthenticated() async {
+  final preferences = await SharedPreferences.getInstance();
+
+  final token = preferences.getString('token');
+  final userData = preferences.getString('user_data');
+
+  if (token == null ||
+      token.trim().isEmpty ||
+      userData == null ||
+      userData.trim().isEmpty) {
+    return false;
+  }
+
+  return true;
+}
  
 }
