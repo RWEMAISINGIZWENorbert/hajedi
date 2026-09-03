@@ -149,26 +149,164 @@ abstract class AppLocalizations {
   /// No description provided for @home.
   ///
   /// In en, this message translates to:
-  /// **'Ahabanza'**
+  /// **'Home'**
   String get home;
 
   /// No description provided for @products.
   ///
   /// In en, this message translates to:
-  /// **'Ibicuruzwa'**
+  /// **'Products'**
   String get products;
 
   /// No description provided for @reports.
   ///
   /// In en, this message translates to:
-  /// **'Raporo'**
+  /// **'Reports'**
   String get reports;
 
   /// No description provided for @users.
   ///
   /// In en, this message translates to:
-  /// **'Abakozi'**
+  /// **'Users'**
   String get users;
+
+  /// No description provided for @new_user.
+  ///
+  /// In en, this message translates to:
+  /// **'New user'**
+  String get new_user;
+
+  /// No description provided for @name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get name;
+
+  /// No description provided for @role.
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get role;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @actions.
+  ///
+  /// In en, this message translates to:
+  /// **'Actions'**
+  String get actions;
+
+  /// No description provided for @please_fill_all_fields.
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill all fields'**
+  String get please_fill_all_fields;
+
+  /// No description provided for @select.
+  ///
+  /// In en, this message translates to:
+  /// **'Select'**
+  String get select;
+
+  /// No description provided for @today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
+  /// No description provided for @this_week.
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get this_week;
+
+  /// No description provided for @this_year.
+  ///
+  /// In en, this message translates to:
+  /// **'This year'**
+  String get this_year;
+
+  /// No description provided for @all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get all;
+
+  /// No description provided for @packet.
+  ///
+  /// In en, this message translates to:
+  /// **'Packet'**
+  String get packet;
+
+  /// No description provided for @crate.
+  ///
+  /// In en, this message translates to:
+  /// **'Crate'**
+  String get crate;
+
+  /// No description provided for @unit.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit'**
+  String get unit;
+
+  /// No description provided for @bottles.
+  ///
+  /// In en, this message translates to:
+  /// **'Bottles'**
+  String get bottles;
+
+  /// No description provided for @both.
+  ///
+  /// In en, this message translates to:
+  /// **'Both'**
+  String get both;
+
+  /// No description provided for @units.
+  ///
+  /// In en, this message translates to:
+  /// **'Units'**
+  String get units;
+
+  /// No description provided for @packets.
+  ///
+  /// In en, this message translates to:
+  /// **'Packets'**
+  String get packets;
+
+  /// No description provided for @select_purchase_method.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the purchase method'**
+  String get select_purchase_method;
+
+  /// No description provided for @select_sale_method.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the sale method'**
+  String get select_sale_method;
+
+  /// No description provided for @this_month.
+  ///
+  /// In en, this message translates to:
+  /// **'This month'**
+  String get this_month;
+
+  /// No description provided for @update_user.
+  ///
+  /// In en, this message translates to:
+  /// **'Update user'**
+  String get update_user;
+
+  /// No description provided for @add_new_user.
+  ///
+  /// In en, this message translates to:
+  /// **'Add new user'**
+  String get add_new_user;
 }
 
 class _AppLocalizationsDelegate

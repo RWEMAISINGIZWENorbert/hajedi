@@ -43,4 +43,73 @@ class AppLocalizationsRw extends AppLocalizations {
 
   @override
   String get users => 'Abakozi';
+
+  @override
+  String get new_user => 'Umukozi mushya';
+
+  @override
+  String get name => 'Izina';
+
+  @override
+  String get role => 'Inshingano';
+
+  @override
+  String get password => 'Ijambo banga';
+
+  @override
+  String get actions => 'Ibikorwa';
+
+  @override
+  String get please_fill_all_fields => 'Nyamuneka uzuza ibisabwa byose';
+
+  @override
+  String get select => 'Hitamo';
+
+  @override
+  String get today => 'Uyu munsi';
+
+  @override
+  String get this_week => 'Muri iki cyumweru';
+
+  @override
+  String get this_year => 'Muri uyu mwaka';
+
+  @override
+  String get all => 'Byose';
+
+  @override
+  String get packet => 'Ipaki';
+
+  @override
+  String get crate => 'Ikaziye';
+
+  @override
+  String get unit => 'Igice';
+
+  @override
+  String get bottles => 'Icupa';
+
+  @override
+  String get both => 'Byombi';
+
+  @override
+  String get units => 'Ibice';
+
+  @override
+  String get packets => 'Amapaki';
+
+  @override
+  String get select_purchase_method => 'Hitamo uburyo bwo kugura';
+
+  @override
+  String get select_sale_method => 'Hitamo uburyo bwo kugurisha';
+
+  @override
+  String get this_month => 'Muri uku kwezi';
+
+  @override
+  String get update_user => 'Vugurura umukozi';
+
+  @override
+  String get add_new_user => 'Umukozi mushya';
 }

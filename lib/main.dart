@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hajedi/bloc/locale/locale_cubit.dart';
 import 'package:hajedi/bloc/theme/theme_bloc.dart';
 import 'package:hajedi/bloc/theme/theme_state.dart';
+import 'package:hajedi/bloc/user/user_bloc.dart';
+import 'package:hajedi/data/user.dart';
 import 'package:hajedi/core/network/sync_manager.dart';
 import 'package:hajedi/core/theme/theme.dart';
 import 'package:hajedi/l10n/app_localizations.dart';
@@ -15,6 +17,7 @@ import 'package:hajedi/utils/hive_registry.dart';
 import 'package:hive/hive.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,8 +28,10 @@ void main() async {
             (await getApplicationDocumentsDirectory()).path,
           ),
   );
-  SyncManager(Hive.box('syncQueue')).start();
   await HiveRegistry.init();
+  await dotenv.load(fileName: ".env");
+
+  SyncManager(Hive.box('syncQueue')).start();
   runApp(const MyApp());
 }
 
@@ -40,6 +45,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => LocaleCubit()),
         BlocProvider(create: (_) => ThemeBloc()),
+        BlocProvider(create: (context) => UserBloc(Hive.box('users'))),
         ],
       child: BlocBuilder<LocaleCubit, Locale?>(
         builder: (context, localState) {
