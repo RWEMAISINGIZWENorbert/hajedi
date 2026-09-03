@@ -28,5 +28,12 @@ class AuthUtils {
     }
     return null;
    } 
+
+  static Future<void> clearAuthData() async {
+     final preferences = await SharedPreferences.getInstance();
+
+     await preferences.remove('token');
+     await preferences.remove('user_data');
+   } 
  
 }

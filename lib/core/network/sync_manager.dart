@@ -22,7 +22,7 @@ class SyncManager {
 
     _subscription = connectivity.onConnectivityChanged.listen((results) async {
       final hasConnection = !results.contains(ConnectivityResult.none);
-
+       print('--------------------------------Connectivity changed: $results, hasConnection: $hasConnection');
       if (hasConnection) {
         await syncPending();
       }

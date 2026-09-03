@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hajedi/bloc/auth/auth_bloc.dart';
 import 'package:hajedi/bloc/locale/locale_cubit.dart';
 import 'package:hajedi/bloc/theme/theme_bloc.dart';
 import 'package:hajedi/bloc/theme/theme_state.dart';
@@ -10,6 +11,7 @@ import 'package:hajedi/core/network/sync_manager.dart';
 import 'package:hajedi/core/theme/theme.dart';
 import 'package:hajedi/l10n/app_localizations.dart';
 import 'package:hajedi/l10n/fallback_localizations.dart';
+import 'package:hajedi/repository/auth_repository.dart';
 import 'package:hajedi/screens/dashboard/main_screen.dart';
 import 'package:hajedi/screens/settings/choose_language.dart';
 import 'package:hajedi/screens/settings/settings.dart';
@@ -46,6 +48,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => LocaleCubit()),
         BlocProvider(create: (_) => ThemeBloc()),
         BlocProvider(create: (context) => UserBloc(Hive.box('users'))),
+        BlocProvider(create: (_) => AuthBloc(authRepository: AuthRepository(),)), 
         ],
       child: BlocBuilder<LocaleCubit, Locale?>(
         builder: (context, localState) {
