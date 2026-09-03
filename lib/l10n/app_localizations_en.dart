@@ -112,4 +112,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get add_new_user => 'Add new user';
+
+  @override
+  String get no => 'No';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get delete_user => 'Remove user';
+
+  @override
+  String get are_you_sure_delete_user =>
+      'Are you sure you want to remove this user? Once removed, they cannot be easily recovered.';
 }

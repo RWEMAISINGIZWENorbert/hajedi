@@ -34,5 +34,9 @@
   "select_sale_method": "Hitamo uburyo bwo kugurisha",
   "this_month": "Muri uku kwezi",
   "update_user": "Vugurura umukozi",
-  "add_new_user": "Umukozi mushya"
+  "add_new_user": "Umukozi mushya",
+  "no": "Oya",
+  "yes": "Yego",
+  "delete_user": "Kuramo umukozi",
+  "are_you_sure_delete_user": "Urizeye ko ushaka gukuramo uyu mukozi? Iyo amaze gukurwamo, ntibyoroshye kongera kumugarura."
 }

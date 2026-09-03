@@ -112,4 +112,17 @@ class AppLocalizationsRw extends AppLocalizations {
 
   @override
   String get add_new_user => 'Umukozi mushya';
+
+  @override
+  String get no => 'Oya';
+
+  @override
+  String get yes => 'Yego';
+
+  @override
+  String get delete_user => 'Kuramo umukozi';
+
+  @override
+  String get are_you_sure_delete_user =>
+      'Urizeye ko ushaka gukuramo uyu mukozi? Iyo amaze gukurwamo, ntibyoroshye kongera kumugarura.';
 }

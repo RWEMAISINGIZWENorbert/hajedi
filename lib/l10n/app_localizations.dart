@@ -307,6 +307,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add new user'**
   String get add_new_user;
+
+  /// No description provided for @no.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get no;
+
+  /// No description provided for @yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yes;
+
+  /// No description provided for @delete_user.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove user'**
+  String get delete_user;
+
+  /// No description provided for @are_you_sure_delete_user.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to remove this user? Once removed, they cannot be easily recovered.'**
+  String get are_you_sure_delete_user;
 }
 
 class _AppLocalizationsDelegate

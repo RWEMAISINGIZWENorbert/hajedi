@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hajedi/bloc/user/user_bloc.dart';
 import 'package:hajedi/l10n/app_localizations.dart';
 import 'package:hajedi/widgets/app_bar.dart';
+import 'package:hajedi/widgets/confirmation_dialog.dart';
 import 'package:hajedi/widgets/user/user_bottom_sheet_modal.dart';
 import 'package:iconly/iconly.dart';
 
@@ -70,7 +71,16 @@ class _UsersState extends State<Users> {
                       isHeader: false,
                       context: context,
                       onRemove: () {
-                        context.read<UserBloc>().add(DeleteUserLocal(userId: user.id));
+                        // context.read<UserBloc>().add(DeleteUserLocal(userId: user.id));
+                        showConfirmationDialog(
+                          context,
+                          title: loc.delete_user,
+                          content: loc.are_you_sure_delete_user,
+                          onConfirm: () {
+                            context.read<UserBloc>().add(DeleteUserLocal(userId: user.id));
+                            Navigator.of(context).pop(); // Close the dialog
+                          },
+                        );
                       },
                       onEdit: () {
                         showUserBottomSheetModal(

@@ -34,5 +34,9 @@
   "select_sale_method": "Select the sale method",
   "this_month": "This month",
   "update_user": "Update user",
-  "add_new_user": "Add new user"
+  "add_new_user": "Add new user",
+  "no": "No",
+  "yes": "Yes",
+  "delete_user": "Remove user",
+  "are_you_sure_delete_user": "Are you sure you want to remove this user? Once removed, they cannot be easily recovered."
 }
