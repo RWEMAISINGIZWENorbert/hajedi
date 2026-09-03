@@ -62,6 +62,10 @@ class _SignInState extends State<SignIn> {
 								listener: (context, state) {
 									if (state is LoginSuccessfully) {
 										showAnimatedSnackBar(context, state.message);
+                    Navigator.pushReplacementNamed(
+                      context,
+                      '/dashboard',
+                    );
 									} else if (state is LoginFailure) {
 										showAnimatedSnackBar(
 											context,

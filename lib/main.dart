@@ -6,7 +6,6 @@ import 'package:hajedi/bloc/locale/locale_cubit.dart';
 import 'package:hajedi/bloc/theme/theme_bloc.dart';
 import 'package:hajedi/bloc/theme/theme_state.dart';
 import 'package:hajedi/bloc/user/user_bloc.dart';
-import 'package:hajedi/data/user.dart';
 import 'package:hajedi/core/network/sync_manager.dart';
 import 'package:hajedi/core/theme/theme.dart';
 import 'package:hajedi/l10n/app_localizations.dart';

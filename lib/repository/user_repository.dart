@@ -53,6 +53,8 @@ class UserRepository {
       }),
     );
 
+    print('Register User Response: ${response.body}');
+
     final data = jsonDecode(response.body);
 
     if (response.statusCode == 201) {
@@ -72,6 +74,7 @@ class UserRepository {
 
     final token = await AuthUtils.getToken();
 
+    try{
     final response = await http.put(
       url,
       headers: {
@@ -90,8 +93,12 @@ class UserRepository {
     if (response.statusCode == 200) {
       return User.fromJson(data['user']);
     }
-
+    print('Error updating user: ${response.body}');
     throw Exception(data['message'] ?? 'Failed to update user');
+    } catch (e) {
+      print('Error updating user: $e');
+      throw Exception('Failed to update user: $e');
+    }
   }
 
   Future<void> removeUser(String id) async {

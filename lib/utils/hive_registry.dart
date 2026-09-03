@@ -28,8 +28,12 @@ class HiveRegistry {
 
   static Future clearALlBoxes() async {
     await Future.wait([
-    Hive.box('userBox').clear(),
+    Hive.box<User>('users').clear(),
+    Hive.box<SyncQueueItem>('syncQueue').clear(),
    ]);
   }
-
+  
+  static Future<void> clearQueue() async {
+     await Hive.box<SyncQueueItem>('syncQueue').clear();
+  }
 }

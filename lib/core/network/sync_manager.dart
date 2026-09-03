@@ -45,12 +45,13 @@ class SyncManager {
 
     try {
       final pending = SyncQueue.getPending();
+      print('--------------------------------Syncing pending items: ${pending.length}');
 
       for (final item in pending) {
         await SyncQueue.markSyncing(item.id);
-
+          print('----------------------Call Send To Server');
         final success = await sendToServer(item);
-
+    
         if (success) {
           await SyncQueue.markSynced(item.id);
         } else {
@@ -103,6 +104,7 @@ class SyncManager {
           return false;
       }
     } catch (e) {
+      print('-------------------Sync failed for item ${item.id}: $e');
       return false;
     }
   }

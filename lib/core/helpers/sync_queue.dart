@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:hajedi/data/sync_queue_item.dart';
 import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
@@ -16,12 +18,11 @@ class SyncQueue {
       id: const Uuid().v4(),
       entityType: entityType,
       operationType: operationType,
-      payload: payload.toString(),
+      payload: jsonEncode(payload),
       status: 'pending',
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     );
-
     await box.add(item);
   }
 
