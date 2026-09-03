@@ -61,7 +61,8 @@ class _UserFormState extends State<UserForm> {
     }
 
       final user = User(
-        id: widget.user?.id ?? Uuid().v4(),
+        id: widget.user?.id ?? "",
+        clientId: widget.user?.clientId ?? Uuid().v4(),
         name: _nameController.text.trim(),
         role: role ?? widget.user?.role ?? '',
         password: _passwordController.text.trim()

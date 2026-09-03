@@ -47,6 +47,7 @@ class UserRepository {
         'Authorization': 'Bearer $token',
       },
       body: jsonEncode({
+        'clientId': user.clientId,
         'name': user.name,
         'role': user.role,
         'password': user.password,
@@ -87,7 +88,7 @@ class UserRepository {
         if (password != null && password.isNotEmpty) 'password': password,
       }),
     );
-
+     print('Update User Response: ${response.body}');
     final data = jsonDecode(response.body);
 
     if (response.statusCode == 200) {

@@ -8,25 +8,29 @@ class User extends HiveObject {
   String id;
 
   @HiveField(1)
-  String name;
+  String clientId;
 
   @HiveField(2)
-  String role;
+  String name;
 
   @HiveField(3)
-  String password;
+  String role;
 
   @HiveField(4)
-  bool isSynced;
+  String password;
 
   @HiveField(5)
-  DateTime createdAt;
+  bool isSynced;
 
   @HiveField(6)
+  DateTime createdAt;
+
+  @HiveField(7)
   DateTime updatedAt;
 
   User({
     required this.id,
+    required this.clientId,
     required this.name,
     required this.role,
     required this.password,
@@ -37,17 +41,21 @@ class User extends HiveObject {
         updatedAt = updatedAt ?? DateTime.now();
 
   factory User.fromJson(Map<String, dynamic> json) {
+    final serverId = json['id'] ?? json['_id'] ?? '';
+    final localClientId = json['clientId'] ?? serverId;
+
     return User(
-      id: json['id'] ?? json['_id'] ?? '',
+      id: serverId.toString(),
+      clientId: localClientId.toString(),
       name: json['name'] ?? '',
       role: json['role'] ?? 'employee',
       password: json['password'] ?? '',
-      isSynced: json['isSynced'] ?? false,
+      isSynced: json['isSynced'] ?? true,
       createdAt: json['createdAt'] != null
-          ? DateTime.tryParse(json['createdAt']) ?? DateTime.now()
+          ? DateTime.tryParse(json['createdAt'].toString()) ?? DateTime.now()
           : DateTime.now(),
       updatedAt: json['updatedAt'] != null
-          ? DateTime.tryParse(json['updatedAt']) ?? DateTime.now()
+          ? DateTime.tryParse(json['updatedAt'].toString()) ?? DateTime.now()
           : DateTime.now(),
     );
   }
@@ -55,6 +63,7 @@ class User extends HiveObject {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
+      'clientId': clientId,
       'name': name,
       'role': role,
       'password': password,
@@ -66,6 +75,7 @@ class User extends HiveObject {
 
   User copyWith({
     String? id,
+    String? clientId,
     String? name,
     String? role,
     String? password,
@@ -75,6 +85,7 @@ class User extends HiveObject {
   }) {
     return User(
       id: id ?? this.id,
+      clientId: clientId ?? this.clientId,
       name: name ?? this.name,
       role: role ?? this.role,
       password: password ?? this.password,

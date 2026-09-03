@@ -76,6 +76,7 @@ class SyncManager {
               await _userRepository.registerUser(
                 User(
                   id: payload['id'] ?? '',
+                  clientId: payload['clientId'] ?? '',
                   name: payload['name'] ?? '',
                   role: payload['role'] ?? 'employee',
                   password: payload['password'] ?? '',
@@ -85,7 +86,7 @@ class SyncManager {
 
             case 'update':
               await _userRepository.updateUser(
-                payload['id'],
+                payload['clientId'],
                 name: payload['name'],
                 role: payload['role'],
                 password: payload['password'],
@@ -93,7 +94,7 @@ class SyncManager {
               return true;
 
             case 'delete':
-              await _userRepository.removeUser(payload['id']);
+              await _userRepository.removeUser(payload['clientId']);
               return true;
 
             default:

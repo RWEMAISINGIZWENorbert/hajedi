@@ -18,32 +18,35 @@ class UserAdapter extends TypeAdapter<User> {
     };
     return User(
       id: fields[0] as String,
-      name: fields[1] as String,
-      role: fields[2] as String,
-      password: fields[3] as String,
-      isSynced: fields[4] as bool,
-      createdAt: fields[5] as DateTime?,
-      updatedAt: fields[6] as DateTime?,
+      clientId: fields[1] as String,
+      name: fields[2] as String,
+      role: fields[3] as String,
+      password: fields[4] as String,
+      isSynced: fields[5] as bool,
+      createdAt: fields[6] as DateTime?,
+      updatedAt: fields[7] as DateTime?,
     );
   }
 
   @override
   void write(BinaryWriter writer, User obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.name)
+      ..write(obj.clientId)
       ..writeByte(2)
-      ..write(obj.role)
+      ..write(obj.name)
       ..writeByte(3)
-      ..write(obj.password)
+      ..write(obj.role)
       ..writeByte(4)
-      ..write(obj.isSynced)
+      ..write(obj.password)
       ..writeByte(5)
-      ..write(obj.createdAt)
+      ..write(obj.isSynced)
       ..writeByte(6)
+      ..write(obj.createdAt)
+      ..writeByte(7)
       ..write(obj.updatedAt);
   }
 

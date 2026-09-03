@@ -32,6 +32,7 @@ void main() async {
           ),
   );
   await HiveRegistry.init();
+  // await HiveRegistry.clearALlBoxes();
   await dotenv.load(fileName: ".env");
 
   SyncManager(Hive.box('syncQueue')).start();
