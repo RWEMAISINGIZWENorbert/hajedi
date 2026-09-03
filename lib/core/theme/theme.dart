@@ -19,7 +19,7 @@ ThemeData  lightTheme = ThemeData(
         textTheme: TextTheme(
           titleLarge: GoogleFonts.poppins(
             // color: Colors.green[700],
-            color: Colors.amber[800],
+            color: Colors.green[800],
             // fontSize: 18,
             fontSize: 36,
             fontWeight: FontWeight.w600,
@@ -28,7 +28,7 @@ ThemeData  lightTheme = ThemeData(
           titleSmall: GoogleFonts.poppins(
             // color: Theme.of(context).primaryColor, // it returns the default peimary color hence an issue
             // color: Colors.green[700],
-            color: Colors.amber[800],
+            color: Colors.green[800],
             // fontSize: 9,
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -78,7 +78,7 @@ ThemeData darkTheme = ThemeData(
   textTheme: TextTheme(
               titleLarge: GoogleFonts.poppins(
             // color: Colors.green[700],
-            color: Colors.amber[800],
+            color: Colors.green[800],
             // fontSize: 18,
             fontSize: 36,
             fontWeight: FontWeight.w600,
@@ -86,7 +86,7 @@ ThemeData darkTheme = ThemeData(
           ),
             titleSmall: GoogleFonts.poppins(
             // color: Theme.of(context).primaryColor, // it returns the default peimary color hence an issue
-            color: Colors.amber[800],
+            color: Colors.green[800],
             // color: Colors.green[700],
             fontSize: 18,
             fontWeight: FontWeight.w600,

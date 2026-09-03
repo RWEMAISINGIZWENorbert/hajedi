@@ -9,6 +9,8 @@ class AuthInitial extends AuthState {
   AuthInitial({this.message = ''});
 }
 
+class LoginLoading extends AuthState {}
+
 class LoginSuccessfully extends AuthState {
   final String message;
 

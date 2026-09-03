@@ -12,6 +12,7 @@ import 'package:hajedi/core/theme/theme.dart';
 import 'package:hajedi/l10n/app_localizations.dart';
 import 'package:hajedi/l10n/fallback_localizations.dart';
 import 'package:hajedi/repository/auth_repository.dart';
+import 'package:hajedi/screens/auth/sign_in.dart';
 import 'package:hajedi/screens/dashboard/main_screen.dart';
 import 'package:hajedi/screens/settings/choose_language.dart';
 import 'package:hajedi/screens/settings/settings.dart';
@@ -60,8 +61,9 @@ class MyApp extends StatelessWidget {
                      '/choose-language': (context) => const ChooseLanguage(),
                      '/settings': (context) => const Settings(),
                      '/dashboard': (context) => const MainScreen(),
+                     '/sign-in': (context) => const SignIn(),
                   },
-                  initialRoute: '/dashboard',
+                  initialRoute: '/sign-in',
                   theme: lightTheme,
                   darkTheme: darkTheme,
                   // themeMode: ThemeMode.dark,
@@ -81,7 +83,7 @@ class MyApp extends StatelessWidget {
                       );
                       return isSupported ? locale : const Locale('en');
                     },
-                  home: const Settings(),
+                  home: const MainScreen(),
                 );
 
             },
