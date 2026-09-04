@@ -11,6 +11,9 @@ import 'package:hajedi/core/network/handlers/user_sync_handler.dart';
 import 'package:hajedi/core/network/sync_coordinator.dart';
 import 'package:hajedi/core/network/sync_manager.dart';
 import 'package:hajedi/core/theme/theme.dart';
+import 'package:hajedi/data/product.dart';
+import 'package:hajedi/data/sync_queue_item.dart';
+import 'package:hajedi/data/user.dart';
 import 'package:hajedi/l10n/app_localizations.dart';
 import 'package:hajedi/l10n/fallback_localizations.dart';
 import 'package:hajedi/repository/auth_repository.dart';
@@ -42,20 +45,14 @@ void main() async {
   // await HiveRegistry.clearALlBoxes();
   await dotenv.load(fileName: ".env");
   
-  final handlers = [
-        UserSyncHandler(
-          userBox: Hive.box('users'),
-          userRepository: UserRepository(),
-        ),
-        ProductSyncHandler(
-          productBox: Hive.box('products'),
-          productRepository: ProductRepository(),
-        ),
-  ];
-
-  final syncManager = SyncManager(
-     queueBox: Hive.box('syncQueue'),
-     handlers: handlers,
+  // final syncManager = SyncManager(
+  //    queueBox: Hive.box('syncQueue'),
+  //    handlers: handlers,
+  // );
+  final syncManager = SyncManager.create(
+     queueBox: Hive.box<SyncQueueItem>('syncQueue'),
+     userBox: Hive.box<User>('users'),
+     productBox: Hive.box<Product>('products'),
 );
 
   await syncManager.start();
