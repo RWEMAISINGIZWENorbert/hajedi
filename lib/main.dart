@@ -6,12 +6,16 @@ import 'package:hajedi/bloc/locale/locale_cubit.dart';
 import 'package:hajedi/bloc/theme/theme_bloc.dart';
 import 'package:hajedi/bloc/theme/theme_state.dart';
 import 'package:hajedi/bloc/user/user_bloc.dart';
+import 'package:hajedi/core/network/handlers/product_sync_handler.dart';
+import 'package:hajedi/core/network/handlers/user_sync_handler.dart';
 import 'package:hajedi/core/network/sync_coordinator.dart';
 import 'package:hajedi/core/network/sync_manager.dart';
 import 'package:hajedi/core/theme/theme.dart';
 import 'package:hajedi/l10n/app_localizations.dart';
 import 'package:hajedi/l10n/fallback_localizations.dart';
 import 'package:hajedi/repository/auth_repository.dart';
+import 'package:hajedi/repository/product_repository.dart';
+import 'package:hajedi/repository/user_repository.dart';
 import 'package:hajedi/screens/auth/sign_in.dart';
 import 'package:hajedi/screens/dashboard/main_screen.dart';
 import 'package:hajedi/screens/settings/choose_language.dart';
@@ -24,7 +28,6 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hajedi/bloc/product/product_bloc.dart';
-import 'package:hajedi/data/product.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,11 +41,21 @@ void main() async {
   await HiveRegistry.init();
   // await HiveRegistry.clearALlBoxes();
   await dotenv.load(fileName: ".env");
+  
+  final handlers = [
+        UserSyncHandler(
+          userBox: Hive.box('users'),
+          userRepository: UserRepository(),
+        ),
+        ProductSyncHandler(
+          productBox: Hive.box('products'),
+          productRepository: ProductRepository(),
+        ),
+  ];
 
   final syncManager = SyncManager(
-     Hive.box('syncQueue'),
-     Hive.box('users'),
-     Hive.box('products'),
+     queueBox: Hive.box('syncQueue'),
+     handlers: handlers,
 );
 
   await syncManager.start();
