@@ -23,6 +23,8 @@ import 'package:hive/hive.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:hajedi/bloc/product/product_bloc.dart';
+import 'package:hajedi/data/product.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,9 +40,10 @@ void main() async {
   await dotenv.load(fileName: ".env");
 
   final syncManager = SyncManager(
-    Hive.box('syncQueue'),
-    Hive.box('users')
-  );
+     Hive.box('syncQueue'),
+     Hive.box('users'),
+     Hive.box('products'),
+);
 
   await syncManager.start();
 
@@ -64,7 +67,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => LocaleCubit()),
         BlocProvider(create: (_) => ThemeBloc()),
         BlocProvider(create: (context) => UserBloc(Hive.box('users'), syncManager)),
-        BlocProvider(create: (_) => AuthBloc(authRepository: AuthRepository(),)), 
+        BlocProvider(create: (_) => AuthBloc(authRepository: AuthRepository(),)),
+        BlocProvider(create: (_) => ProductBloc(Hive.box('products'),syncManager)..add(LoadLocalProducts()),
+), 
         ],
       child: BlocBuilder<LocaleCubit, Locale?>(
         builder: (context, localState) {
