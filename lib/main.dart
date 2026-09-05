@@ -92,7 +92,7 @@ class MyApp extends StatelessWidget {
                   },
                   theme: lightTheme,
                   darkTheme: darkTheme,
-                  // themeMode: ThemeMode.dark,
+                  // themeMode: ThemeMode.light,
                   themeMode: themeState.themeMode,
                   locale: localState ?? const Locale('en'),
                   supportedLocales: AppLocalizations.supportedLocales,

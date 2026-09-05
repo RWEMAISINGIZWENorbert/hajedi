@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hajedi/bloc/product/product_bloc.dart';
 import 'package:hajedi/l10n/app_localizations.dart';
+import 'package:hajedi/screens/product/product_details.dart';
 import 'package:hajedi/widgets/app_bar.dart';
 import 'package:hajedi/widgets/product/list_tile_product.dart';
 import 'package:hajedi/widgets/loading.dart';
@@ -43,8 +44,18 @@ class Products extends StatelessWidget {
               itemCount: state.products.length,
               itemBuilder: (context, index) {
                 return ListTileProduct(
-                  product: state.products[index],
-                );
+  product: state.products[index],
+  onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => ProductDetails(
+          product: state.products[index],
+        ),
+      ),
+    );
+  },
+);
               },
             );
           }

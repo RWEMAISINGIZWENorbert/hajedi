@@ -5,7 +5,8 @@ import 'package:hajedi/data/product.dart';
 
 class ListTileProduct extends StatelessWidget {
   final Product product;
-  const ListTileProduct({super.key, required this.product});
+  final VoidCallback? onTap;
+  const ListTileProduct({super.key, required this.product, this.onTap});
 
   Color _generateColor(String text) {
     final int hash = text.codeUnitAt(0);
@@ -31,6 +32,7 @@ class ListTileProduct extends StatelessWidget {
     }
     
     return ListTile(
+      onTap: onTap,
       leading: CircleAvatar(
         backgroundColor: _generateColor(product.name),
         child: Center(

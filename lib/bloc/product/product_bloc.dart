@@ -195,6 +195,11 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       );
 
       await _syncManager.syncIfConnected();
+      emit(
+  ProductsLoadedSuccessfully(
+    products: _productBox.values.toList(),
+  ),
+);
     } catch (error) {
       emit(
         ProductDeleteFailure(
