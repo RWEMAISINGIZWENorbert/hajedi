@@ -125,4 +125,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get are_you_sure_delete_user =>
       'Are you sure you want to remove this user? Once removed, they cannot be easily recovered.';
+
+  @override
+  String get no_products_found => 'No products found';
+
+  @override
+  String get new_product => 'New product';
 }

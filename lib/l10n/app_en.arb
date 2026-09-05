@@ -38,5 +38,7 @@
   "no": "No",
   "yes": "Yes",
   "delete_user": "Remove user",
-  "are_you_sure_delete_user": "Are you sure you want to remove this user? Once removed, they cannot be easily recovered."
+  "are_you_sure_delete_user": "Are you sure you want to remove this user? Once removed, they cannot be easily recovered.",
+  "no_products_found": "No products found",
+  "new_product": "New product"
 }

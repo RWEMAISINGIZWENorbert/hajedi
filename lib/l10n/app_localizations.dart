@@ -331,6 +331,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Are you sure you want to remove this user? Once removed, they cannot be easily recovered.'**
   String get are_you_sure_delete_user;
+
+  /// No description provided for @no_products_found.
+  ///
+  /// In en, this message translates to:
+  /// **'No products found'**
+  String get no_products_found;
+
+  /// No description provided for @new_product.
+  ///
+  /// In en, this message translates to:
+  /// **'New product'**
+  String get new_product;
 }
 
 class _AppLocalizationsDelegate

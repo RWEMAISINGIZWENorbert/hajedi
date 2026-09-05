@@ -38,5 +38,7 @@
   "no": "Oya",
   "yes": "Yego",
   "delete_user": "Kuramo umukozi",
-  "are_you_sure_delete_user": "Urizeye ko ushaka gukuramo uyu mukozi? Iyo amaze gukurwamo, ntibyoroshye kongera kumugarura."
+  "are_you_sure_delete_user": "Urizeye ko ushaka gukuramo uyu mukozi? Iyo amaze gukurwamo, ntibyoroshye kongera kumugarura.",
+  "no_products_found": "Nta bicuruzwa byabonetse",
+   "new_product": "Igicuruzwa gishya"
 }

@@ -1,14 +1,70 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hajedi/bloc/product/product_bloc.dart';
+import 'package:hajedi/l10n/app_localizations.dart';
+import 'package:hajedi/widgets/app_bar.dart';
+import 'package:hajedi/widgets/product/list_tile_product.dart';
+import 'package:hajedi/widgets/loading.dart';
+import 'package:iconly/iconly.dart';
 
 class Products extends StatelessWidget {
   const Products({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Products'),
+    final loc = AppLocalizations.of(context)!;
+
+    return Scaffold(
+      appBar: AppBarComponent(
+        icon: InkWell(
+          onTap: () => Navigator.pop(context),
+          child: const Icon(
+            IconlyLight.arrow_left_circle,
+          ),
+        ),
+        title: loc.products,
+      ),
+      body: BlocBuilder<ProductBloc, ProductState>(
+        builder: (context, state) {
+          if (state is ProductsLoading) {
+            return Center(
+              child: Loading(),
+            );
+          }
+
+          if (state is ProductLoadFailure) {
+            return Center(
+              child: Text(state.message),
+            );
+          }
+
+          if (state is ProductsLoadedSuccessfully) {
+            if (state.products.isEmpty) {
+              return Center(
+                child: Text('No products found'),
+              );
+            }
+
+            return ListView.builder(
+              padding: const EdgeInsets.all(12),
+              itemCount: state.products.length,
+              itemBuilder: (context, index) {
+                return ListTileProduct(
+                  product: state.products[index],
+                );
+              },
+            );
+          }
+
+          return const SizedBox.shrink();
+        },
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => {},
+        icon: const Icon(Icons.add),
+        label: Text(loc.new_product),
+        backgroundColor: Theme.of(context).primaryColor,
+        foregroundColor: Colors.white,
       ),
     );
   }

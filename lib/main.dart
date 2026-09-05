@@ -6,8 +6,6 @@ import 'package:hajedi/bloc/locale/locale_cubit.dart';
 import 'package:hajedi/bloc/theme/theme_bloc.dart';
 import 'package:hajedi/bloc/theme/theme_state.dart';
 import 'package:hajedi/bloc/user/user_bloc.dart';
-import 'package:hajedi/core/network/handlers/product_sync_handler.dart';
-import 'package:hajedi/core/network/handlers/user_sync_handler.dart';
 import 'package:hajedi/core/network/sync_coordinator.dart';
 import 'package:hajedi/core/network/sync_manager.dart';
 import 'package:hajedi/core/theme/theme.dart';
@@ -17,8 +15,6 @@ import 'package:hajedi/data/user.dart';
 import 'package:hajedi/l10n/app_localizations.dart';
 import 'package:hajedi/l10n/fallback_localizations.dart';
 import 'package:hajedi/repository/auth_repository.dart';
-import 'package:hajedi/repository/product_repository.dart';
-import 'package:hajedi/repository/user_repository.dart';
 import 'package:hajedi/screens/auth/sign_in.dart';
 import 'package:hajedi/screens/dashboard/main_screen.dart';
 import 'package:hajedi/screens/settings/choose_language.dart';
@@ -78,8 +74,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => ThemeBloc()),
         BlocProvider(create: (context) => UserBloc(Hive.box('users'), syncManager)),
         BlocProvider(create: (_) => AuthBloc(authRepository: AuthRepository(),)),
-        BlocProvider(create: (_) => ProductBloc(Hive.box('products'),syncManager)..add(LoadLocalProducts()),
-), 
+        BlocProvider(create: (_) => ProductBloc(Hive.box('products'),syncManager)..add(LoadLocalProducts()),), 
         ],
       child: BlocBuilder<LocaleCubit, Locale?>(
         builder: (context, localState) {
