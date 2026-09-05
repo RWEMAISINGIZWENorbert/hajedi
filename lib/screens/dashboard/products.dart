@@ -60,7 +60,7 @@ class Products extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => {},
+        onPressed: () => { Navigator.pushReplacementNamed(context, '/new-product') },
         icon: const Icon(Icons.add),
         label: Text(loc.new_product),
         backgroundColor: Theme.of(context).primaryColor,

@@ -50,6 +50,8 @@ class ProductRepository {
       }),
     );
 
+    print("Response: ${response.body}");
+
     final data = await _decodeResponse(response);
 
     if (response.statusCode == 201) {

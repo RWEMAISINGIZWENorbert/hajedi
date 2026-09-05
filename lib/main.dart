@@ -17,6 +17,7 @@ import 'package:hajedi/l10n/fallback_localizations.dart';
 import 'package:hajedi/repository/auth_repository.dart';
 import 'package:hajedi/screens/auth/sign_in.dart';
 import 'package:hajedi/screens/dashboard/main_screen.dart';
+import 'package:hajedi/screens/product/new_product.dart';
 import 'package:hajedi/screens/settings/choose_language.dart';
 import 'package:hajedi/screens/settings/settings.dart';
 import 'package:hajedi/utils/auth_utils.dart';
@@ -87,6 +88,7 @@ class MyApp extends StatelessWidget {
                      '/settings': (context) => const Settings(),
                      '/dashboard': (context) => const MainScreen(),
                      '/sign-in': (context) => const SignIn(),
+                     '/new-product': (context) => const NewProduct()
                   },
                   theme: lightTheme,
                   darkTheme: darkTheme,
