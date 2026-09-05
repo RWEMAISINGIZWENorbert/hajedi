@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hajedi/bloc/product/product_bloc.dart';
 import 'package:hajedi/data/product.dart';
+import 'package:hajedi/screens/product/edit_product.dart';
 import 'package:hajedi/widgets/animated_snackbar.dart';
 import 'package:hajedi/widgets/app_bar.dart';
 import 'package:hajedi/widgets/confirmation_dialog.dart';
@@ -17,6 +18,34 @@ class ProductDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<ProductBloc, ProductState>(
+      builder: (context, state) {
+        Product currentProduct = product;
+
+        if (state is ProductsLoadedSuccessfully) {
+          for (final item in state.products) {
+            if (item.clientId == product.clientId) {
+              currentProduct = item;
+              break;
+            }
+          }
+        } else if (state is ProductsUpdatedSuccessfully &&
+            state.product.clientId == product.clientId) {
+          currentProduct = state.product;
+        }
+
+        return _buildDetailsScreen(
+          context,
+          currentProduct,
+        );
+      },
+    );
+  }
+
+  Widget _buildDetailsScreen(
+    BuildContext context,
+    Product product,
+  ) {
     final showPurchaseCost =
         product.purchaseMethod == 'packet' ||
         product.purchaseMethod == 'crate';
@@ -334,8 +363,15 @@ class _ProductActions extends StatelessWidget {
             Expanded(
               child: OutlinedButton.icon(
                 onPressed: () {
-                  // Open the product edit screen later.
-                },
+                 Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => EditProduct(
+                    product: product,
+                    ),
+                  ),
+                );
+              },
                 icon: const Icon(Icons.edit_outlined),
                 label: const Text('Edit'),
               ),

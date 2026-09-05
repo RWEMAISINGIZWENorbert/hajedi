@@ -114,6 +114,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     Emitter<ProductState> emit,
   ) async {
     try {
+      emit(ProductsLoading());
       final existingProduct = _productBox.get(event.clientId);
 
       if (existingProduct == null) {
@@ -151,6 +152,11 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       );
 
       await _syncManager.syncIfConnected();
+      emit(
+  ProductsLoadedSuccessfully(
+    products: _productBox.values.toList(),
+  ),
+);
     } catch (error) {
       emit(
         ProductUpdateFailure(
