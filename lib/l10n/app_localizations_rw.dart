@@ -99,7 +99,7 @@ class AppLocalizationsRw extends AppLocalizations {
   String get packets => 'Amapaki';
 
   @override
-  String get select_purchase_method => 'Hitamo uburyo bwo kugura';
+  String get select_purchase_method => 'Hitamo uburyo bwo kurangura';
 
   @override
   String get select_sale_method => 'Hitamo uburyo bwo kugurisha';
@@ -131,4 +131,46 @@ class AppLocalizationsRw extends AppLocalizations {
 
   @override
   String get new_product => 'Igicuruzwa gishya';
+
+  @override
+  String get enter => 'Andika';
+
+  @override
+  String get product_type => 'Ubwoko bw\'igicuruzwa';
+
+  @override
+  String get select_product_type_method => 'Hitamo ubwoko bw\'igicuruzwa';
+
+  @override
+  String get units_per_package => 'Umubare uri mu ipaki';
+
+  @override
+  String get quantity_in_stock => 'Umubare w\'ibicuruzwa biri mu bubiko';
+
+  @override
+  String get purchase_method => 'Uburyo bwo kurangura';
+
+  @override
+  String get sale_method => 'Uburyo bwo kugurisha';
+
+  @override
+  String get purchase_cost_per => 'Ikiranguzo kuri';
+
+  @override
+  String get selling_price_per => 'Igiciro kuri';
+
+  @override
+  String get save => 'Emeza';
+
+  @override
+  String get in_stock => 'Biri mu bubiko';
+
+  @override
+  String get transactions => 'Ibikorwa by\'ubucuruzi';
+
+  @override
+  String get edit => 'Hindura';
+
+  @override
+  String get delete => 'Siba';
 }

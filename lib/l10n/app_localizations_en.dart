@@ -131,4 +131,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get new_product => 'New product';
+
+  @override
+  String get enter => 'Enter';
+
+  @override
+  String get product_type => 'Product type';
+
+  @override
+  String get select_product_type_method => 'Select the product type';
+
+  @override
+  String get units_per_package => 'Units per package';
+
+  @override
+  String get quantity_in_stock => 'Quantity in stock';
+
+  @override
+  String get purchase_method => 'Purchase Method';
+
+  @override
+  String get sale_method => 'Sale Method';
+
+  @override
+  String get purchase_cost_per => 'Purchase cost per';
+
+  @override
+  String get selling_price_per => 'Selling price per';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get in_stock => 'In stock';
+
+  @override
+  String get transactions => 'Transactions';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get delete => 'Delete';
 }

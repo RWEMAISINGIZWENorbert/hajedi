@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hajedi/bloc/product/product_bloc.dart';
 import 'package:hajedi/data/product.dart';
+import 'package:hajedi/l10n/app_localizations.dart';
 import 'package:hajedi/screens/product/edit_product.dart';
 import 'package:hajedi/widgets/animated_snackbar.dart';
 import 'package:hajedi/widgets/app_bar.dart';
@@ -117,6 +118,7 @@ class _ProductSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isLowStock = product.quantityInStock <= 5;
+    final loc = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,7 +152,7 @@ class _ProductSummary extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '${product.quantityInStock} ${product.saleMethod} in stock',
+              '${product.quantityInStock} ${product.saleMethod} ${loc.in_stock}',
               style: Theme.of(context).textTheme.titleMedium,
             ),
             if (isLowStock)
@@ -272,12 +274,13 @@ class _TransactionsSection extends StatelessWidget {
     // Sales and purchases will share this single list.
     // Their icons will differentiate the transaction type.
     const transactions = <_TransactionPreview>[];
+    final loc = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          'Transactions',
+          loc.transactions,
           style: Theme.of(context).textTheme.titleLarge,
         ),
         const SizedBox(height: 12),
@@ -355,6 +358,7 @@ class _ProductActions extends StatelessWidget {
 }
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -373,7 +377,7 @@ class _ProductActions extends StatelessWidget {
                 );
               },
                 icon: const Icon(Icons.edit_outlined),
-                label: const Text('Edit'),
+                label: Text(loc.edit),
               ),
             ),
             const SizedBox(width: 12),
@@ -381,7 +385,7 @@ class _ProductActions extends StatelessWidget {
               child: FilledButton.icon(
                 onPressed: () => _confirmDelete(context),
                 icon: const Icon(Icons.delete_outline),
-                label: const Text('Delete'),
+                label: Text(loc.delete),
                 style: FilledButton.styleFrom(
                   backgroundColor: Colors.red,
                 ),

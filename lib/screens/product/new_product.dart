@@ -128,8 +128,8 @@ void _registerProduct() {
       ),
       body: BlocConsumer<ProductBloc, ProductState>(
         listener: (context, state) {
-  if (state is ProductRegisteredSuccessfully) {
-    showAnimatedSnackBar(
+          if (state is ProductRegisteredSuccessfully) {
+            showAnimatedSnackBar(
       context,
       state.message,
     );
@@ -160,15 +160,15 @@ void _registerProduct() {
                 InputTextField(
                   controller: _nameController,
                   labelText: loc.name,
-                  hintText: 'Enter ${loc.name}',
+                  hintText: '${loc.enter} ${loc.name}',
                   keyboardType: TextInputType.name,
                   redaOnly: isLoading,
                 ),
                 const SizedBox(height: 14),
 
-                SimpleText(label: 'Product type:'),
+                SimpleText(label: '${loc.product_type}:'),
                 SelectOption(
-                  label: 'product type',
+                  label: "Product type",
                   options: const [
                     'item',
                     'kg',
@@ -183,7 +183,7 @@ void _registerProduct() {
                 ),
                 const SizedBox(height: 14),
 
-                SimpleText(label: 'Purchase method:'),
+                SimpleText(label: '${loc.purchase_method}:'),
                 SelectOption(
                   label: 'purchase',
                   options: const [
@@ -206,7 +206,7 @@ void _registerProduct() {
 ),
                 const SizedBox(height: 14),
 
-                SimpleText(label: 'Sale method:'),
+                SimpleText(label: '${loc.sale_method}:'),
 SelectOption(
   label: 'sale',
   options: const [
@@ -228,11 +228,11 @@ SelectOption(
                 if (_purchaseMethod == 'packet' ||
     _purchaseMethod == 'crate') ...[
   SimpleText(
-    label: 'Purchase cost per 1 $_purchaseMethod:',
+    label: '${loc.purchase_cost_per} 1 $_purchaseMethod:',
   ),
   InputTextField(
     controller: _purchaseCostController,
-    labelText: 'Purchase cost per 1 $_purchaseMethod',
+    labelText: '${loc.purchase_cost_per} 1 $_purchaseMethod',
     hintText: '0',
     keyboardType: const TextInputType.numberWithOptions(
       decimal: true,
@@ -246,11 +246,11 @@ SelectOption(
 
                 if (_saleMethod != null) ...[
   SimpleText(
-    label: 'Selling price per 1 $_saleMethod:',
+    label: '${loc.selling_price_per} 1 $_saleMethod:',
   ),
   InputTextField(
     controller: _sellingPriceController,
-    labelText: 'Selling price per 1 $_saleMethod',
+    labelText: '${loc.selling_price_per} 1 $_saleMethod',
     hintText: '0',
     keyboardType: const TextInputType.numberWithOptions(
       decimal: true,
@@ -262,10 +262,10 @@ SelectOption(
 ],
                 const SizedBox(height: 14),
 
-                SimpleText(label: 'Units per package:'),
+                SimpleText(label: '${loc.units_per_package}:'),
                 InputTextField(
                   controller: _unitsPerPackageController,
-                  labelText: 'Units per package',
+                  labelText: loc.units_per_package,
                   hintText: '1',
                   keyboardType: TextInputType.number,
                   formatNumber: true,
@@ -273,10 +273,10 @@ SelectOption(
                 ),
                 const SizedBox(height: 14),
 
-                SimpleText(label: 'Quantity in stock:'),
+                SimpleText(label: '${loc.quantity_in_stock}:'),
                 InputTextField(
                   controller: _quantityInStockController,
-                  labelText: 'Quantity in stock',
+                  labelText: loc.quantity_in_stock,
                   hintText: '0',
                   keyboardType: TextInputType.number,
                   formatNumber: true,
@@ -286,7 +286,7 @@ SelectOption(
 
                 PrimaryButton(
                   onPressed: _registerProduct,
-                  label: loc.new_product,
+                  label: loc.save,
                   isLoading: isLoading,
                 ),
               ],

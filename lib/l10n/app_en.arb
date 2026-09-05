@@ -40,5 +40,19 @@
   "delete_user": "Remove user",
   "are_you_sure_delete_user": "Are you sure you want to remove this user? Once removed, they cannot be easily recovered.",
   "no_products_found": "No products found",
-  "new_product": "New product"
+  "new_product": "New product",
+  "enter": "Enter",
+  "product_type": "Product type",
+"select_product_type_method": "Select the product type",
+"units_per_package": "Units per package",
+"quantity_in_stock": "Quantity in stock",
+  "purchase_method": "Purchase Method",
+  "sale_method": "Sale Method",
+  "purchase_cost_per": "Purchase cost per",
+  "selling_price_per": "Selling price per",
+  "save": "Save",
+  "in_stock": "In stock",
+"transactions": "Transactions",
+"edit": "Edit",
+"delete": "Delete"
 }

@@ -84,13 +84,21 @@ class SelectOption extends StatelessWidget {
          return l10n.units;
       }else if(m == "packets"){
          return l10n.packets;
-      }else if(m == "Select the purchase method"){
+      }else if(m == "crate"){
+        return l10n.crate;
+      }else if(m == "bottles"){
+        return l10n.bottles;
+      }
+      else if(m == "Select the purchase method"){
         return l10n.select_purchase_method;
       }else if(m == "Select the sale method"){
          return l10n.select_sale_method;
       }else if(m == "Select the Role method"){
          return "${l10n.select} Role";
-      }else if(m == "Today"){
+      }else if(m == "Select the Product type method"){
+         return l10n.select_product_type_method;
+      }
+      else if(m == "Today"){
          return l10n.today;
       }else if(m == "This Week"){
          return l10n.this_week;

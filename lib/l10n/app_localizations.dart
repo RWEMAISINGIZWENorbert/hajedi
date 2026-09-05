@@ -343,6 +343,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'New product'**
   String get new_product;
+
+  /// No description provided for @enter.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter'**
+  String get enter;
+
+  /// No description provided for @product_type.
+  ///
+  /// In en, this message translates to:
+  /// **'Product type'**
+  String get product_type;
+
+  /// No description provided for @select_product_type_method.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the product type'**
+  String get select_product_type_method;
+
+  /// No description provided for @units_per_package.
+  ///
+  /// In en, this message translates to:
+  /// **'Units per package'**
+  String get units_per_package;
+
+  /// No description provided for @quantity_in_stock.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity in stock'**
+  String get quantity_in_stock;
+
+  /// No description provided for @purchase_method.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase Method'**
+  String get purchase_method;
+
+  /// No description provided for @sale_method.
+  ///
+  /// In en, this message translates to:
+  /// **'Sale Method'**
+  String get sale_method;
+
+  /// No description provided for @purchase_cost_per.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase cost per'**
+  String get purchase_cost_per;
+
+  /// No description provided for @selling_price_per.
+  ///
+  /// In en, this message translates to:
+  /// **'Selling price per'**
+  String get selling_price_per;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @in_stock.
+  ///
+  /// In en, this message translates to:
+  /// **'In stock'**
+  String get in_stock;
+
+  /// No description provided for @transactions.
+  ///
+  /// In en, this message translates to:
+  /// **'Transactions'**
+  String get transactions;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
 }
 
 class _AppLocalizationsDelegate

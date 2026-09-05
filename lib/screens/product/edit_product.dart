@@ -191,9 +191,9 @@ class _EditProductState extends State<EditProduct> {
                 ),
                 const SizedBox(height: 14),
 
-                SimpleText(label: 'Product type:'),
+                SimpleText(label: '${loc.product_type}:'),
                 SelectOption(
-                  label: 'product type',
+                  label: "Product type",
                   options: const [
                     'item',
                     'kg',
@@ -212,9 +212,9 @@ class _EditProductState extends State<EditProduct> {
                 ),
                 const SizedBox(height: 14),
 
-                SimpleText(label: 'Purchase method:'),
+                SimpleText(label: '${loc.purchase_method}:'),
                 SelectOption(
-                  label: 'purchase',
+                  label: loc.purchase_method,
                   options: const [
                     'packet',
                     'crate',
@@ -239,9 +239,9 @@ class _EditProductState extends State<EditProduct> {
                 ),
                 const SizedBox(height: 14),
 
-                SimpleText(label: 'Sale method:'),
+                SimpleText(label: '${loc.sale_method}:'),
                 SelectOption(
-                  label: 'sale',
+                  label: loc.sale_method,
                   options: const [
                     'unit',
                     'kg',
@@ -266,12 +266,12 @@ class _EditProductState extends State<EditProduct> {
                     _purchaseMethod == 'crate') ...[
                   SimpleText(
                     label:
-                        'Purchase cost per 1 $_purchaseMethod:',
+                        '${loc.purchase_cost_per} 1 $_purchaseMethod:',
                   ),
                   InputTextField(
                     controller: _purchaseCostController,
                     labelText:
-                        'Purchase cost per 1 $_purchaseMethod',
+                        '${loc.purchase_cost_per} 1 $_purchaseMethod',
                     hintText: '0',
                     keyboardType:
                         const TextInputType.numberWithOptions(
@@ -285,12 +285,12 @@ class _EditProductState extends State<EditProduct> {
 
                 if (_saleMethod.isNotEmpty) ...[
                   SimpleText(
-                    label: 'Selling price per 1 $_saleMethod:',
+                    label: '${loc.selling_price_per} 1 $_saleMethod:',
                   ),
                   InputTextField(
                     controller: _sellingPriceController,
                     labelText:
-                        'Selling price per 1 $_saleMethod',
+                        '${loc.selling_price_per} 1 $_saleMethod',
                     hintText: '0',
                     keyboardType:
                         const TextInputType.numberWithOptions(
@@ -302,10 +302,10 @@ class _EditProductState extends State<EditProduct> {
                   const SizedBox(height: 14),
                 ],
 
-                SimpleText(label: 'Units per package:'),
+                SimpleText(label: '${loc.units_per_package}:'),
                 InputTextField(
                   controller: _unitsPerPackageController,
-                  labelText: 'Units per package',
+                  labelText: loc.units_per_package,
                   hintText: '1',
                   keyboardType: TextInputType.number,
                   formatNumber: true,
@@ -313,10 +313,10 @@ class _EditProductState extends State<EditProduct> {
                 ),
                 const SizedBox(height: 14),
 
-                SimpleText(label: 'Quantity in stock:'),
+                SimpleText(label: '${loc.quantity_in_stock}:'),
                 InputTextField(
                   controller: _quantityInStockController,
-                  labelText: 'Quantity in stock',
+                  labelText: loc.quantity_in_stock,
                   hintText: '0',
                   keyboardType: TextInputType.number,
                   formatNumber: true,
@@ -326,7 +326,7 @@ class _EditProductState extends State<EditProduct> {
 
                 PrimaryButton(
                   onPressed: _updateProduct,
-                  label: 'Update product',
+                  label: loc.save,
                   isLoading: isLoading,
                 ),
               ],

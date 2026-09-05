@@ -43,19 +43,19 @@ class Products extends StatelessWidget {
               padding: const EdgeInsets.all(12),
               itemCount: state.products.length,
               itemBuilder: (context, index) {
-                return ListTileProduct(
-  product: state.products[index],
-  onTap: () {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => ProductDetails(
-          product: state.products[index],
-        ),
-      ),
-    );
-  },
-);
+               return ListTileProduct(
+                  product: state.products[index],
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                         builder: (_) => ProductDetails(
+                         product: state.products[index],
+                       ),
+                     ),
+                   );
+                  },
+               );
               },
             );
           }
