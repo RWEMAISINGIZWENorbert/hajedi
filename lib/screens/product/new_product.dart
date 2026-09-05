@@ -128,24 +128,23 @@ void _registerProduct() {
       ),
       body: BlocConsumer<ProductBloc, ProductState>(
         listener: (context, state) {
-          if (state is ProductRegisteredSuccessfully) {
+  if (state is ProductRegisteredSuccessfully) {
+    showAnimatedSnackBar(
+      context,
+      state.message,
+    );
 
-            showAnimatedSnackBar(
-              context,
-              state.message,
-            );
+    Navigator.pop(context);
+  }
 
-            Navigator.pop(context);
-          }
-
-          if (state is RegisterProductFailure) {
-            showAnimatedSnackBar(
-              context,
-              state.message,
-              isSuccess: false,
-            );
-          }
-        },
+  if (state is RegisterProductFailure) {
+    showAnimatedSnackBar(
+      context,
+      state.message,
+      isSuccess: false,
+    );
+  }
+},
         builder: (context, state) {
           final isLoading = state is RegisterProductLoading;
 
