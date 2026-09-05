@@ -5,7 +5,6 @@ import 'package:hajedi/l10n/app_localizations.dart';
 import 'package:hajedi/widgets/app_bar.dart';
 import 'package:hajedi/widgets/product/list_tile_product.dart';
 import 'package:hajedi/widgets/loading.dart';
-import 'package:iconly/iconly.dart';
 
 class Products extends StatelessWidget {
   const Products({super.key});
@@ -16,12 +15,6 @@ class Products extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBarComponent(
-        icon: InkWell(
-          onTap: () => Navigator.pop(context),
-          child: const Icon(
-            IconlyLight.arrow_left_circle,
-          ),
-        ),
         title: loc.products,
       ),
       body: BlocBuilder<ProductBloc, ProductState>(

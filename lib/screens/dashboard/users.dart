@@ -5,7 +5,6 @@ import 'package:hajedi/l10n/app_localizations.dart';
 import 'package:hajedi/widgets/app_bar.dart';
 import 'package:hajedi/widgets/confirmation_dialog.dart';
 import 'package:hajedi/widgets/user/user_bottom_sheet_modal.dart';
-import 'package:iconly/iconly.dart';
 
 class Users extends StatefulWidget {
   const Users({super.key});
@@ -30,10 +29,6 @@ class _UsersState extends State<Users> {
     return Scaffold(
       appBar: AppBarComponent(
         title: loc.users,
-        icon: InkWell(
-          onTap: () => Navigator.pop(context),
-          child: const Icon(IconlyLight.arrow_left_circle),
-        ),
       ),
       body: BlocBuilder<UserBloc, UserState>(
         builder: (context, state) {
