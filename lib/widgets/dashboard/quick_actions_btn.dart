@@ -14,7 +14,7 @@ class QuickActionsBtn extends StatelessWidget {
     return Container(
       // height: 160,
       height: 135,
-      // margin: const  EdgeInsets.only(left: 16, right: 16, bottom: 0),
+      margin: const  EdgeInsets.only(left: 16, right: 16, bottom: 0),
       child:  GridView.builder(
         padding: EdgeInsets.zero,
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -31,16 +31,16 @@ class QuickActionsBtn extends StatelessWidget {
                     onTap: () {
                       switch (index) {
                         case 0:
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(builder: (context) => const Sale()),
-                          // );
+                          Navigator.pushNamed(
+                            context,
+                            '/sale',
+                          );
                           break;
                         case 1:
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(builder: (context) => const Purchase()),
-                          // );
+                          Navigator.pushNamed(
+                            context,
+                            '/purchase',
+                          );
                           break;
                         case 2:
                           // Navigator.push(

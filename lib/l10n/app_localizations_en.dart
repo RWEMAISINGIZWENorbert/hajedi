@@ -166,7 +166,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get in_stock => 'In stock';
 
   @override
-  String get transactions => 'Ibyakozwe';
+  String get transactions => 'Transactions';
 
   @override
   String get edit => 'Edit';
@@ -184,13 +184,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchase => 'Rangura';
 
   @override
-  String get sell => 'Gurisha';
+  String get sell => 'Sell';
 
   @override
-  String get customers => 'Abakiriya';
+  String get customers => 'Customers';
 
   @override
-  String get suppliers => 'Abaturanguza';
+  String get suppliers => 'Suppliers';
 
   @override
   String get credits => 'Credits';

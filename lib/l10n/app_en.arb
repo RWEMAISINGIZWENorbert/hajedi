@@ -59,9 +59,9 @@
   "good_afternoon": "Good afternoon",
   "today": "Today",
   "purchase": "Rangura",
-  "sell": "Gurisha",
-  "transactions": "Ibyakozwe",
-  "customers": "Abakiriya",
-  "suppliers": "Abaturanguza",
+  "sell": "Sell",
+  "transactions": "Transactions",
+  "customers": "Customers",
+  "suppliers": "Suppliers",
   "credits": "Credits"
 }

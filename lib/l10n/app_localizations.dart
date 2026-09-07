@@ -413,7 +413,7 @@ abstract class AppLocalizations {
   /// No description provided for @transactions.
   ///
   /// In en, this message translates to:
-  /// **'Ibyakozwe'**
+  /// **'Transactions'**
   String get transactions;
 
   /// No description provided for @edit.
@@ -449,19 +449,19 @@ abstract class AppLocalizations {
   /// No description provided for @sell.
   ///
   /// In en, this message translates to:
-  /// **'Gurisha'**
+  /// **'Sell'**
   String get sell;
 
   /// No description provided for @customers.
   ///
   /// In en, this message translates to:
-  /// **'Abakiriya'**
+  /// **'Customers'**
   String get customers;
 
   /// No description provided for @suppliers.
   ///
   /// In en, this message translates to:
-  /// **'Abaturanguza'**
+  /// **'Suppliers'**
   String get suppliers;
 
   /// No description provided for @credits.
