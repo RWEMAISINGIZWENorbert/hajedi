@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hajedi/l10n/app_localizations.dart';
-import 'package:iconly/iconly.dart';
 import 'package:iconsax/iconsax.dart';
 
 class QuickActionsModel {

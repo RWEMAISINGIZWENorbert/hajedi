@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:hajedi/l10n/app_localizations.dart';
 import 'package:hajedi/utils/auth_utils.dart';
@@ -7,7 +5,6 @@ import 'package:hajedi/widgets/dashboard/dashboard_card.dart';
 import 'package:hajedi/widgets/dashboard/dashboard_header.dart';
 import 'package:hajedi/widgets/dashboard/quick_actions_btn.dart';
 import 'package:hajedi/widgets/text.dart';
-import 'package:iconly/iconly.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});

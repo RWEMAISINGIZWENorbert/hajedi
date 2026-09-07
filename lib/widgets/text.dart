@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class SimpleText extends StatelessWidget {
   final String label; 
-  Color? color;
-  SimpleText({super.key, required this.label, this.color});
+  final Color? color;
+  const SimpleText({super.key, required this.label, this.color});
 
   @override
   Widget build(BuildContext context) {
