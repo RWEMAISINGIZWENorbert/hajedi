@@ -413,7 +413,7 @@ abstract class AppLocalizations {
   /// No description provided for @transactions.
   ///
   /// In en, this message translates to:
-  /// **'Transactions'**
+  /// **'Ibyakozwe'**
   String get transactions;
 
   /// No description provided for @edit.
@@ -427,6 +427,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete'**
   String get delete;
+
+  /// No description provided for @good_morning.
+  ///
+  /// In en, this message translates to:
+  /// **'Good morning'**
+  String get good_morning;
+
+  /// No description provided for @good_afternoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Good afternoon'**
+  String get good_afternoon;
+
+  /// No description provided for @purchase.
+  ///
+  /// In en, this message translates to:
+  /// **'Rangura'**
+  String get purchase;
+
+  /// No description provided for @sell.
+  ///
+  /// In en, this message translates to:
+  /// **'Gurisha'**
+  String get sell;
+
+  /// No description provided for @customers.
+  ///
+  /// In en, this message translates to:
+  /// **'Abakiriya'**
+  String get customers;
+
+  /// No description provided for @suppliers.
+  ///
+  /// In en, this message translates to:
+  /// **'Abaturanguza'**
+  String get suppliers;
+
+  /// No description provided for @credits.
+  ///
+  /// In en, this message translates to:
+  /// **'Credits'**
+  String get credits;
 }
 
 class _AppLocalizationsDelegate

@@ -52,7 +52,16 @@
   "selling_price_per": "Igiciro kuri",
   "save": "Emeza",
   "in_stock": "Biri mu bubiko",
-  "transactions": "Ibikorwa by'ubucuruzi",
+  "transactions": "Ibyakozwe",
   "edit": "Hindura",
-  "delete": "Siba"
+  "delete": "Siba",
+  "good_morning": "Mwaramutse",
+  "good_afternoon": "Mwiriwe",
+  "today": "Uyu munsi",
+  "purchase": "Rangura",
+  "sell": "Gurisha",
+  "transactions": "Ibyakozwe",
+  "customers": "Abakiriya",
+  "suppliers": "Abaturanguza",
+  "credits": "Amadeni"
 }

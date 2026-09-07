@@ -166,11 +166,32 @@ class AppLocalizationsEn extends AppLocalizations {
   String get in_stock => 'In stock';
 
   @override
-  String get transactions => 'Transactions';
+  String get transactions => 'Ibyakozwe';
 
   @override
   String get edit => 'Edit';
 
   @override
   String get delete => 'Delete';
+
+  @override
+  String get good_morning => 'Good morning';
+
+  @override
+  String get good_afternoon => 'Good afternoon';
+
+  @override
+  String get purchase => 'Rangura';
+
+  @override
+  String get sell => 'Gurisha';
+
+  @override
+  String get customers => 'Abakiriya';
+
+  @override
+  String get suppliers => 'Abaturanguza';
+
+  @override
+  String get credits => 'Credits';
 }

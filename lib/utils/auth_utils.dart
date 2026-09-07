@@ -15,7 +15,7 @@ class AuthUtils {
     return prfs.getString('token');
   }
 
-  static void saveUser(AuthData authData) async {
+  static Future<void> saveUser(AuthData authData) async {
     SharedPreferences prfs = await SharedPreferences.getInstance();
     await prfs.setString('user_data', jsonEncode(authData.toJson()));
   }

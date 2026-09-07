@@ -166,11 +166,32 @@ class AppLocalizationsRw extends AppLocalizations {
   String get in_stock => 'Biri mu bubiko';
 
   @override
-  String get transactions => 'Ibikorwa by\'ubucuruzi';
+  String get transactions => 'Ibyakozwe';
 
   @override
   String get edit => 'Hindura';
 
   @override
   String get delete => 'Siba';
+
+  @override
+  String get good_morning => 'Mwaramutse';
+
+  @override
+  String get good_afternoon => 'Mwiriwe';
+
+  @override
+  String get purchase => 'Rangura';
+
+  @override
+  String get sell => 'Gurisha';
+
+  @override
+  String get customers => 'Abakiriya';
+
+  @override
+  String get suppliers => 'Abaturanguza';
+
+  @override
+  String get credits => 'Amadeni';
 }

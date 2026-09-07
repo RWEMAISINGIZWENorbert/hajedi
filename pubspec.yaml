@@ -51,6 +51,7 @@ dependencies:
   hydrated_bloc: ^11.0.0
   path_provider: ^2.1.6
   shadcn_ui: ^0.52.1
+  iconsax: ^0.0.8
 
 dev_dependencies:
   flutter_test:
