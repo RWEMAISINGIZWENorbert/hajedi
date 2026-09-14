@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hajedi/bloc/cart/cart_bloc.dart';
+import 'package:hajedi/bloc/cart/cart_event.dart';
 import 'package:hajedi/bloc/product/product_bloc.dart';
+import 'package:hajedi/data/cart_item.dart';
 import 'package:hajedi/data/product.dart';
 import 'package:hajedi/l10n/app_localizations.dart';
 import 'package:hajedi/widgets/app_bar.dart';
 import 'package:hajedi/widgets/loading.dart';
 import 'package:hajedi/widgets/product/product_card.dart';
+import 'package:hajedi/widgets/sell/sell_cart.dart';
 import 'package:hajedi/widgets/text.dart';
 import 'package:iconly/iconly.dart';
 
@@ -68,8 +72,15 @@ class _SaleState extends State<Sale> {
                         itemBuilder: (context, index) {
                           final product = products[index];
                           return InkWell(
-                            onTap: () async{
-
+                            onTap: () {
+                              final cartItem = CartItem(
+                                  productClientId: product.clientId,
+                                  productName: product.name,
+                                  quantity: 1,
+                                  unitPrice: product.sellingPrice,
+                              );
+                              context.read<CartBloc>().add(AddToCart(cartItem));
+                              showSellCartBottomSheet(context);
                             },
                             child: ProductCard(product: product, isSell: true),
                           );

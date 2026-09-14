@@ -2,13 +2,22 @@ import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:hajedi/core/helpers/sync_queue.dart';
+import 'package:hajedi/core/network/handlers/expense_sync_handler.dart';
 import 'package:hajedi/core/network/handlers/product_sync_handler.dart';
+import 'package:hajedi/core/network/handlers/purchase_sync_handler.dart';
+import 'package:hajedi/core/network/handlers/sale_sync_handler.dart';
 import 'package:hajedi/core/network/handlers/user_sync_handler.dart';
 import 'package:hajedi/core/network/sync_handler.dart';
+import 'package:hajedi/data/expense.dart';
 import 'package:hajedi/data/product.dart';
+import 'package:hajedi/data/purchase.dart';
+import 'package:hajedi/data/sale.dart';
 import 'package:hajedi/data/sync_queue_item.dart';
 import 'package:hajedi/data/user.dart';
+import 'package:hajedi/repository/expense_repository.dart';
 import 'package:hajedi/repository/product_repository.dart';
+import 'package:hajedi/repository/purchase_repository.dart';
+import 'package:hajedi/repository/sale_repository.dart';
 import 'package:hajedi/repository/user_repository.dart';
 import 'package:hive/hive.dart';
 
@@ -34,6 +43,9 @@ class SyncManager {
     required Box<SyncQueueItem> queueBox,
     required Box<User> userBox,
     required Box<Product> productBox,
+    required Box<Sale> saleBox,
+    required Box<Purchase> purchaseBox,
+    required Box<Expense> expenseBox,
   }) {
     return SyncManager(
       queueBox: queueBox,
@@ -45,6 +57,20 @@ class SyncManager {
         ProductSyncHandler(
           productBox: productBox,
           productRepository: ProductRepository(),
+        ),
+        SaleSyncHandler(
+          saleBox: saleBox,
+          productBox: productBox,
+          saleRepository: SaleRepository(),
+        ),
+        PurchaseSyncHandler(
+          purchaseBox: purchaseBox,
+          productBox: productBox,
+          purchaseRepository: PurchaseRepository(),
+        ),
+        ExpenseSyncHandler(
+          expenseBox: expenseBox,
+          expenseRepository: ExpenseRepository(),
         ),
       ],
     );

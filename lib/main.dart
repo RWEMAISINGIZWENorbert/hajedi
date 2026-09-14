@@ -2,21 +2,28 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hajedi/bloc/auth/auth_bloc.dart';
+import 'package:hajedi/bloc/cart/cart_bloc.dart';
+import 'package:hajedi/bloc/expense/expense_bloc.dart';
 import 'package:hajedi/bloc/locale/locale_cubit.dart';
+import 'package:hajedi/bloc/purchase/purchase_bloc.dart';
+import 'package:hajedi/bloc/sale/sale_bloc.dart';
 import 'package:hajedi/bloc/theme/theme_bloc.dart';
 import 'package:hajedi/bloc/theme/theme_state.dart';
 import 'package:hajedi/bloc/user/user_bloc.dart';
 import 'package:hajedi/core/network/sync_coordinator.dart';
 import 'package:hajedi/core/network/sync_manager.dart';
 import 'package:hajedi/core/theme/theme.dart';
+import 'package:hajedi/data/expense.dart';
 import 'package:hajedi/data/product.dart';
+import 'package:hajedi/data/purchase.dart';
+import 'package:hajedi/data/sale.dart';
 import 'package:hajedi/data/sync_queue_item.dart';
 import 'package:hajedi/data/user.dart';
 import 'package:hajedi/l10n/app_localizations.dart';
 import 'package:hajedi/l10n/fallback_localizations.dart';
 import 'package:hajedi/repository/auth_repository.dart';
-import 'package:hajedi/screens/actions/Sale.dart';
-import 'package:hajedi/screens/actions/purchase.dart';
+import 'package:hajedi/screens/actions/Sale.dart' as sale_screen;
+import 'package:hajedi/screens/actions/purchase.dart' as purchase_screen;
 import 'package:hajedi/screens/auth/sign_in.dart';
 import 'package:hajedi/screens/dashboard/main_screen.dart';
 import 'package:hajedi/screens/product/new_product.dart';
@@ -52,7 +59,10 @@ void main() async {
      queueBox: Hive.box<SyncQueueItem>('syncQueue'),
      userBox: Hive.box<User>('users'),
      productBox: Hive.box<Product>('products'),
-);
+     saleBox: Hive.box<Sale>('sales'),
+     purchaseBox: Hive.box<Purchase>('purchases'),
+     expenseBox: Hive.box<Expense>('expenses'),
+  );
 
   await syncManager.start();
 
@@ -78,6 +88,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => UserBloc(Hive.box('users'), syncManager)),
         BlocProvider(create: (_) => AuthBloc(authRepository: AuthRepository(),)),
         BlocProvider(create: (_) => ProductBloc(Hive.box('products'),syncManager)..add(LoadLocalProducts()),), 
+        BlocProvider(create: (_) => SaleBloc(saleBox: Hive.box<Sale>('sales'), productBox: Hive.box<Product>('products'), syncManager: syncManager)),
+        BlocProvider(create: (_) => PurchaseBloc(purchaseBox: Hive.box<Purchase>('purchases'), productBox: Hive.box<Product>('products'), syncManager: syncManager)),
+        BlocProvider(create: (_) => ExpenseBloc(expenseBox: Hive.box<Expense>('expenses'), syncManager: syncManager)),
+        BlocProvider(create: (_) => CartBloc()),
         ],
       child: BlocBuilder<LocaleCubit, Locale?>(
         builder: (context, localState) {
@@ -91,8 +105,8 @@ class MyApp extends StatelessWidget {
                      '/dashboard': (context) => const MainScreen(),
                      '/sign-in': (context) => const SignIn(),
                      '/new-product': (context) => const NewProduct(),
-                     '/sale': (context) => const Sale(),
-                     '/purchase': (context) => const Purchase(),
+                     '/sale': (context) => const sale_screen.Sale(),
+                     '/purchase': (context) => const purchase_screen.Purchase(),
                   },
                   theme: lightTheme,
                   darkTheme: darkTheme,
