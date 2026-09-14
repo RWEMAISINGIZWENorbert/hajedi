@@ -24,7 +24,9 @@ import 'package:hajedi/l10n/app_localizations.dart';
 import 'package:hajedi/l10n/fallback_localizations.dart';
 import 'package:hajedi/repository/auth_repository.dart';
 import 'package:hajedi/screens/actions/Sale.dart' as sale_screen;
+import 'package:hajedi/screens/actions/customers.dart';
 import 'package:hajedi/screens/actions/purchase.dart' as purchase_screen;
+import 'package:hajedi/screens/actions/suppliers.dart';
 import 'package:hajedi/screens/actions/transactions.dart';
 import 'package:hajedi/screens/auth/sign_in.dart';
 import 'package:hajedi/screens/dashboard/main_screen.dart';
@@ -114,7 +116,9 @@ class MyApp extends StatelessWidget {
                      '/new-product': (context) => const NewProduct(),
                      '/sale': (context) => const sale_screen.Sale(),
                      '/purchase': (context) => const purchase_screen.Purchase(),
-                     '/transactions': (context) => const Transactions()
+                     '/transactions': (context) => const Transactions(),
+                     '/customers': (context) => const Customers(),
+                     '/suppliers': (context) => const Suppliers(),
                   },
                   theme: lightTheme,
                   darkTheme: darkTheme,
