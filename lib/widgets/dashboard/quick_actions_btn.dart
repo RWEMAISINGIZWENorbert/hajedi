@@ -43,12 +43,10 @@ class QuickActionsBtn extends StatelessWidget {
                           );
                           break;
                         case 2:
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const Customers(),
-                          //   ),
-                          // );
+                          Navigator.pushNamed(
+                            context,
+                            '/transactions',
+                          );
                           break;
                         case 3:
                           // Navigator.push(

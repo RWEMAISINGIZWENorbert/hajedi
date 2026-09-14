@@ -181,7 +181,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get good_afternoon => 'Good afternoon';
 
   @override
-  String get purchase => 'Rangura';
+  String get purchase => 'Purchase';
 
   @override
   String get sell => 'Sell';
@@ -194,4 +194,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get credits => 'Credits';
+
+  @override
+  String get all_transactions => 'All';
+
+  @override
+  String get sales => 'Sales';
+
+  @override
+  String get purchases => 'Purchases';
+
+  @override
+  String get expenses => 'Expenses';
+
+  @override
+  String get no_transactions_found => 'No transactions found';
+
+  @override
+  String get transaction_details => 'Transaction Details';
+
+  @override
+  String get sync_status => 'Sync Status';
+
+  @override
+  String get synced => 'Synced';
+
+  @override
+  String get pending => 'Pending';
+
+  @override
+  String get failed => 'Failed';
+
+  @override
+  String get payment_method => 'Payment Method';
+
+  @override
+  String get retry => 'Retry';
 }

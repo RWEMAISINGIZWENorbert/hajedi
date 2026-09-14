@@ -194,4 +194,40 @@ class AppLocalizationsRw extends AppLocalizations {
 
   @override
   String get credits => 'Amadeni';
+
+  @override
+  String get all_transactions => 'Byose';
+
+  @override
+  String get sales => 'Ibyagurishije';
+
+  @override
+  String get purchases => 'Ibyaguye';
+
+  @override
+  String get expenses => 'Ibyasohowe';
+
+  @override
+  String get no_transactions_found => 'Nta myitwarire iboneye';
+
+  @override
+  String get transaction_details => 'Ibisobanuro by\'imyitwarire';
+
+  @override
+  String get sync_status => 'Imiterere yo guhuza';
+
+  @override
+  String get synced => 'Byarangiye';
+
+  @override
+  String get pending => 'Birakorwa';
+
+  @override
+  String get failed => 'Byatose';
+
+  @override
+  String get payment_method => 'Uburyo bwo kwishyura';
+
+  @override
+  String get retry => 'Gerageza nanone';
 }

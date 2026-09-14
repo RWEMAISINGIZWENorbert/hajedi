@@ -9,6 +9,7 @@ import 'package:hajedi/bloc/purchase/purchase_bloc.dart';
 import 'package:hajedi/bloc/sale/sale_bloc.dart';
 import 'package:hajedi/bloc/theme/theme_bloc.dart';
 import 'package:hajedi/bloc/theme/theme_state.dart';
+import 'package:hajedi/bloc/transaction/transaction_bloc.dart';
 import 'package:hajedi/bloc/user/user_bloc.dart';
 import 'package:hajedi/core/network/sync_coordinator.dart';
 import 'package:hajedi/core/network/sync_manager.dart';
@@ -24,6 +25,7 @@ import 'package:hajedi/l10n/fallback_localizations.dart';
 import 'package:hajedi/repository/auth_repository.dart';
 import 'package:hajedi/screens/actions/Sale.dart' as sale_screen;
 import 'package:hajedi/screens/actions/purchase.dart' as purchase_screen;
+import 'package:hajedi/screens/actions/transactions.dart';
 import 'package:hajedi/screens/auth/sign_in.dart';
 import 'package:hajedi/screens/dashboard/main_screen.dart';
 import 'package:hajedi/screens/product/new_product.dart';
@@ -92,6 +94,11 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => PurchaseBloc(purchaseBox: Hive.box<Purchase>('purchases'), productBox: Hive.box<Product>('products'), syncManager: syncManager)),
         BlocProvider(create: (_) => ExpenseBloc(expenseBox: Hive.box<Expense>('expenses'), syncManager: syncManager)),
         BlocProvider(create: (_) => CartBloc()),
+        BlocProvider(create: (context) => TransactionBloc(
+          saleBloc: context.read<SaleBloc>(),
+          purchaseBloc: context.read<PurchaseBloc>(),
+          expenseBloc: context.read<ExpenseBloc>(),
+        )),
         ],
       child: BlocBuilder<LocaleCubit, Locale?>(
         builder: (context, localState) {
@@ -107,6 +114,7 @@ class MyApp extends StatelessWidget {
                      '/new-product': (context) => const NewProduct(),
                      '/sale': (context) => const sale_screen.Sale(),
                      '/purchase': (context) => const purchase_screen.Purchase(),
+                     '/transactions': (context) => const Transactions()
                   },
                   theme: lightTheme,
                   darkTheme: darkTheme,

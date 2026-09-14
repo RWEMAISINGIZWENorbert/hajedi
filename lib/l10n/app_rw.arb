@@ -63,5 +63,17 @@
   "transactions": "Ibyakozwe",
   "customers": "Abakiriya",
   "suppliers": "Abaturanguza",
-  "credits": "Amadeni"
+  "credits": "Amadeni",
+  "all_transactions": "Byose",
+  "sales": "Ibyagurishije",
+  "purchases": "Ibyaguye",
+  "expenses": "Ibyasohowe",
+  "no_transactions_found": "Nta myitwarire iboneye",
+  "transaction_details": "Ibisobanuro by'imyitwarire",
+  "sync_status": "Imiterere yo guhuza",
+  "synced": "Byarangiye",
+  "pending": "Birakorwa",
+  "failed": "Byatose",
+  "payment_method": "Uburyo bwo kwishyura",
+  "retry": "Gerageza nanone"
 }

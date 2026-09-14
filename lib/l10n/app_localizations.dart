@@ -443,7 +443,7 @@ abstract class AppLocalizations {
   /// No description provided for @purchase.
   ///
   /// In en, this message translates to:
-  /// **'Rangura'**
+  /// **'Purchase'**
   String get purchase;
 
   /// No description provided for @sell.
@@ -469,6 +469,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Credits'**
   String get credits;
+
+  /// No description provided for @all_transactions.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get all_transactions;
+
+  /// No description provided for @sales.
+  ///
+  /// In en, this message translates to:
+  /// **'Sales'**
+  String get sales;
+
+  /// No description provided for @purchases.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchases'**
+  String get purchases;
+
+  /// No description provided for @expenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses'**
+  String get expenses;
+
+  /// No description provided for @no_transactions_found.
+  ///
+  /// In en, this message translates to:
+  /// **'No transactions found'**
+  String get no_transactions_found;
+
+  /// No description provided for @transaction_details.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction Details'**
+  String get transaction_details;
+
+  /// No description provided for @sync_status.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync Status'**
+  String get sync_status;
+
+  /// No description provided for @synced.
+  ///
+  /// In en, this message translates to:
+  /// **'Synced'**
+  String get synced;
+
+  /// No description provided for @pending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get pending;
+
+  /// No description provided for @failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get failed;
+
+  /// No description provided for @payment_method.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Method'**
+  String get payment_method;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
 }
 
 class _AppLocalizationsDelegate
