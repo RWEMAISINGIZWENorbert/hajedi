@@ -5,6 +5,8 @@ import 'package:hajedi/data/sale.dart';
 import 'package:hajedi/data/sale_item.dart';
 import 'package:hajedi/data/sync_queue_item.dart';
 import 'package:hajedi/data/user.dart';
+import 'package:hajedi/data/customer.dart';
+import 'package:hajedi/data/supplier.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hajedi/data/product.dart';
@@ -26,6 +28,8 @@ class HiveRegistry {
      Hive.registerAdapter(PurchaseItemAdapter());
      Hive.registerAdapter(PurchaseAdapter());
      Hive.registerAdapter(ExpenseAdapter());
+     Hive.registerAdapter(SupplierAdapter());
+     Hive.registerAdapter(CustomerAdapter());
    }
 
    static Future<void> openAllBoxes() async {
@@ -35,6 +39,8 @@ class HiveRegistry {
      await Hive.openBox<Sale>('sales');
      await Hive.openBox<Purchase>('purchases');
      await Hive.openBox<Expense>('expenses');
+     await Hive.openBox<Supplier>('suppliers');
+     await Hive.openBox<Customer>('customers'); 
    }
 
   static Future<void> closeAll() async {
@@ -49,6 +55,8 @@ class HiveRegistry {
     Hive.box<Sale>('sales').clear(),
     Hive.box<Purchase>('purchases').clear(),
     Hive.box<Expense>('expenses').clear(),
+    Hive.box<Supplier>('suppliers').clear(),
+    Hive.box<Customer>('customers').clear(),
    ]);
   }
   
