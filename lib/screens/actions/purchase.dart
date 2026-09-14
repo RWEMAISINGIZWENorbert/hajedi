@@ -8,6 +8,10 @@ import 'package:hajedi/widgets/loading.dart';
 import 'package:hajedi/widgets/product/product_card.dart';
 import 'package:hajedi/widgets/text.dart';
 import 'package:iconly/iconly.dart';
+import 'package:hajedi/bloc/cart/cart_bloc.dart';
+import 'package:hajedi/bloc/cart/cart_event.dart';
+import 'package:hajedi/data/cart_item.dart';
+import 'package:hajedi/widgets/purchase/purchase_cart.dart';
 
 class Purchase extends StatefulWidget {
   const Purchase({super.key});
@@ -68,8 +72,21 @@ class _PurchaseState extends State<Purchase> {
                         itemBuilder: (context, index) {
                           final product = products[index];
                           return InkWell(
-                            onTap: () async{
-
+                            onTap: () async {
+                              // Add the product to the cart (CartBloc handles quantity increment if item exists)
+                              context.read<CartBloc>().add(
+                                AddToCart(
+                                  CartItem(
+                                    productClientId: product.clientId,
+                                    productName: product.name,
+                                    unitPrice: product.purchaseCost, // Use purchase cost for purchases
+                                    quantity: 1,
+                                  ),
+                                ),
+                              );
+  
+                              // Open the purchase cart bottom sheet
+                              await showPurchaseCartBottomSheet(context);
                             },
                             child: ProductCard(product: product, isSell: false),
                           );
