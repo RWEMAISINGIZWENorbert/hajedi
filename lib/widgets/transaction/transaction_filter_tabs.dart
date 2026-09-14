@@ -24,24 +24,28 @@ class TransactionFilterTabs extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         children: [
           _buildFilterChip(
+            context,
             TransactionFilter.all,
             IconlyLight.category,
             loc.all_transactions,
           ),
           const SizedBox(width: 8),
           _buildFilterChip(
+            context,
             TransactionFilter.sales,
             IconlyLight.buy,
             loc.sales,
           ),
           const SizedBox(width: 8),
           _buildFilterChip(
+            context,
             TransactionFilter.purchases,
             Icons.shopping_cart,
             loc.purchases,
           ),
           const SizedBox(width: 8),
           _buildFilterChip(
+            context,
             TransactionFilter.expenses,
             IconlyLight.wallet,
             loc.expenses,
@@ -51,39 +55,59 @@ class TransactionFilterTabs extends StatelessWidget {
     );
   }
 
-  Widget _buildFilterChip(
-    TransactionFilter filter,
-    IconData icon,
-    String label,
-  ) {
-    final isSelected = currentFilter == filter;
-    
-    return FilterChip(
-      selected: isSelected,
-      label: Row(
+Widget _buildFilterChip(
+  BuildContext context,
+  TransactionFilter filter,
+  IconData icon,
+  String label,
+) {
+  final isSelected = currentFilter == filter;
+  final theme = Theme.of(context);
+  
+  if (isSelected) {
+    // Active tab: rounded container with primary color background and white text
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 1),
+      decoration: BoxDecoration(
+        color: theme.primaryColor,
+        borderRadius: BorderRadius.circular(22),
+      ),
+      child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 16),
+          // Icon(icon, size: 16, color: Colors.white),
           const SizedBox(width: 6),
-          Text(label),
+          Text(
+            label,
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         ],
       ),
-      onSelected: (selected) {
-        if (selected) {
-          onFilterChanged(filter);
-        }
-      },
-      selectedColor: _getFilterColor(filter).withOpacity(0.2),
-      checkmarkColor: _getFilterColor(filter),
-      labelStyle: TextStyle(
-        color: isSelected ? _getFilterColor(filter) : Colors.grey,
-        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-      ),
-      side: BorderSide(
-        color: isSelected ? _getFilterColor(filter) : Colors.grey,
+    );
+  } else {
+    // Inactive tab: normal text with theme.hintColor
+    return InkWell(
+      onTap: () => onFilterChanged(filter),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Icon(icon, size: 16, color: theme.hintColor),
+          const SizedBox(width: 6),
+          Text(
+            label,
+            style: TextStyle(
+              color: theme.hintColor,
+              fontWeight: FontWeight.normal,
+            ),
+          ),
+        ],
       ),
     );
   }
+}
 
   Color _getFilterColor(TransactionFilter filter) {
     switch (filter) {

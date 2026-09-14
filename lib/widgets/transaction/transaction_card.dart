@@ -13,9 +13,7 @@ class TransactionCard extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final loc = AppLocalizations.of(context)!;
-    
+  Widget build(BuildContext context) {    
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Padding(
@@ -108,9 +106,7 @@ class TransactionCard extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusChip(BuildContext context) {
-    final loc = AppLocalizations.of(context)!;
-    
+  Widget _buildStatusChip(BuildContext context) {    
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
