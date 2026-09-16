@@ -230,4 +230,57 @@ class AppLocalizationsRw extends AppLocalizations {
 
   @override
   String get retry => 'Gerageza nanone';
+
+  @override
+  String get new_customer => 'Umukiriya mushya';
+
+  @override
+  String get customer_name => 'Izina ry\'umukiriya';
+
+  @override
+  String get phone_number => 'Nimero ya telefone';
+
+  @override
+  String get address => 'Aderesi';
+
+  @override
+  String get credit_limit => 'Imingirane y\'udeni';
+
+  @override
+  String get no_customers_found => 'Nta bakiriya babonetse';
+
+  @override
+  String get add_customer => 'Ongera umukiriya';
+
+  @override
+  String get edit_customer => 'Hindura umukiriya';
+
+  @override
+  String get delete_customer => 'Siba umukiriya';
+
+  @override
+  String get are_you_sure_delete_customer =>
+      'Urizeye ko ushaka gusiba uyu mukiriya?';
+
+  @override
+  String get new_supplier => 'Umucuruzi mushya';
+
+  @override
+  String get supplier_name => 'Izina ry\'umucuruzi';
+
+  @override
+  String get no_suppliers_found => 'Nta bacuruzi babonetse';
+
+  @override
+  String get add_supplier => 'Ongera umucuruzi';
+
+  @override
+  String get edit_supplier => 'Hindura umucuruzi';
+
+  @override
+  String get delete_supplier => 'Siba umucuruzi';
+
+  @override
+  String get are_you_sure_delete_supplier =>
+      'Urizeye ko ushaka gusiba uyu muranguza?';
 }

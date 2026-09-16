@@ -230,4 +230,57 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get retry => 'Retry';
+
+  @override
+  String get new_customer => 'New Customer';
+
+  @override
+  String get customer_name => 'Customer Name';
+
+  @override
+  String get phone_number => 'Phone Number';
+
+  @override
+  String get address => 'Address';
+
+  @override
+  String get credit_limit => 'Credit Limit';
+
+  @override
+  String get no_customers_found => 'No customers found';
+
+  @override
+  String get add_customer => 'Add Customer';
+
+  @override
+  String get edit_customer => 'Edit Customer';
+
+  @override
+  String get delete_customer => 'Delete Customer';
+
+  @override
+  String get are_you_sure_delete_customer =>
+      'Are you sure you want to delete this customer?';
+
+  @override
+  String get new_supplier => 'New Supplier';
+
+  @override
+  String get supplier_name => 'Supplier Name';
+
+  @override
+  String get no_suppliers_found => 'No suppliers found';
+
+  @override
+  String get add_supplier => 'Add Supplier';
+
+  @override
+  String get edit_supplier => 'Edit Supplier';
+
+  @override
+  String get delete_supplier => 'Delete Supplier';
+
+  @override
+  String get are_you_sure_delete_supplier =>
+      'Are you sure you want to delete this supplier?';
 }

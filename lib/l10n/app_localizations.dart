@@ -541,6 +541,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Retry'**
   String get retry;
+
+  /// No description provided for @new_customer.
+  ///
+  /// In en, this message translates to:
+  /// **'New Customer'**
+  String get new_customer;
+
+  /// No description provided for @customer_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Name'**
+  String get customer_name;
+
+  /// No description provided for @phone_number.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get phone_number;
+
+  /// No description provided for @address.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get address;
+
+  /// No description provided for @credit_limit.
+  ///
+  /// In en, this message translates to:
+  /// **'Credit Limit'**
+  String get credit_limit;
+
+  /// No description provided for @no_customers_found.
+  ///
+  /// In en, this message translates to:
+  /// **'No customers found'**
+  String get no_customers_found;
+
+  /// No description provided for @add_customer.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Customer'**
+  String get add_customer;
+
+  /// No description provided for @edit_customer.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Customer'**
+  String get edit_customer;
+
+  /// No description provided for @delete_customer.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Customer'**
+  String get delete_customer;
+
+  /// No description provided for @are_you_sure_delete_customer.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this customer?'**
+  String get are_you_sure_delete_customer;
+
+  /// No description provided for @new_supplier.
+  ///
+  /// In en, this message translates to:
+  /// **'New Supplier'**
+  String get new_supplier;
+
+  /// No description provided for @supplier_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier Name'**
+  String get supplier_name;
+
+  /// No description provided for @no_suppliers_found.
+  ///
+  /// In en, this message translates to:
+  /// **'No suppliers found'**
+  String get no_suppliers_found;
+
+  /// No description provided for @add_supplier.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Supplier'**
+  String get add_supplier;
+
+  /// No description provided for @edit_supplier.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Supplier'**
+  String get edit_supplier;
+
+  /// No description provided for @delete_supplier.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Supplier'**
+  String get delete_supplier;
+
+  /// No description provided for @are_you_sure_delete_supplier.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this supplier?'**
+  String get are_you_sure_delete_supplier;
 }
 
 class _AppLocalizationsDelegate

@@ -75,5 +75,23 @@
   "pending": "Birakorwa",
   "failed": "Byatose",
   "payment_method": "Uburyo bwo kwishyura",
-  "retry": "Gerageza nanone"
+  "retry": "Gerageza nanone",
+  "new_customer": "Umukiriya mushya",
+  "customer_name": "Izina ry'umukiriya",
+  "phone_number": "Nimero ya telefone",
+  "address": "Aderesi",
+  "credit_limit": "Imingirane y'udeni",
+  "no_customers_found": "Nta bakiriya babonetse",
+  "add_customer": "Ongera umukiriya",
+  "edit_customer": "Hindura umukiriya",
+  "delete_customer": "Siba umukiriya",
+  "are_you_sure_delete_customer": "Urizeye ko ushaka gusiba uyu mukiriya?",
+  
+  "new_supplier": "Umucuruzi mushya",
+  "supplier_name": "Izina ry'umucuruzi",
+  "no_suppliers_found": "Nta bacuruzi babonetse",
+  "add_supplier": "Ongera umucuruzi",
+  "edit_supplier": "Hindura umucuruzi",
+  "delete_supplier": "Siba umucuruzi",
+  "are_you_sure_delete_supplier": "Urizeye ko ushaka gusiba uyu muranguza?"
 }
