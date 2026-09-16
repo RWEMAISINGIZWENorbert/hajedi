@@ -20,6 +20,8 @@ import 'package:hajedi/data/purchase.dart';
 import 'package:hajedi/data/sale.dart';
 import 'package:hajedi/data/sync_queue_item.dart';
 import 'package:hajedi/data/user.dart';
+import 'package:hajedi/data/customer.dart';
+import 'package:hajedi/data/supplier.dart';
 import 'package:hajedi/l10n/app_localizations.dart';
 import 'package:hajedi/l10n/fallback_localizations.dart';
 import 'package:hajedi/repository/auth_repository.dart';
@@ -66,6 +68,8 @@ void main() async {
      saleBox: Hive.box<Sale>('sales'),
      purchaseBox: Hive.box<Purchase>('purchases'),
      expenseBox: Hive.box<Expense>('expenses'),
+     customerBox: Hive.box<Customer>('customers'),
+     supplierBox: Hive.box<Supplier>('suppliers')
   );
 
   await syncManager.start();

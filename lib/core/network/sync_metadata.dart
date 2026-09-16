@@ -6,6 +6,8 @@ class SyncMetadata {
   static const _salesCursorKey = 'sales_sync_cursor';
   static const _purchasesCursorKey = 'purchases_sync_cursor';
   static const _expensesCursorKey = 'expenses_sync_cursor';
+  static const _customerCursorKey = 'customers_sync_cursor';
+  static const _supplierCursorKey = 'suppliers_sync_cursor';
 
   static Future<String?> getUsersCursor() async {
     final preferences =
@@ -75,6 +77,26 @@ class SyncMetadata {
     await preferences.setString(_expensesCursorKey, cursor);
   }
 
+  static Future<String?> getCustomersCursor() async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getString(_customerCursorKey);
+}
+
+static Future<void> saveCustomersCursor(String cursor) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setString(_customerCursorKey, cursor);
+}
+
+static Future<String?> getSuppliersCursor() async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getString(_supplierCursorKey);
+}
+
+static Future<void> saveSuppliersCursor(String cursor) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setString(_supplierCursorKey, cursor);
+}
+
   static Future<void> clear() async {
     final preferences =
         await SharedPreferences.getInstance();
@@ -84,5 +106,7 @@ class SyncMetadata {
     await preferences.remove(_salesCursorKey);
     await preferences.remove(_purchasesCursorKey);
     await preferences.remove(_expensesCursorKey);
+    await preferences.remove(_customerCursorKey);
+    await preferences.remove(_supplierCursorKey);
   }
 }

@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:hajedi/core/helpers/sync_queue.dart';
+import 'package:hajedi/core/network/handlers/customer_sync_handler.dart';
+import 'package:hajedi/core/network/handlers/supplier_sync_handler.dart';
 import 'package:hajedi/core/network/handlers/expense_sync_handler.dart';
 import 'package:hajedi/core/network/handlers/product_sync_handler.dart';
 import 'package:hajedi/core/network/handlers/purchase_sync_handler.dart';
@@ -14,7 +16,8 @@ import 'package:hajedi/data/purchase.dart';
 import 'package:hajedi/data/sale.dart';
 import 'package:hajedi/data/sync_queue_item.dart';
 import 'package:hajedi/data/user.dart';
-import 'package:hajedi/repository/expense_repository.dart';
+import 'package:hajedi/repository/customer_repository.dart';
+import 'package:hajedi/repository/supplier_repository.dart';
 import 'package:hajedi/repository/product_repository.dart';
 import 'package:hajedi/repository/purchase_repository.dart';
 import 'package:hajedi/repository/sale_repository.dart';
@@ -46,6 +49,8 @@ class SyncManager {
     required Box<Sale> saleBox,
     required Box<Purchase> purchaseBox,
     required Box<Expense> expenseBox,
+    required Box<Customer> customerBox,
+    required Box<Supplier> supplierBox,
   }) {
     return SyncManager(
       queueBox: queueBox,
@@ -71,6 +76,14 @@ class SyncManager {
         ExpenseSyncHandler(
           expenseBox: expenseBox,
           expenseRepository: ExpenseRepository(),
+        ),
+        CustomerSyncHandler(
+          customerBox: customerBox,
+          customerRepository: CustomerRepository(),
+        ),
+        SupplierSyncHandler(
+          supplierBox: supplierBox,
+          supplierRepository: SupplierRepository(),
         ),
       ],
     );
