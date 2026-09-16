@@ -11,6 +11,8 @@ import 'package:hajedi/bloc/theme/theme_bloc.dart';
 import 'package:hajedi/bloc/theme/theme_state.dart';
 import 'package:hajedi/bloc/transaction/transaction_bloc.dart';
 import 'package:hajedi/bloc/user/user_bloc.dart';
+import 'package:hajedi/bloc/customer/customer_bloc.dart';
+import 'package:hajedi/bloc/supplier/supplier_bloc.dart';
 import 'package:hajedi/core/network/sync_coordinator.dart';
 import 'package:hajedi/core/network/sync_manager.dart';
 import 'package:hajedi/core/theme/theme.dart';
@@ -99,6 +101,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => SaleBloc(saleBox: Hive.box<Sale>('sales'), productBox: Hive.box<Product>('products'), syncManager: syncManager)),
         BlocProvider(create: (_) => PurchaseBloc(purchaseBox: Hive.box<Purchase>('purchases'), productBox: Hive.box<Product>('products'), syncManager: syncManager)),
         BlocProvider(create: (_) => ExpenseBloc(expenseBox: Hive.box<Expense>('expenses'), syncManager: syncManager)),
+        BlocProvider(create: (_) => CustomerBloc(expenseBox: Hive.box<Customer>('customers'), syncManager: syncManager)),
+        BlocProvider(create: (_) => SupplierBloc(expenseBox: Hive.box<Supplier>('suppliers'), syncManager: syncManager)),
         BlocProvider(create: (_) => CartBloc()),
         BlocProvider(create: (context) => TransactionBloc(
           saleBloc: context.read<SaleBloc>(),

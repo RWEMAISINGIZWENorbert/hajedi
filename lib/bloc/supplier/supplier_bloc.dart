@@ -2,8 +2,8 @@ import 'dart:async';
 
 // import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hajedi/bloc/supplier/supplie_event.dart';
-import 'package:hajedi/bloc/supplier/supplie_state.dart';
+import 'package:hajedi/bloc/supplier/supplier_event.dart';
+import 'package:hajedi/bloc/supplier/supplier_state.dart';
 import 'package:hajedi/core/helpers/sync_queue.dart';
 import 'package:hajedi/core/network/sync_manager.dart';
 import 'package:hajedi/data/supplier.dart';
