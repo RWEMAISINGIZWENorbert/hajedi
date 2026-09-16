@@ -9,7 +9,7 @@ class SupplierRepository {
   final String _baseUrl = dotenv.env['API_URL']!;
    
   Future<List<Supplier>> getAllSuppliers() async {
-    final url = Uri.parse('$_baseUrl/suppliers');
+    final url = Uri.parse('$_baseUrl/supplier');
 
     final token = await AuthUtils.getToken();
 
@@ -35,7 +35,7 @@ class SupplierRepository {
   } 
 
   Future<Supplier> createSupplier(Supplier supplier) async {
-    final url = Uri.parse('$_baseUrl/suppliers');
+    final url = Uri.parse('$_baseUrl/supplier');
     final token = await AuthUtils.getToken();
 
     final response = await http.post(
@@ -67,7 +67,7 @@ class SupplierRepository {
     String? phoneNumber,
     String? address,
   }) async {
-    final url = Uri.parse('$_baseUrl/suppliers/client/$clientId');
+    final url = Uri.parse('$_baseUrl/supplier/client/$clientId');
 
     final token = await AuthUtils.getToken();
 
@@ -94,7 +94,7 @@ class SupplierRepository {
   }
 
   Future<void> deleteSupplierByClientId(String clientId) async {
-    final url = Uri.parse('$_baseUrl/suppliers/client/$clientId');
+    final url = Uri.parse('$_baseUrl/supplier/client/$clientId');
 
     final token = await AuthUtils.getToken();
 
@@ -123,7 +123,7 @@ class SupplierRepository {
         : '?since=${Uri.encodeQueryComponent(since)}';
 
     final url = Uri.parse(
-      '$_baseUrl/suppliers/changes$query',
+      '$_baseUrl/supplier/changes$query',
     );
 
     final token = await AuthUtils.getToken();

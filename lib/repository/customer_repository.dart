@@ -9,7 +9,7 @@ class CustomerRepository {
   final String _baseUrl = dotenv.env['API_URL']!;
    
   Future<List<Customer>> getAllCustomers() async {
-    final url = Uri.parse('$_baseUrl/customers');
+    final url = Uri.parse('$_baseUrl/customer');
 
     final token = await AuthUtils.getToken();
 
@@ -35,7 +35,7 @@ class CustomerRepository {
   } 
 
   Future<Customer> createCustomer(Customer customer) async {
-    final url = Uri.parse('$_baseUrl/customers');
+    final url = Uri.parse('$_baseUrl/customer');
     final token = await AuthUtils.getToken();
 
     final response = await http.post(
@@ -69,7 +69,7 @@ class CustomerRepository {
     String? address,
     double? creditLimit,
   }) async {
-    final url = Uri.parse('$_baseUrl/customers/client/$clientId');
+    final url = Uri.parse('$_baseUrl/customer/client/$clientId');
 
     final token = await AuthUtils.getToken();
 
@@ -97,7 +97,7 @@ class CustomerRepository {
   }
 
   Future<void> deleteCustomerByClientId(String clientId) async {
-    final url = Uri.parse('$_baseUrl/customers/client/$clientId');
+    final url = Uri.parse('$_baseUrl/customer/client/$clientId');
 
     final token = await AuthUtils.getToken();
 
@@ -126,7 +126,7 @@ class CustomerRepository {
         : '?since=${Uri.encodeQueryComponent(since)}';
 
     final url = Uri.parse(
-      '$_baseUrl/customers/changes$query',
+      '$_baseUrl/customer/changes$query',
     );
 
     final token = await AuthUtils.getToken();
@@ -138,7 +138,6 @@ class CustomerRepository {
         if (token != null) 'Authorization': 'Bearer $token',
       },
     );
-
     final data = jsonDecode(response.body) as Map<String, dynamic>;
 
     if (response.statusCode == 200) {

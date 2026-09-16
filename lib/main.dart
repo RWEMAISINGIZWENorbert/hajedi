@@ -59,10 +59,6 @@ void main() async {
   // await HiveRegistry.clearALlBoxes();
   await dotenv.load(fileName: ".env");
   
-  // final syncManager = SyncManager(
-  //    queueBox: Hive.box('syncQueue'),
-  //    handlers: handlers,
-  // );
   final syncManager = SyncManager.create(
      queueBox: Hive.box<SyncQueueItem>('syncQueue'),
      userBox: Hive.box<User>('users'),
