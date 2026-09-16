@@ -21,7 +21,8 @@ class CustomerBloc extends Bloc<CustomerEvent, CustomerState> {
   CustomerBloc(
     this._customerBox,
     this._syncManager,
-  ) : super(CustomerInitial()) {
+  ) : 
+   super(CustomerInitial()) {
     on<LoadCustomers>(_loadCustomers);
     on<AddCustomerLocal>(_addCustomerLocal);
     on<UpdateCustomerLocal>(_updateCustomerLocal);

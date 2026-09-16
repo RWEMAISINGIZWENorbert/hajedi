@@ -21,7 +21,8 @@ class SupplierBloc extends Bloc<SupplierEvent, SupplierState> {
   SupplierBloc(
     this._supplierBox,
     this._syncManager,
-  ) : super(SupplierInitial()) {
+  ) :
+  super(SupplierInitial()) {
     on<LoadSuppliers>(_loadSuppliers);
     on<AddSupplierLocal>(_addSupplierLocal);
     on<UpdateSupplierLocal>(_updateSupplierLocal);

@@ -101,8 +101,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => SaleBloc(saleBox: Hive.box<Sale>('sales'), productBox: Hive.box<Product>('products'), syncManager: syncManager)),
         BlocProvider(create: (_) => PurchaseBloc(purchaseBox: Hive.box<Purchase>('purchases'), productBox: Hive.box<Product>('products'), syncManager: syncManager)),
         BlocProvider(create: (_) => ExpenseBloc(expenseBox: Hive.box<Expense>('expenses'), syncManager: syncManager)),
-        BlocProvider(create: (_) => CustomerBloc(expenseBox: Hive.box<Customer>('customers'), syncManager: syncManager)),
-        BlocProvider(create: (_) => SupplierBloc(expenseBox: Hive.box<Supplier>('suppliers'), syncManager: syncManager)),
+        BlocProvider(create: (_) => CustomerBloc(Hive.box<Customer>('customers'),  syncManager)),
+        BlocProvider(create: (_) => SupplierBloc(Hive.box<Supplier>('suppliers'), syncManager)),
         BlocProvider(create: (_) => CartBloc()),
         BlocProvider(create: (context) => TransactionBloc(
           saleBloc: context.read<SaleBloc>(),
