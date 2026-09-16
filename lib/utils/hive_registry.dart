@@ -17,7 +17,7 @@ class HiveRegistry {
        await Hive.initFlutter();
        registerAdapters();
        await openAllBoxes();
-   }
+   } 
 
    static void registerAdapters() {
      Hive.registerAdapter(UserAdapter());
