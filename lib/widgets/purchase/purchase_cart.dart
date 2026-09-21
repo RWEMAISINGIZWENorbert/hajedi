@@ -6,16 +6,22 @@ import 'package:hajedi/bloc/cart/cart_state.dart';
 import 'package:hajedi/bloc/purchase/purchase_bloc.dart';
 import 'package:hajedi/bloc/purchase/purchase_event.dart';
 import 'package:hajedi/data/cart_item.dart';
+import 'package:hajedi/data/supplier.dart';
 import 'package:hajedi/widgets/primary_button.dart';
 import 'package:iconly/iconly.dart';
+import 'package:hajedi/widgets/supplier/supplier_dropdown.dart';
 
 Future<dynamic> showPurchaseCartBottomSheet(
   BuildContext context,
 ) {
+  Supplier? selectedSupplier;
   return showModalBottomSheet(
     context: context,
     isScrollControlled: true,
-    builder: (context) => Container(
+    builder: (context) {
+      return StatefulBuilder(
+          builder: (context, setState) {
+      return Container(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(12),
@@ -48,6 +54,19 @@ Future<dynamic> showPurchaseCartBottomSheet(
                       icon: const Icon(IconlyLight.close_square),
                     ),
                   ],
+                ),
+              ),
+              const Divider(),
+
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: SupplierDropdown(
+                  selectedSupplier: selectedSupplier,
+                  onSupplierChanged: (Supplier? supplier) {
+                        setState(() {
+                          selectedSupplier = supplier;
+                        });
+                    },
                 ),
               ),
               const Divider(),
@@ -107,10 +126,11 @@ Future<dynamic> showPurchaseCartBottomSheet(
                       return PrimaryButton(
                         label: 'Save Purchase',
                         onPressed: () {
+                              
                               context.read<PurchaseBloc>().add(
                                 CreatePurchaseLocal(
                                   cartItems: state.items,
-                                  supplierClientId: null, // Add supplier ID if you have supplier selection
+                                  supplierClientId: selectedSupplier?.clientId, // Add supplier ID if you have supplier selection
                                   paymentMethod: 'cash', // or your preferred payment method
                                ),
                               );
@@ -127,7 +147,10 @@ Future<dynamic> showPurchaseCartBottomSheet(
           ),
         ),
       ),
-    ),
+    );
+          }
+      );
+    }
   );
 }
 

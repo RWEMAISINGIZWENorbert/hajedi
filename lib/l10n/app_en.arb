@@ -91,6 +91,8 @@
   "new_supplier": "New Supplier",
   "supplier_name": "Supplier Name",
   "no_suppliers_found": "No suppliers found",
+  "supplier": "Supplier",
+  "select_supplier": "Select Supplier",
   "add_supplier": "Add Supplier",
   "edit_supplier": "Edit Supplier",
   "delete_supplier": "Delete Supplier",

@@ -278,6 +278,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get no_suppliers_found => 'No suppliers found';
 
   @override
+  String get supplier => 'Supplier';
+
+  @override
+  String get select_supplier => 'Select Supplier';
+
+  @override
   String get add_supplier => 'Add Supplier';
 
   @override

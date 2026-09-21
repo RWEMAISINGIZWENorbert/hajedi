@@ -1,55 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
-import 'package:hajedi/data/customer.dart';
-import 'package:hajedi/bloc/customer/customer_bloc.dart';
-import 'package:hajedi/bloc/customer/customer_event.dart';
-import 'package:hajedi/bloc/customer/customer_state.dart';
+import 'package:hajedi/data/supplier.dart';
+import 'package:hajedi/bloc/supplier/supplier_bloc.dart';
+import 'package:hajedi/bloc/supplier/supplier_event.dart';
+import 'package:hajedi/bloc/supplier/supplier_state.dart';
 import 'package:hajedi/l10n/app_localizations.dart';
-import 'package:hajedi/widgets/customer/customer_bottom_sheet_modal.dart';
+import 'package:hajedi/widgets/supplier/supplier_bottom_sheet_modal.dart';
 
-class CustomerDropdown extends StatefulWidget {
-  final Customer? selectedCustomer;
-  final Function(Customer?) onCustomerChanged;
-
-  const CustomerDropdown({
-    super.key,
-    this.selectedCustomer,
-    required this.onCustomerChanged,
-  });
+class SupplierDropdown extends StatefulWidget {
+  final Supplier? selectedSupplier;
+  final Function(Supplier?) onSupplierChanged;
+  const SupplierDropdown({super.key, this.selectedSupplier, required this.onSupplierChanged});
 
   @override
-  State<CustomerDropdown> createState() => _CustomerDropdownState();
+  State<SupplierDropdown> createState() => _SupplierDropdownState();
 }
 
-class _CustomerDropdownState extends State<CustomerDropdown> {
-  @override
-  void initState() {
+class _SupplierDropdownState extends State<SupplierDropdown> {
+ 
+ @override
+ void initState() {
     super.initState();
-    context.read<CustomerBloc>().add(LoadCustomers());
+    context.read<SupplierBloc>().add(LoadSuppliers());
   }
 
   @override
   Widget build(BuildContext context) {
-     final loc = AppLocalizations.of(context)!;
-    return BlocBuilder<CustomerBloc, CustomerState>(
+   final l10n = AppLocalizations.of(context)!;
+    return BlocBuilder<SupplierBloc, SupplierState>(
       builder: (context, state) {
-        if (state is CustomersLoadingState) {
-          return  Center( child: SizedBox.square(
+        if (state is SuppliersLoadingState) {
+          return Center( child: SizedBox.square(
                       dimension: 16,
                        child: CircularProgressIndicator(
                          strokeWidth: 2,
                          color: Theme.of(context).hintColor,
                        ),
                      ));
-        } else if (state is CustomersLoadedState) {
+        } else if (state is SuppliersLoadedState) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Text(
-                  loc.customer,
+                  l10n.supplier_name,
                   style: Theme.of(context).textTheme.displayMedium,
                 ),
               ),
@@ -82,22 +78,22 @@ class _CustomerDropdownState extends State<CustomerDropdown> {
                   ),
                   brightness: Brightness.dark,
                 ),
-                child: ShadSelect<Customer?>(
-                  placeholder: Text('${loc.select_customer}'),
+                child: ShadSelect<Supplier?>(
+                  placeholder: Text('${l10n.select_supplier} (optional)'),
                   options: [
-                    const ShadOption<Customer?>(
+                    const ShadOption<Supplier?>(
                       value: null,
-                      child: Text('No customer selected'),
+                      child: Text('No Supplier selected'),
                     ),
-                    ...state.customers.map((customer) => ShadOption<Customer?>(
-                      value: customer,
-                      child: Text(customer.name),
+                    ...state.suppliers.map((supplier) => ShadOption<Supplier?>(
+                      value: supplier,
+                      child: Text(supplier.name),
                     )),
                   ],
                   selectedOptionBuilder: (context, customer) => customer == null
-                      ? Text('${loc.select_customer} (optional)')
+                      ? Text('${l10n.select_supplier} (optional)')
                       : Text(customer.name),
-                  onChanged: widget.onCustomerChanged,
+                  onChanged: widget.onSupplierChanged,
                 ),
               ),
               const SizedBox(height: 8),
@@ -106,9 +102,9 @@ class _CustomerDropdownState extends State<CustomerDropdown> {
                 child: Row(
                   children: [
                     TextButton.icon(
-                      onPressed: () => _showAddCustomerModal(context),
+                      onPressed: () => _showAddSupplierModal(context),
                       icon: const Icon(Icons.add, size: 16),
-                      label: Text(loc.add_customer),
+                      label: Text(l10n.add_supplier),
                       style: TextButton.styleFrom(
                         foregroundColor: Theme.of(context).primaryColor,
                       ),
@@ -119,7 +115,7 @@ class _CustomerDropdownState extends State<CustomerDropdown> {
             ],
           );
         } 
-        // else if (state is CustomerError) {
+        // else if (state is SupplierError) {
         //   return Padding(
         //     padding: const EdgeInsets.all(16),
         //     child: Column(
@@ -132,9 +128,9 @@ class _CustomerDropdownState extends State<CustomerDropdown> {
         //         ),
         //         const SizedBox(height: 8),
         //         TextButton.icon(
-        //           onPressed: () => _showAddCustomerModal(context),
+        //           onPressed: () => _showAddSupplierModal(context),
         //           icon: const Icon(Icons.add, size: 16),
-        //           label: const Text('Add New Customer'),
+        //           label:  Text(l10n.new_supplier),
         //           style: TextButton.styleFrom(
         //             foregroundColor: Theme.of(context).primaryColor,
         //           ),
@@ -143,14 +139,14 @@ class _CustomerDropdownState extends State<CustomerDropdown> {
         //     ),
         //   );
         // }
-        else {
-         return const SizedBox();
-        }
+        
+        return const SizedBox();
       },
     );
   }
 
-  void _showAddCustomerModal(BuildContext context) {
-    showCustomerBottomSheetModal(context);
+  void _showAddSupplierModal(BuildContext context) {
+    showSupplierBottomSheetModal(context);
+    context.read<SupplierBloc>().add(LoadSuppliers());
   }
-} 
+}

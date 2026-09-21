@@ -632,6 +632,18 @@ abstract class AppLocalizations {
   /// **'No suppliers found'**
   String get no_suppliers_found;
 
+  /// No description provided for @supplier.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier'**
+  String get supplier;
+
+  /// No description provided for @select_supplier.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Supplier'**
+  String get select_supplier;
+
   /// No description provided for @add_supplier.
   ///
   /// In en, this message translates to:

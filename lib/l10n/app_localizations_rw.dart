@@ -278,6 +278,12 @@ class AppLocalizationsRw extends AppLocalizations {
   String get no_suppliers_found => 'Nta bacuruzi babonetse';
 
   @override
+  String get supplier => 'Umucuruzi';
+
+  @override
+  String get select_supplier => 'Hitamo umucuruzi';
+
+  @override
   String get add_supplier => 'Ongera umucuruzi';
 
   @override

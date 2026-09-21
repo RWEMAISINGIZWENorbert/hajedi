@@ -201,11 +201,7 @@ Future<dynamic> showSellCartBottomSheet(
                     if (state is CartLoadedState) {
                       return PrimaryButton(
                         label: 'Save',
-                        // onPressed: (){}
                         onPressed:
-                        //  state.items.isEmpty
-                        //     ? null
-                        //     :
                              () {
                               if (selectedPayment == null) {
                             showDialog(
