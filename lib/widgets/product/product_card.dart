@@ -51,7 +51,7 @@ class ProductCard extends StatelessWidget {
                 color: const Color.fromARGB(255, 91, 218, 97),
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: Text('$items\t$label',style: const TextStyle(fontSize: 10, color: Colors.white))
+              child: Text('${items.toStringAsFixed(1)}\t$label',style: const TextStyle(fontSize: 10, color: Colors.white))
              )
             ]
           ),

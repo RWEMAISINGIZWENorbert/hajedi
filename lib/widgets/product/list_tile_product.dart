@@ -52,7 +52,7 @@ class ListTileProduct extends StatelessWidget {
         style: Theme.of(context).textTheme.displayMedium,
       ),
       subtitle: Text(
-        "$items     $label",
+        "${items.toStringAsFixed(1)}     $label",
               style: GoogleFonts.poppins(
                 fontSize: 15,
                 color: Theme.of(context).hintColor,
