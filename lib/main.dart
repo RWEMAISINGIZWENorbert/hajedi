@@ -58,7 +58,6 @@ void main() async {
   await HiveRegistry.init();
   // await HiveRegistry.clearALlBoxes();
   await dotenv.load(fileName: ".env");
-  
   final syncManager = SyncManager.create(
      queueBox: Hive.box<SyncQueueItem>('syncQueue'),
      userBox: Hive.box<User>('users'),
@@ -69,11 +68,13 @@ void main() async {
      customerBox: Hive.box<Customer>('customers'),
      supplierBox: Hive.box<Supplier>('suppliers')
   );
-
-  await syncManager.start();
-
+  
   final syncCoordinator = SyncCoordinator(syncManager);
-  syncCoordinator.start();
+
+  if (await AuthUtils.isAuthenticated()) {
+    await syncManager.start();
+    syncCoordinator.start();
+  }
 
   runApp(MyApp(syncManager: syncManager, syncCoordinator: syncCoordinator));
 }

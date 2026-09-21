@@ -49,20 +49,16 @@ class QuickActionsBtn extends StatelessWidget {
                           );
                           break;
                         case 3:
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const Suppliers(),
-                          //   ),
-                          // );
+                          Navigator.pushNamed(
+                            context,
+                            '/customers',
+                          );
                           break;
                         case 4:
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const CreditSalesScreen(),
-                          //   ),
-                          // );
+                          Navigator.pushNamed(
+                            context,
+                            '/suppliers',
+                          );
                           break;
                         case 5:
                           // Navigator.push(

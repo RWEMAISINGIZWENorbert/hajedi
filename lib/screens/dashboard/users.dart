@@ -4,6 +4,7 @@ import 'package:hajedi/bloc/user/user_bloc.dart';
 import 'package:hajedi/l10n/app_localizations.dart';
 import 'package:hajedi/widgets/app_bar.dart';
 import 'package:hajedi/widgets/confirmation_dialog.dart';
+import 'package:hajedi/widgets/loading.dart';
 import 'package:hajedi/widgets/user/user_bottom_sheet_modal.dart';
 
 class Users extends StatefulWidget {
@@ -33,7 +34,7 @@ class _UsersState extends State<Users> {
       body: BlocBuilder<UserBloc, UserState>(
         builder: (context, state) {
           if (state is UsersLoadingState) {
-            return const Center(child: CircularProgressIndicator());
+            return  Center(child: Loading());
           }
 
           if (state is UsersLoadedState) {
