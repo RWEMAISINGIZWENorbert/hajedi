@@ -35,7 +35,7 @@ class Products extends StatelessWidget {
           if (state is ProductsLoadedSuccessfully) {
             if (state.products.isEmpty) {
               return Center(
-                child: Text('No products found'),
+                child: Text(loc.no_products_found),
               );
             }
 

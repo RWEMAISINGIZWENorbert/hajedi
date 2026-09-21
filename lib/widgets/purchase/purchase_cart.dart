@@ -163,7 +163,7 @@ class _PurchaseCartItemRow extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '\$${item.unitPrice.toStringAsFixed(2)}',
+                  '${item.unitPrice.toStringAsFixed(2)} frw',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: Colors.grey,
                       ),

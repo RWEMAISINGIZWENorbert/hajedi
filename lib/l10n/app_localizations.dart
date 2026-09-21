@@ -578,6 +578,12 @@ abstract class AppLocalizations {
   /// **'No customers found'**
   String get no_customers_found;
 
+  /// No description provided for @customer.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer'**
+  String get customer;
+
   /// No description provided for @add_customer.
   ///
   /// In en, this message translates to:
@@ -595,6 +601,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete Customer'**
   String get delete_customer;
+
+  /// No description provided for @select_customer.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Customer'**
+  String get select_customer;
 
   /// No description provided for @are_you_sure_delete_customer.
   ///
@@ -643,6 +655,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Are you sure you want to delete this supplier?'**
   String get are_you_sure_delete_supplier;
+
+  /// No description provided for @cash.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get cash;
+
+  /// No description provided for @mobile.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile'**
+  String get mobile;
+
+  /// No description provided for @credit.
+  ///
+  /// In en, this message translates to:
+  /// **'Credit'**
+  String get credit;
 }
 
 class _AppLocalizationsDelegate

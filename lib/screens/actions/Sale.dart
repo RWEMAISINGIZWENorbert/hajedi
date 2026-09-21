@@ -55,10 +55,12 @@ class _SaleState extends State<Sale> {
                   child: const Icon(IconlyLight.arrow_left_circle),
               ),
             ),
-            body: Column(
+            body: products.isEmpty
+                  ? Center(child: Text(loc.no_products_found))
+                  : Column(
                children: [
                  const SizedBox(height: 12),
-                 Expanded(
+                  Expanded(
                   child: Padding(
                     padding:  const EdgeInsets.symmetric(horizontal: 12),
                     child: GridView.builder(

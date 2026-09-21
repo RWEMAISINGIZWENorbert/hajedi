@@ -6,16 +6,33 @@ import 'package:hajedi/bloc/cart/cart_state.dart';
 import 'package:hajedi/bloc/sale/sale_bloc.dart';
 import 'package:hajedi/bloc/sale/sale_event.dart';
 import 'package:hajedi/data/cart_item.dart';
+import 'package:hajedi/data/customer.dart';
+import 'package:hajedi/widgets/customer/customer_dropdown.dart';
 import 'package:hajedi/widgets/primary_button.dart';
 import 'package:iconly/iconly.dart';
+import 'package:hajedi/l10n/app_localizations.dart';
 
 Future<dynamic> showSellCartBottomSheet(
   BuildContext context,
 ) {
+  Customer? selectedCustomer;
+  String? selectedPayment;
+  final loc = AppLocalizations.of(context)!;
+
+  final List<Map<String, dynamic>> paymentMethods = [
+    {'label': loc.cash, 'value': 'cash', 'icon': Icons.attach_money},
+    {'label': loc.mobile, 'value': 'mobile', 'icon': Icons.phone_android},
+    {'label': loc.credit, 'value': 'credit', 'icon': Icons.account_balance},
+  ];
+
   return showModalBottomSheet(
     context: context,
     isScrollControlled: true,
-    builder: (context) => Container(
+    builder: (context) {
+     return StatefulBuilder(
+        builder: (context, setState) { 
+
+       return Container(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(12),
@@ -51,6 +68,84 @@ Future<dynamic> showSellCartBottomSheet(
                 ),
               ),
               const Divider(),
+
+              // Payment Method Selection
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: paymentMethods.map((method) {
+                            final isSelected =
+                                selectedPayment == method['value'];
+                            return GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  selectedPayment = method['value'];
+                                });
+                              },
+                              child: Card(
+                                color: isSelected
+                                    ? Theme.of(context)
+                                        .colorScheme
+                                        .primary
+                                        .withOpacity(0.2)
+                                    : Colors.white,
+                                elevation: isSelected ? 4 : 1,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  side: BorderSide(
+                                    color: isSelected
+                                        ? Theme.of(context).colorScheme.primary
+                                        : Colors.grey.shade300,
+                                    width: isSelected ? 2 : 1,
+                                  ),
+                                ),
+                                child: SizedBox(
+                                  width: 60,
+                                  height: 40,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(method['icon'],
+                                          size: 16,
+                                          color: isSelected
+                                              ? Theme.of(context)
+                                                  .colorScheme
+                                                  .primary
+                                              : Colors.grey),
+                                      const SizedBox(height: 2),
+                                      // Text(method['label'], style: TextStyle(
+                                      //   color: isSelected ? Theme.of(context).colorScheme.primary : Colors.grey,
+                                      //   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                                      // )),
+                                      Text(method['label'],
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .displaySmall),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),   
+                      const Divider(),
+                      
+                      // Customer Selection
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: CustomerDropdown(
+                          selectedCustomer: selectedCustomer,
+                          onCustomerChanged: (Customer? customer) {
+                            setState(() {
+                              selectedCustomer = customer;
+                            });
+                          },
+                        ),
+                      ),
+
+                      const Divider(),
 
               // Cart Items List
               BlocBuilder<CartBloc, CartState>(
@@ -112,11 +207,45 @@ Future<dynamic> showSellCartBottomSheet(
                         //     ? null
                         //     :
                              () {
+                              if (selectedPayment == null) {
+                            showDialog(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
+                                title:  Text("payment_method_required"),
+                                content:  Text("choose_payment_method"),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.of(ctx).pop(),
+                                    child: Text("ok", style: const TextStyle(color: Colors.green),),
+                                  ),
+                                ],
+                              ),
+                            );
+                            return;
+                          }
+                          if (selectedPayment == 'credit' &&
+                              selectedCustomer == null) {
+                            showDialog(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
+                                // title: const Text('Custometr Required'),
+                                title: Text("select_customer"),
+                                content: const Text('You have to choose the customer for the credit.'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.of(ctx).pop(),
+                                    child:  Text("ok"),
+                                  ),
+                                ],
+                              ),
+                            );
+                            return;
+                          }
                               context.read<SaleBloc>().add(
                                 CreateSaleLocal(
                                   cartItems: state.items,
-                                  customerClientId: null, // Add customer ID if you have customer selection
-                                  paymentMethod: 'cash', // or your preferred payment method
+                                  customerClientId: selectedCustomer!.clientId, // Add customer ID if you have customer selection
+                                  paymentMethod: selectedPayment!, // or your preferred payment method
                                ),
                               );
                               context.read<CartBloc>().add(ClearCart());
@@ -132,7 +261,10 @@ Future<dynamic> showSellCartBottomSheet(
           ),
         ),
       ),
-    ),
+    );
+        }
+     );
+    }
   );
 }
 
@@ -168,7 +300,7 @@ class _CartItemRow extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '\$${item.unitPrice.toStringAsFixed(2)}',
+                  '${item.unitPrice.toStringAsFixed(2)} frw',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: Colors.grey,
                       ),

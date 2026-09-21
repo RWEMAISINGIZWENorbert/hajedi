@@ -250,6 +250,9 @@ class AppLocalizationsRw extends AppLocalizations {
   String get no_customers_found => 'Nta bakiriya babonetse';
 
   @override
+  String get customer => 'Umukiriya';
+
+  @override
   String get add_customer => 'Ongera umukiriya';
 
   @override
@@ -257,6 +260,9 @@ class AppLocalizationsRw extends AppLocalizations {
 
   @override
   String get delete_customer => 'Siba umukiriya';
+
+  @override
+  String get select_customer => 'Hitamo umukiriya';
 
   @override
   String get are_you_sure_delete_customer =>
@@ -283,4 +289,13 @@ class AppLocalizationsRw extends AppLocalizations {
   @override
   String get are_you_sure_delete_supplier =>
       'Urizeye ko ushaka gusiba uyu muranguza?';
+
+  @override
+  String get cash => 'Cash';
+
+  @override
+  String get mobile => 'Mobile';
+
+  @override
+  String get credit => 'Ideni';
 }

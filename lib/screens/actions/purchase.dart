@@ -55,7 +55,9 @@ class _PurchaseState extends State<Purchase> {
                   child: const Icon(IconlyLight.arrow_left_circle),
               ),
             ),
-            body: Column(
+            body: products.isEmpty
+                  ? Center(child: Text(loc.no_products_found))
+                  : Column(
                children: [
                  const SizedBox(height: 12),
                  Expanded(
