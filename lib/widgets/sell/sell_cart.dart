@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hajedi/bloc/cart/cart_bloc.dart';
-import 'package:hajedi/bloc/cart/cart_event.dart';
-import 'package:hajedi/bloc/cart/cart_state.dart';
+import 'package:hajedi/bloc/sell_cart/sell_cart_bloc.dart';
+import 'package:hajedi/bloc/sell_cart/sell_cart_event.dart';
+import 'package:hajedi/bloc/sell_cart/sell_cart_state.dart';
 import 'package:hajedi/bloc/sale/sale_bloc.dart';
 import 'package:hajedi/bloc/sale/sale_event.dart';
 import 'package:hajedi/data/cart_item.dart';
@@ -148,9 +148,9 @@ Future<dynamic> showSellCartBottomSheet(
                       const Divider(),
 
               // Cart Items List
-              BlocBuilder<CartBloc, CartState>(
+              BlocBuilder<SellCartBloc, SellCartState>(
                 builder: (context, state) {
-                  if (state is CartLoadedState) {
+                  if (state is SellCartLoadedState) {
                     if (state.items.isEmpty) {
                       return const Padding(
                         padding: EdgeInsets.all(32),
@@ -165,21 +165,21 @@ Future<dynamic> showSellCartBottomSheet(
                         return _CartItemRow(
                           item: item,
                           onRemove: () {
-                            context.read<CartBloc>().add(
-                              RemoveFromCart(item.productClientId),
+                            context.read<SellCartBloc>().add(
+                              RemoveFromSellCart(item.productClientId),
                             );
                           },
                           onIncrease: () {
-                            context.read<CartBloc>().add(
-                              UpdateCartQuantity(
+                            context.read<SellCartBloc>().add(
+                              UpdateSellCartQuantity(
                                 item.productClientId,
                                 item.quantity + 1,
                               ),
                             );
                           },
                           onDecrease: () {
-                            context.read<CartBloc>().add(
-                              UpdateCartQuantity(
+                            context.read<SellCartBloc>().add(
+                              UpdateSellCartQuantity(
                                 item.productClientId,
                                 item.quantity - 1,
                               ),
@@ -196,9 +196,9 @@ Future<dynamic> showSellCartBottomSheet(
               // Save Button
               Padding(
                 padding: const EdgeInsets.all(16),
-                child: BlocBuilder<CartBloc, CartState>(
+                child: BlocBuilder<SellCartBloc, SellCartState>(
                   builder: (context, state) {
-                    if (state is CartLoadedState) {
+                    if (state is SellCartLoadedState) {
                       return PrimaryButton(
                         label: 'Save',
                         onPressed:
@@ -244,7 +244,7 @@ Future<dynamic> showSellCartBottomSheet(
                                   paymentMethod: selectedPayment!, // or your preferred payment method
                                ),
                               );
-                              context.read<CartBloc>().add(ClearCart());
+                              context.read<SellCartBloc>().add(ClearSellCart());
                               Navigator.of(context).pop();
                            },
                       );

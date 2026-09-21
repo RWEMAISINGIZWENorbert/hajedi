@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hajedi/bloc/cart/cart_bloc.dart';
-import 'package:hajedi/bloc/cart/cart_event.dart';
+import 'package:hajedi/bloc/sell_cart/sell_cart_bloc.dart';
+import 'package:hajedi/bloc/sell_cart/sell_cart_event.dart';
 import 'package:hajedi/bloc/product/product_bloc.dart';
 import 'package:hajedi/data/cart_item.dart';
 import 'package:hajedi/data/product.dart';
@@ -81,7 +81,7 @@ class _SaleState extends State<Sale> {
                                   quantity: 1,
                                   unitPrice: product.sellingPrice,
                               );
-                              context.read<CartBloc>().add(AddToCart(cartItem));
+                              context.read<SellCartBloc>().add(AddToSellCart(cartItem));
                               showSellCartBottomSheet(context);
                             },
                             child: ProductCard(product: product, isSell: true),

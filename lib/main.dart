@@ -2,7 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hajedi/bloc/auth/auth_bloc.dart';
-import 'package:hajedi/bloc/cart/cart_bloc.dart';
+import 'package:hajedi/bloc/sell_cart/sell_cart_bloc.dart';
+import 'package:hajedi/bloc/purchase_cart/purchase_cart_bloc.dart';
 import 'package:hajedi/bloc/expense/expense_bloc.dart';
 import 'package:hajedi/bloc/locale/locale_cubit.dart';
 import 'package:hajedi/bloc/purchase/purchase_bloc.dart';
@@ -100,7 +101,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => ExpenseBloc(expenseBox: Hive.box<Expense>('expenses'), syncManager: syncManager)),
         BlocProvider(create: (_) => CustomerBloc(Hive.box<Customer>('customers'),  syncManager)),
         BlocProvider(create: (_) => SupplierBloc(Hive.box<Supplier>('suppliers'), syncManager)),
-        BlocProvider(create: (_) => CartBloc()),
+        BlocProvider(create: (_) => SellCartBloc()),
+        BlocProvider(create: (_) => PurchaseCartBloc()),
         BlocProvider(create: (context) => TransactionBloc(
           saleBloc: context.read<SaleBloc>(),
           purchaseBloc: context.read<PurchaseBloc>(),

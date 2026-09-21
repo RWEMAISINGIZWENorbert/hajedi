@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hajedi/bloc/cart/cart_bloc.dart';
-import 'package:hajedi/bloc/cart/cart_event.dart';
-import 'package:hajedi/bloc/cart/cart_state.dart';
 import 'package:hajedi/bloc/purchase/purchase_bloc.dart';
 import 'package:hajedi/bloc/purchase/purchase_event.dart';
+import 'package:hajedi/bloc/purchase_cart/purchase_cart_bloc.dart';
+import 'package:hajedi/bloc/purchase_cart/purchase_cart_event.dart';
+import 'package:hajedi/bloc/purchase_cart/purchase_cart_state.dart';
 import 'package:hajedi/data/cart_item.dart';
 import 'package:hajedi/data/supplier.dart';
 import 'package:hajedi/widgets/primary_button.dart';
@@ -72,9 +72,9 @@ Future<dynamic> showPurchaseCartBottomSheet(
               const Divider(),
 
               // Cart Items List
-              BlocBuilder<CartBloc, CartState>(
+              BlocBuilder<PurchaseCartBloc, PurchaseCartState>(
                 builder: (context, state) {
-                  if (state is CartLoadedState) {
+                  if (state is PurchaseCartLoadedState) {
                     if (state.items.isEmpty) {
                       return const Padding(
                         padding: EdgeInsets.all(32),
@@ -89,21 +89,21 @@ Future<dynamic> showPurchaseCartBottomSheet(
                         return _PurchaseCartItemRow(
                           item: item,
                           onRemove: () {
-                            context.read<CartBloc>().add(
-                              RemoveFromCart(item.productClientId),
+                            context.read<PurchaseCartBloc>().add(
+                              RemoveFromPurchaseCart(item.productClientId),
                             );
                           },
                           onIncrease: () {
-                            context.read<CartBloc>().add(
-                              UpdateCartQuantity(
+                            context.read<PurchaseCartBloc>().add(
+                              UpdatePurchaseCartQuantity(
                                 item.productClientId,
                                 item.quantity + 1,
                               ),
                             );
                           },
                           onDecrease: () {
-                            context.read<CartBloc>().add(
-                              UpdateCartQuantity(
+                            context.read<PurchaseCartBloc>().add(
+                              UpdatePurchaseCartQuantity(
                                 item.productClientId,
                                 item.quantity - 1,
                               ),
@@ -120,9 +120,9 @@ Future<dynamic> showPurchaseCartBottomSheet(
               // Save Button
               Padding(
                 padding: const EdgeInsets.all(16),
-                child: BlocBuilder<CartBloc, CartState>(
+                child: BlocBuilder<PurchaseCartBloc, PurchaseCartState>(
                   builder: (context, state) {
-                    if (state is CartLoadedState) {
+                    if (state is PurchaseCartLoadedState) {
                       return PrimaryButton(
                         label: 'Save Purchase',
                         onPressed: () {
@@ -134,7 +134,7 @@ Future<dynamic> showPurchaseCartBottomSheet(
                                   paymentMethod: 'cash', // or your preferred payment method
                                ),
                               );
-                              context.read<CartBloc>().add(ClearCart());
+                              context.read<PurchaseCartBloc>().add(ClearPurchaseCart());
                               Navigator.of(context).pop();
                            },
                       );

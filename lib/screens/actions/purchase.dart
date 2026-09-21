@@ -8,8 +8,8 @@ import 'package:hajedi/widgets/loading.dart';
 import 'package:hajedi/widgets/product/product_card.dart';
 import 'package:hajedi/widgets/text.dart';
 import 'package:iconly/iconly.dart';
-import 'package:hajedi/bloc/cart/cart_bloc.dart';
-import 'package:hajedi/bloc/cart/cart_event.dart';
+import 'package:hajedi/bloc/purchase_cart/purchase_cart_bloc.dart';
+import 'package:hajedi/bloc/purchase_cart/purchase_cart_event.dart';
 import 'package:hajedi/data/cart_item.dart';
 import 'package:hajedi/widgets/purchase/purchase_cart.dart';
 
@@ -76,8 +76,8 @@ class _PurchaseState extends State<Purchase> {
                           return InkWell(
                             onTap: () async {
                               // Add the product to the cart (CartBloc handles quantity increment if item exists)
-                              context.read<CartBloc>().add(
-                                AddToCart(
+                              context.read<PurchaseCartBloc>().add(
+                                AddToPurchaseCart(
                                   CartItem(
                                     productClientId: product.clientId,
                                     productName: product.name,
