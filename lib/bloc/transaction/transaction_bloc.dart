@@ -13,6 +13,9 @@ import 'package:hajedi/data/transaction.dart';
 import 'package:hajedi/data/sale.dart';
 import 'package:hajedi/data/purchase.dart';
 import 'package:hajedi/data/expense.dart';
+import 'package:hive/hive.dart';
+import 'package:hajedi/data/customer.dart';
+import 'package:hajedi/data/supplier.dart';
 
 class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
   final SaleBloc _saleBloc;
@@ -155,6 +158,12 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
   }
 
   Transaction _saleToTransaction(Sale sale) {
+   // Retrieve customer name from local Hive
+   final customerBox = Hive.box<Customer>('customers');
+   final customer = customerBox.get(sale.customerClientId);
+   final customerName = customer?.name ?? "";
+    
+
     return Transaction(
       clientId: sale.clientId,
       type: TransactionType.sale,
@@ -164,11 +173,16 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
       rawData: sale.toJson(),
       userId: sale.userId,
       paymentMethod: sale.paymentMethod,
-      customerName: sale.customerClientId, // Would need to look up actual name
+      customerName: customerName, // Would need to look up actual name
     );
   }
 
   Transaction _purchaseToTransaction(Purchase purchase) {
+    
+    final supplierBox = Hive.box<Supplier>('suppliers');
+    final supplier = supplierBox.get(purchase.supplierClientId);
+    final supplierName = supplier?.name ?? "";
+
     return Transaction(
       clientId: purchase.clientId,
       type: TransactionType.purchase,
@@ -178,7 +192,7 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
       rawData: purchase.toJson(),
       userId: purchase.userId,
       paymentMethod: purchase.paymentMethod,
-      supplierName: purchase.supplierClientId, // Would need to look up actual name
+      supplierName: supplierName, // Would need to look up actual name
     );
   }
 

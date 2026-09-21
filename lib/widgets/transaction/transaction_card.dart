@@ -75,7 +75,7 @@ class TransactionCard extends StatelessWidget {
                   children: [
                     // Amount
                     Text(
-                      '\$${transaction.amount.toStringAsFixed(2)}',
+                      '${transaction.amount.toStringAsFixed(2)} frw',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             color: _getAmountColor(),
                             fontWeight: FontWeight.bold,
