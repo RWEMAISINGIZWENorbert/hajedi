@@ -199,10 +199,10 @@ class AppLocalizationsRw extends AppLocalizations {
   String get all_transactions => 'Byose';
 
   @override
-  String get sales => 'Ibyagurishije';
+  String get sales => 'Ibyagurishijwe';
 
   @override
-  String get purchases => 'Ibyaguye';
+  String get purchases => 'Ibyaranguwe';
 
   @override
   String get expenses => 'Ibyasohowe';

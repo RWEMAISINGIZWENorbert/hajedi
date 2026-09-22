@@ -43,57 +43,67 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState> {
   }
 
   Future<void> _onCreatePurchaseLocal(CreatePurchaseLocal event, Emitter<PurchaseState> emit) async {
-    emit(PurchaseCreatingState());
+  emit(PurchaseCreatingState());
 
-    try {
-      final clientId = _uuid.v4();
-      final userId = 'current_user_id'; // Get from auth
+  try {
+    final clientId = _uuid.v4();
+    final userId = 'current_user_id'; // Get from auth
 
-      final purchaseItems = event.cartItems.map((cartItem) {
-        final product = _productBox.get(cartItem.productClientId);
-        return PurchaseItem(
-          productId: product?.id ?? '',
-          productClientId: cartItem.productClientId,
-          quantity: cartItem.quantity,
-          purchaseCost: product?.purchaseCost ?? 0.0,
-          totalCost: cartItem.totalAmount,
-        );
-      }).toList();
+    // Create modified cart items with adjusted quantities
+    final modifiedCartItems = event.cartItems.map((cartItem) {
+      final product = _productBox.get(cartItem.productClientId);
+      if((product?.purchaseMethod == "packet") || (product?.purchaseMethod == "crate")){
+        final adjustedQuantity = cartItem.quantity * product!.unitsPerPackage;
+        return cartItem.copyWith(quantity: adjustedQuantity);
+      }
+      return cartItem;
+    }).toList();
 
-      final totalItems = purchaseItems.fold(0, (sum, item) => sum + item.quantity);
-      final totalCost = purchaseItems.fold(0.0, (sum, item) => sum + item.totalCost);
-
-      final purchase = Purchase(
-        id: '',
-        clientId: clientId,
-        userId: userId,
-        supplierClientId: event.supplierClientId,
-        items: purchaseItems,
-        totalItems: totalItems,
-        totalCost: totalCost,
-        paymentMethod: event.paymentMethod,
-        syncStatus: 'pending',
+    final purchaseItems = event.cartItems.map((cartItem) {
+      final product = _productBox.get(cartItem.productClientId);
+      return PurchaseItem(
+        productId: product?.id ?? '',
+        productClientId: cartItem.productClientId,
+        quantity: cartItem.quantity,
+        purchaseCost: product?.purchaseCost ?? 0.0,
+        totalCost: cartItem.totalAmount,
       );
+    }).toList();
 
-      await _purchaseBox.put(clientId, purchase);
+    final totalItems = purchaseItems.fold(0, (sum, item) => sum + item.quantity);
+    final totalCost = purchaseItems.fold(0.0, (sum, item) => sum + item.totalCost);
 
-      // Project local stock increment
-      await _projectLocalStockIncrement(event.cartItems);
+    final purchase = Purchase(
+      id: '',
+      clientId: clientId,
+      userId: userId,
+      supplierClientId: event.supplierClientId,
+      items: purchaseItems,
+      totalItems: totalItems,
+      totalCost: totalCost,
+      paymentMethod: event.paymentMethod,
+      syncStatus: 'pending',
+    );
 
-      // Enqueue for sync
-      await SyncQueue.enqueue(
-        entityType: 'purchase',
-        operationType: 'create',
-        payload: purchase.toJson(),
-      );
+    await _purchaseBox.put(clientId, purchase);
 
-      emit(PurchaseCreatedState(purchase));
-      await _syncManager.syncIfConnected();
-      add(LoadLocalPurchases());
-    } catch (error) {
-      emit(PurchaseErrorState(error.toString()));
-    }
+    // Project local stock increment with modified quantities
+    await _projectLocalStockIncrement(modifiedCartItems);
+
+    // Enqueue for sync
+    await SyncQueue.enqueue(
+      entityType: 'purchase',
+      operationType: 'create',
+      payload: purchase.toJson(),
+    );
+
+    emit(PurchaseCreatedState(purchase));
+    await _syncManager.syncIfConnected();
+    add(LoadLocalPurchases());
+  } catch (error) {
+    emit(PurchaseErrorState(error.toString()));
   }
+}
 
   Future<void> _projectLocalStockIncrement(List<CartItem> cartItems) async {
     for (final item in cartItems) {

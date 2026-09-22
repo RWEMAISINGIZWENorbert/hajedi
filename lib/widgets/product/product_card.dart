@@ -25,7 +25,7 @@ class ProductCard extends StatelessWidget {
           }else if((product.purchaseMethod == "crate" && product.quantityInStock < product.unitsPerPackage) ||
            (product.purchaseMethod == "packet" && product.quantityInStock < product.unitsPerPackage)){
              items = product.quantityInStock.toDouble();
-             label = product.purchaseMethod;
+             label = product.saleMethod;
           }else {
             items = product.quantityInStock.toDouble();
             label = product.purchaseMethod;
