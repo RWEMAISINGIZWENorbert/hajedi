@@ -25,8 +25,10 @@
   "all": "Byose",
   "packet": "Ipaki",
   "crate": "Ikaziye",
+  "crates": "Amakaziye",
   "unit": "Igice",
-  "bottles": "Icupa",
+  "bottles": "Amacupa",
+  "bottle": "icupa",
   "both": "Byombi",
   "units": "Ibice",
   "packets": "Amapaki",
@@ -100,5 +102,13 @@
   "are_you_sure_delete_supplier": "Urizeye ko ushaka gusiba uyu muranguza?",
   "cash": "Cash",
   "mobile": "Mobile",
-  "credit": "Ideni"
+  "credit": "Ideni",
+  "stock_info": "Amakuru ya Stock",
+  "stock_level": "Ingano iri muri Stock",
+  "in_keyword": "aba mu",
+  "packet_size": "Ingano y'iPake",
+  "crate_size": "Ingano y'ikaziye",
+  "purchase_info": "Amakuru yo kurangra",
+  "sell_info": "Amakuru yo kugurisha",
+  "per": "Ku"
 }

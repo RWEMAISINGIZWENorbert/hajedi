@@ -248,6 +248,12 @@ abstract class AppLocalizations {
   /// **'Crate'**
   String get crate;
 
+  /// No description provided for @crates.
+  ///
+  /// In en, this message translates to:
+  /// **'Crates'**
+  String get crates;
+
   /// No description provided for @unit.
   ///
   /// In en, this message translates to:
@@ -259,6 +265,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Bottles'**
   String get bottles;
+
+  /// No description provided for @bottle.
+  ///
+  /// In en, this message translates to:
+  /// **'Bottle'**
+  String get bottle;
 
   /// No description provided for @both.
   ///
@@ -685,6 +697,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Credit'**
   String get credit;
+
+  /// No description provided for @stock_info.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock Info'**
+  String get stock_info;
+
+  /// No description provided for @stock_level.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock Level'**
+  String get stock_level;
+
+  /// No description provided for @in_keyword.
+  ///
+  /// In en, this message translates to:
+  /// **'in'**
+  String get in_keyword;
+
+  /// No description provided for @packet_size.
+  ///
+  /// In en, this message translates to:
+  /// **'Packet Size'**
+  String get packet_size;
+
+  /// No description provided for @crate_size.
+  ///
+  /// In en, this message translates to:
+  /// **'Crate Size'**
+  String get crate_size;
+
+  /// No description provided for @purchase_info.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase Info'**
+  String get purchase_info;
+
+  /// No description provided for @sell_info.
+  ///
+  /// In en, this message translates to:
+  /// **'Sell Info'**
+  String get sell_info;
+
+  /// No description provided for @per.
+  ///
+  /// In en, this message translates to:
+  /// **'Per'**
+  String get per;
 }
 
 class _AppLocalizationsDelegate

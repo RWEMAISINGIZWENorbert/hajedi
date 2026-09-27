@@ -84,10 +84,16 @@ class AppLocalizationsRw extends AppLocalizations {
   String get crate => 'Ikaziye';
 
   @override
+  String get crates => 'Amakaziye';
+
+  @override
   String get unit => 'Igice';
 
   @override
-  String get bottles => 'Icupa';
+  String get bottles => 'Amacupa';
+
+  @override
+  String get bottle => 'icupa';
 
   @override
   String get both => 'Byombi';
@@ -304,4 +310,28 @@ class AppLocalizationsRw extends AppLocalizations {
 
   @override
   String get credit => 'Ideni';
+
+  @override
+  String get stock_info => 'Amakuru ya Stock';
+
+  @override
+  String get stock_level => 'Ingano iri muri Stock';
+
+  @override
+  String get in_keyword => 'aba mu';
+
+  @override
+  String get packet_size => 'Ingano y\'iPake';
+
+  @override
+  String get crate_size => 'Ingano y\'ikaziye';
+
+  @override
+  String get purchase_info => 'Amakuru yo kurangra';
+
+  @override
+  String get sell_info => 'Amakuru yo kugurisha';
+
+  @override
+  String get per => 'Ku';
 }

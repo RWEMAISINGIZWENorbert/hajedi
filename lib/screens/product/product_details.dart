@@ -95,7 +95,7 @@ class ProductDetails extends StatelessWidget {
                       showPurchaseCost: showPurchaseCost,
                     ),
                     const SizedBox(height: 30),
-                    const _TransactionsSection(),
+                    // const _TransactionsSection(),
                   ],
                 ),
               ),
@@ -119,6 +119,33 @@ class _ProductSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     final isLowStock = product.quantityInStock <= 5;
     final loc = AppLocalizations.of(context)!;
+    double items;
+    String label;
+    String localizedLabel;  
+    if((product.saleMethod == "unit" && product.quantityInStock > product.unitsPerPackage) ||
+      (product.saleMethod == "bottles" && product.quantityInStock > product.unitsPerPackage)){
+      items = product.quantityInStock / product.unitsPerPackage;
+      label = product.purchaseMethod;
+    }else if((product.saleMethod == "unit" && product.quantityInStock < product.unitsPerPackage) ||
+             (product.saleMethod == "bottles" && product.quantityInStock < product.unitsPerPackage)){
+      items = product.quantityInStock.toDouble();
+      label = product.saleMethod;
+    }else {
+      items = product.quantityInStock.toDouble();
+      label = product.saleMethod;
+    }
+
+    if(label == "packet"){
+      localizedLabel = loc.packets;
+    }else if(label == "crate"){
+      localizedLabel = loc.crates;
+    }else if(label == "unit"){
+      localizedLabel = loc.units;
+    }else if(label == "bottles"){
+      localizedLabel = loc.bottles;
+    }else {
+      localizedLabel = label;
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,24 +174,76 @@ class _ProductSummary extends StatelessWidget {
           product.productType,
           style: Theme.of(context).textTheme.bodyMedium,
         ),
+
         const SizedBox(height: 18),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: [
+        //     Text(
+        //       '${product.quantityInStock} ${product.saleMethod} ${loc.in_stock}',
+        //       style: Theme.of(context).textTheme.titleMedium,
+        //     ),
+        //     if (isLowStock)
+        //       const Text(
+        //         'Low stock',
+        //         style: TextStyle(
+        //           color: Colors.red,
+        //           fontWeight: FontWeight.bold,
+        //         ),
+        //       ),
+        //   ],
+        // ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '${product.quantityInStock} ${product.saleMethod} ${loc.in_stock}',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            if (isLowStock)
-              const Text(
-                'Low stock',
-                style: TextStyle(
-                  color: Colors.red,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+             loc.stock_info,
+             style: Theme.of(context).textTheme.titleMedium,
+             ),
           ],
         ),
+        const SizedBox(height: 8),
+        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 12),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    loc.stock_level,
+                                    style: Theme.of(context).textTheme.displaySmall,
+                                  ),
+                                  RichText(
+                                    text: TextSpan(children: <TextSpan>[
+                                      TextSpan(
+                                        text: '${items.toStringAsFixed(2)} $localizedLabel\n',
+                                        style: Theme.of(context).textTheme.displaySmall),
+                                    ]),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 6),
+                              if(product.purchaseMethod == "packet" || product.purchaseMethod == "crate")
+                               Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                     product.saleMethod == "bottles"
+                                      ? loc.crate_size
+                                      : loc.packet_size,
+                                    style: Theme.of(context).textTheme.displaySmall,
+                                  ),
+                                  Text(
+                                     '${product.unitsPerPackage.toStringAsFixed(2)} ${product.saleMethod == "bottles" ? loc.bottles : loc.units}',
+                                     style: Theme.of(context).textTheme.displaySmall
+                                  ),
+                                ],
+                              ), 
+                               
+                            ],
+                          ),
+                        ),
       ],
     );
   }
@@ -181,90 +260,130 @@ class _ProductInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+    String localizedPurchaseMethod;
+    String localizedSellMethod;
+    
+    if(product.purchaseMethod == "packet"){
+      localizedPurchaseMethod = loc.packet;
+    }else if(product.purchaseMethod == "crate"){
+      localizedPurchaseMethod = loc.crate;
+    }else if(product.purchaseMethod == "unit"){
+      localizedPurchaseMethod = loc.unit;
+    }else {
+      localizedPurchaseMethod = product.purchaseMethod;
+    }
+    
+
+    if(product.saleMethod == "unit"){
+      localizedSellMethod = loc.unit;
+    }else if(product.saleMethod == "bottles"){
+       localizedSellMethod = loc.bottle;
+    }else {
+      localizedSellMethod = product.saleMethod;
+    }
+
+
+
     return Column(
       children: [
+        const SizedBox(height: 10),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
-              child: _InfoItem(
-                label: 'Purchase method',
-                value: product.purchaseMethod,
-              ),
-            ),
-            const SizedBox(width: 24),
-            Expanded(
-              child: _InfoItem(
-                label: 'Sale method',
-                value: product.saleMethod,
-              ),
-            ),
+            Text(
+             loc.purchase_info,
+             style: Theme.of(context).textTheme.titleMedium,
+             ),
           ],
-        ),
-        const SizedBox(height: 20),
-
-        Row(
-          children: [
-            if (showPurchaseCost)
-              Expanded(
-                child: _InfoItem(
-                  label:
-                      'Purchase cost / 1 ${product.purchaseMethod}',
-                  value: '${product.purchaseCost} RWF',
+        ),            
+        Container(
+           margin: const EdgeInsets.symmetric(horizontal: 12),
+           child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "${loc.per} $localizedPurchaseMethod",
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
+                    Text(
+                      '${product.purchaseCost.toStringAsFixed(2)} FRW\n',
+                      style: Theme.of(context).textTheme.displaySmall
+                    ),
+                  ],
                 ),
-              ),
-
-            if (showPurchaseCost) const SizedBox(width: 24),
-
-            Expanded(
-              child: _InfoItem(
-                label:
-                    'Selling price / 1 ${product.saleMethod}',
-                value: '${product.sellingPrice} RWF',
-              ),
-            ),
-          ],
+                const SizedBox(height: 6),
+                if(product.purchaseMethod == "packet" || product.purchaseMethod == "crate")
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "${loc.purchase_cost_per} ${product.purchaseMethod == "packet" ? loc.unit : loc.bottle}",
+                        style: Theme.of(context).textTheme.displaySmall,
+                      ),
+                      Text( 
+                        '${product.purchaseCost / product.unitsPerPackage}',
+                        style: Theme.of(context).textTheme.displaySmall
+                      ),
+                     ],
+                  ), 
+                               
+             ],
+             ),
         ),
-        const SizedBox(height: 20),
-
-        _InfoItem(
-          label: 'Units per package',
-          value: product.unitsPerPackage.toString(),
+        const SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+             loc.sell_info,
+             style: Theme.of(context).textTheme.titleMedium,
+             ),
+          ],
+        ),            
+        Container(
+           margin: const EdgeInsets.symmetric(horizontal: 12),
+           child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "${loc.per} $localizedSellMethod",
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
+                    Text(
+                      '${product.sellingPrice.toStringAsFixed(2)} FRW\n',
+                      style: Theme.of(context).textTheme.displaySmall
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 6),
+                if(product.purchaseMethod == "packet" || product.purchaseMethod == "crate")
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "${loc.selling_price_per} ${product.purchaseMethod == "packet" ? loc.packet : loc.crate}",
+                        style: Theme.of(context).textTheme.displaySmall,
+                      ),
+                      Text( 
+                        '${product.sellingPrice * product.unitsPerPackage}',
+                        style: Theme.of(context).textTheme.displaySmall
+                      ),
+                     ],
+                  ), 
+                               
+             ],
+             ),
         ),
       ],
     );
   }
 }
 
-class _InfoItem extends StatelessWidget {
-  final String label;
-  final String value;
-
-  const _InfoItem({
-    required this.label,
-    required this.value,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 160,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-          const SizedBox(height: 5),
-          Text(
-            value,
-            style: Theme.of(context).textTheme.displayMedium,
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 class _TransactionsSection extends StatelessWidget {
   const _TransactionsSection();

@@ -84,10 +84,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get crate => 'Crate';
 
   @override
+  String get crates => 'Crates';
+
+  @override
   String get unit => 'Unit';
 
   @override
   String get bottles => 'Bottles';
+
+  @override
+  String get bottle => 'Bottle';
 
   @override
   String get both => 'Both';
@@ -304,4 +310,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get credit => 'Credit';
+
+  @override
+  String get stock_info => 'Stock Info';
+
+  @override
+  String get stock_level => 'Stock Level';
+
+  @override
+  String get in_keyword => 'in';
+
+  @override
+  String get packet_size => 'Packet Size';
+
+  @override
+  String get crate_size => 'Crate Size';
+
+  @override
+  String get purchase_info => 'Purchase Info';
+
+  @override
+  String get sell_info => 'Sell Info';
+
+  @override
+  String get per => 'Per';
 }
