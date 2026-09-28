@@ -66,7 +66,6 @@ class SaleRepository {
     final headers = await _headers();
 
     final response = await http.get(url, headers: headers);
-      print("Response ${response.statusCode} - ${response.body}");
     final data = await _decodeResponse(response);
 
     if (response.statusCode == 200) {

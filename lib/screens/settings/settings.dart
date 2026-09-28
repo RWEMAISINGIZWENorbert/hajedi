@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hajedi/bloc/auth/auth_bloc.dart';
 import 'package:hajedi/bloc/theme/theme_bloc.dart';
 import 'package:hajedi/bloc/theme/theme_event.dart';
 import 'package:hajedi/bloc/theme/theme_state.dart';
@@ -74,9 +75,55 @@ class Settings extends StatelessWidget {
                 );
               },
             ),
+            const Spacer(),
+             BlocListener<AuthBloc, AuthState>(
+          listener: (context, state) {
+            if (state is LogoutSuccessfully) {
+              Navigator.pushNamed(context, '/sign-in');
+            }
+          },
+          child:SafeArea(
+               top: false,
+               child: _buildListTileSettings(
+                  context,
+                  loc.logout,
+                  textColor: const Color.fromARGB(255, 228, 48, 36),
+                  const Icon(
+                    Icons.logout,
+                    color:  Color.fromARGB(255, 228, 48, 36),
+                  ),
+                  (){
+                    context.read<AuthBloc>().add(LogoutRequested());
+                  }
+               )
+            )
+          )
           ],
         ),
       )
     );
   }
+
+  Widget _buildListTileSettings(
+    BuildContext context,
+    String text, 
+    Icon icon, 
+    Function onTap,
+    {Color? textColor, Widget? trailing}
+    ) {
+  return ListTile(
+    leading: icon,
+    title: Padding(
+      padding: const EdgeInsets.only(left: 5),
+      child: textColor != null 
+              ? Text(text, style:  TextStyle(color: textColor),) 
+              : Text(text)
+    ),
+    onTap: () => onTap(),
+    trailing: trailing,
+    // trailing: const Icon(IconlyLight.arrow_right_2),
+  );
+}
+ 
+
 }
