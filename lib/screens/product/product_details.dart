@@ -49,7 +49,8 @@ class ProductDetails extends StatelessWidget {
   ) {
     final showPurchaseCost =
         product.purchaseMethod == 'packet' ||
-        product.purchaseMethod == 'crate';
+        product.purchaseMethod == 'crate' ||
+        product.purchaseMethod == 'sack';
 
     return Scaffold(
       appBar: AppBarComponent(
@@ -143,7 +144,10 @@ class _ProductSummary extends StatelessWidget {
       localizedLabel = loc.units;
     }else if(label == "bottles"){
       localizedLabel = loc.bottles;
-    }else {
+    }else if(label == "sack"){
+      localizedLabel = loc.sack;
+    }
+    else {
       localizedLabel = label;
     }
 
@@ -224,19 +228,27 @@ class _ProductSummary extends StatelessWidget {
                                 ],
                               ),
                               const SizedBox(height: 6),
-                              if(product.purchaseMethod == "packet" || product.purchaseMethod == "crate")
+                              if(product.purchaseMethod == "packet" || product.purchaseMethod == "crate" || product.purchaseMethod == "sack")
                                Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                      product.saleMethod == "bottles"
                                       ? loc.crate_size
-                                      : loc.packet_size,
+                                      : product.purchaseMethod == "sack"
+                                         ? loc.sack_size
+                                         : loc.packet_size,
                                     style: Theme.of(context).textTheme.displaySmall,
                                   ),
                                   Text(
-                                     '${product.unitsPerPackage.toStringAsFixed(2)} ${product.saleMethod == "bottles" ? loc.bottles : loc.units}',
-                                     style: Theme.of(context).textTheme.displaySmall
+                                    '${product.unitsPerPackage.toStringAsFixed(2)} ${
+                                      product.saleMethod == "kg"
+                                         ? "kg"
+                                         : product.saleMethod == "bottles"
+                                        ? loc.bottles 
+                                        : loc.units
+                                    }',
+                                    style: Theme.of(context).textTheme.displaySmall
                                   ),
                                 ],
                               ), 
@@ -270,7 +282,10 @@ class _ProductInformation extends StatelessWidget {
       localizedPurchaseMethod = loc.crate;
     }else if(product.purchaseMethod == "unit"){
       localizedPurchaseMethod = loc.unit;
-    }else {
+    }else if(product.purchaseMethod == "sack"){
+      localizedPurchaseMethod = loc.sack;
+    }
+    else {
       localizedPurchaseMethod = product.purchaseMethod;
     }
     
@@ -315,16 +330,17 @@ class _ProductInformation extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 6),
-                if(product.purchaseMethod == "packet" || product.purchaseMethod == "crate")
+                if(product.purchaseMethod == "packet" || product.purchaseMethod == "crate" || product.purchaseMethod == "sack")
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "${loc.purchase_cost_per} ${product.purchaseMethod == "packet" ? loc.unit : loc.bottle}",
+                      Text(product.purchaseMethod == "sack"
+                        ? "${loc.purchase_cost_per} kg"
+                        : "${loc.purchase_cost_per} ${product.purchaseMethod == "packet" ? loc.unit : loc.bottle}",
                         style: Theme.of(context).textTheme.displaySmall,
                       ),
                       Text( 
-                        '${product.purchaseCost / product.unitsPerPackage}',
+                        '${product.purchaseCost / product.unitsPerPackage} FRW',
                         style: Theme.of(context).textTheme.displaySmall
                       ),
                      ],
@@ -361,16 +377,16 @@ class _ProductInformation extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 6),
-                if(product.purchaseMethod == "packet" || product.purchaseMethod == "crate")
+                if(product.purchaseMethod == "packet" || product.purchaseMethod == "crate" || product.purchaseMethod == "sack")
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "${loc.selling_price_per} ${product.purchaseMethod == "packet" ? loc.packet : loc.crate}",
+                        "${loc.selling_price_per} ${product.purchaseMethod == "sack" ? loc.sack : product.purchaseMethod == "packet" ? loc.packet : loc.crate}",
                         style: Theme.of(context).textTheme.displaySmall,
                       ),
                       Text( 
-                        '${product.sellingPrice * product.unitsPerPackage}',
+                        '${product.sellingPrice * product.unitsPerPackage} FRW',
                         style: Theme.of(context).textTheme.displaySmall
                       ),
                      ],

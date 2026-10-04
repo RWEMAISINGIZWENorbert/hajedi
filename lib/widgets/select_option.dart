@@ -84,6 +84,8 @@ class SelectOption extends StatelessWidget {
          return l10n.units;
       }else if(m == "packets"){
          return l10n.packets;
+      }else if(m == 'sack'){
+         return l10n.sack;
       }else if(m == "crate"){
         return l10n.crate;
       }else if(m == "bottles"){

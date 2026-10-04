@@ -242,6 +242,12 @@ abstract class AppLocalizations {
   /// **'Packet'**
   String get packet;
 
+  /// No description provided for @sack.
+  ///
+  /// In en, this message translates to:
+  /// **'Sack'**
+  String get sack;
+
   /// No description provided for @crate.
   ///
   /// In en, this message translates to:
@@ -727,6 +733,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Crate Size'**
   String get crate_size;
+
+  /// No description provided for @sack_size.
+  ///
+  /// In en, this message translates to:
+  /// **'Sack Size'**
+  String get sack_size;
 
   /// No description provided for @purchase_info.
   ///

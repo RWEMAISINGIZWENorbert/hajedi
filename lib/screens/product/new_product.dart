@@ -57,7 +57,8 @@ void _registerProduct() {
 
   final purchaseMethodRequiresCost =
       _purchaseMethod == 'packet' ||
-      _purchaseMethod == 'crate';
+      _purchaseMethod == 'crate' ||
+      _purchaseMethod == 'sack';
 
   final purchaseCost = purchaseMethodRequiresCost
       ? double.tryParse(_purchaseCostController.text.trim())
@@ -189,6 +190,7 @@ void _registerProduct() {
                   options: const [
                     'packet',
                     'crate',
+                    'sack',
                     'unit',
                     'kg',
                   ],
@@ -225,8 +227,7 @@ SelectOption(
 ),
                 const SizedBox(height: 14),
 
-                if (_purchaseMethod == 'packet' ||
-    _purchaseMethod == 'crate') ...[
+                if (_purchaseMethod == 'packet' || _purchaseMethod == 'crate' || _purchaseMethod == 'sack') ...[
   SimpleText(
     label: '${loc.purchase_cost_per} 1 $_purchaseMethod:',
   ),

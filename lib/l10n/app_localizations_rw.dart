@@ -81,6 +81,9 @@ class AppLocalizationsRw extends AppLocalizations {
   String get packet => 'Ipaki';
 
   @override
+  String get sack => 'Umufuka';
+
+  @override
   String get crate => 'Ikaziye';
 
   @override
@@ -325,6 +328,9 @@ class AppLocalizationsRw extends AppLocalizations {
 
   @override
   String get crate_size => 'Ingano y\'ikaziye';
+
+  @override
+  String get sack_size => 'Ingano y\'umufuka';
 
   @override
   String get purchase_info => 'Amakuru yo kurangra';

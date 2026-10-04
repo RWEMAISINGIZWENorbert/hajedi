@@ -26,7 +26,10 @@ class ProductCard extends StatelessWidget {
            (product.purchaseMethod == "packet" && product.quantityInStock < product.unitsPerPackage)){
              items = product.quantityInStock.toDouble();
              label = product.saleMethod;
-          }else {
+          }else if(product.purchaseMethod == "sack"){
+            items = product.quantityInStock.toDouble();
+            label = product.saleMethod;
+          } else {
             items = product.quantityInStock.toDouble();
             label = product.purchaseMethod;
           }

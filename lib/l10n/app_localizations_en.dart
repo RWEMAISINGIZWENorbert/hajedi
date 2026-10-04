@@ -81,6 +81,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get packet => 'Packet';
 
   @override
+  String get sack => 'Sack';
+
+  @override
   String get crate => 'Crate';
 
   @override
@@ -325,6 +328,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get crate_size => 'Crate Size';
+
+  @override
+  String get sack_size => 'Sack Size';
 
   @override
   String get purchase_info => 'Purchase Info';
