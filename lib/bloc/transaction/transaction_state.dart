@@ -17,6 +17,24 @@ class TransactionsLoaded extends TransactionState {
   });
 }
 
+class ReportsLoading extends TransactionState {}
+
+class ReportsLoaded extends TransactionState {
+  final double totalSales;
+  final double totalPurchases;
+  final double totalExpenses;
+  final DateTime startDate;
+  final DateTime endDate;
+
+  ReportsLoaded({
+    required this.totalSales,
+    required this.totalPurchases,
+    required this.totalExpenses,
+    required this.startDate,
+    required this.endDate,
+  });
+}
+
 class TransactionsError extends TransactionState {
   final String message;
 

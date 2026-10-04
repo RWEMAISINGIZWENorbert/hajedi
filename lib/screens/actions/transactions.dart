@@ -10,14 +10,35 @@ import 'package:hajedi/widgets/transaction/transaction_card.dart';
 import 'package:hajedi/widgets/transaction/transaction_filter_tabs.dart';
 import 'package:iconly/iconly.dart';
 
-class Transactions extends StatelessWidget {
+class Transactions extends StatefulWidget {
   const Transactions({super.key});
+
+  @override
+  State<Transactions> createState() => _TransactionsState();
+}
+
+class _TransactionsState extends State<Transactions> {
+  @override
+  void initState() {
+    super.initState();
+    // Load transactions on initialization
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<TransactionBloc>().add(LoadTransactions());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     
-    return Scaffold(
+    return PopScope(
+      canPop: true,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) {
+          context.read<TransactionBloc>().add(LoadReports());
+        }
+      },
+   child:  Scaffold(
       appBar: AppBarComponent(
         title: loc.transactions,
         icon: InkWell(
@@ -86,9 +107,10 @@ class Transactions extends StatelessWidget {
               ),
             );
           }
-          return const SizedBox.shrink();
+          return Text(state.toString());
         },
       ),
+    )
     );
   }
 }

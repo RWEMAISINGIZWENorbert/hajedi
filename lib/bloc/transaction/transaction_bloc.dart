@@ -43,7 +43,8 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
     on<LoadTransactions>(_onLoadTransactions);
     on<FilterTransactions>(_onFilterTransactions);
     on<RefreshTransactions>(_onRefreshTransactions);
-    
+    on<LoadReports>(_onLoadReports);
+
     add(LoadTransactions());
   }
 
@@ -123,6 +124,87 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
   ) async {
     add(LoadTransactions());
   }
+   
+  Future<void> _onLoadReports( LoadReports event, Emitter<TransactionState> emit, ) async { 
+    emit(ReportsLoading()); 
+    try { 
+      DateTime? startDate = event.startDate; 
+      DateTime? endDate = event.endDate; 
+      if (event.period != null) {
+         final (start, end) = _getDateRangeForPeriod(event.period!); 
+         startDate = start; endDate = end;
+       } else if (startDate == null && endDate == null) {
+         final now = DateTime.now(); 
+         startDate = DateTime(now.year, now.month, now.day, 0, 0, 0); 
+         endDate = DateTime(now.year, now.month, now.day, 23, 59, 59); 
+       } else if (startDate != null && endDate == null) { 
+        endDate = DateTime(startDate.year, startDate.month, startDate.day, 23, 59, 59); 
+      } else if (startDate == null && endDate != null) { 
+        startDate = DateTime(endDate.year, endDate.month, endDate.day, 0, 0, 0); 
+      } 
+
+      final saleState = _saleBloc.state; 
+      final purchaseState = _purchaseBloc.state;
+      final expenseState = _expenseBloc.state; 
+      List<Sale> sales = []; 
+      List<Purchase> purchases = [];
+      List<Expense> expenses = []; 
+        if (saleState is SalesLoadedState) { sales = saleState.sales; } 
+        if (purchaseState is PurchasesLoadedState) { purchases = purchaseState.purchases; } 
+        if (expenseState is ExpensesLoadedState) { expenses = expenseState.expenses; } 
+      final filteredSales = sales.where((sale) {
+         return sale.createdAt.isAfter(startDate!) && sale.createdAt.isBefore(endDate!); 
+         }).toList(); 
+      final filteredPurchases = purchases.where((purchase) { 
+         return purchase.createdAt.isAfter(startDate!) && purchase.createdAt.isBefore(endDate!); 
+         }).toList(); 
+      final filteredExpenses = expenses.where((expense) { 
+         return expense.createdAt.isAfter(startDate!) && expense.createdAt.isBefore(endDate!); 
+         }).toList(); 
+      final totalSales = filteredSales.fold<double>( 0.0, (sum, sale) => sum + sale.totalAmount, ); 
+      final totalPurchases = filteredPurchases.fold<double>( 0.0, (sum, purchase) => sum + purchase.totalCost, ); 
+      final totalExpenses = filteredExpenses.fold<double>( 0.0, (sum, expense) => sum + expense.amount, ); 
+      emit(ReportsLoaded( 
+         totalSales: totalSales, 
+         totalPurchases: totalPurchases, 
+         totalExpenses: totalExpenses, 
+         startDate: startDate!, 
+         endDate: endDate!, 
+         )); 
+      } catch (e) { 
+         emit(TransactionsError(e.toString())); 
+      } 
+   } 
+
+  (DateTime, DateTime) _getDateRangeForPeriod(ReportPeriod period) {
+     final now = DateTime.now();
+     switch (period) {
+       case ReportPeriod.today:
+         final start = DateTime(now.year, now.month, now.day, 0, 0, 0); 
+         final end = DateTime(now.year, now.month, now.day, 23, 59, 59);
+         return (start, end); 
+       case ReportPeriod.yesterday: 
+         final yesterday = now.subtract(const Duration(days: 1)); 
+         final start = DateTime(yesterday.year, yesterday.month, yesterday.day, 0, 0, 0); 
+         final end = DateTime(yesterday.year, yesterday.month, yesterday.day, 23, 59, 59); 
+         return (start, end); 
+       case ReportPeriod.thisWeek: 
+         final currentDay = now.weekday; 
+         final daysToSubtract = currentDay - 1; 
+         final startOfweek = now.subtract(Duration(days: daysToSubtract)); 
+         final start = DateTime(startOfweek.year, startOfweek.month, startOfweek.day, 0, 0, 0); 
+         final end = DateTime(now.year, now.month, now.day, 23, 59, 59); 
+         return (start, end); 
+       case ReportPeriod.thisMonth: 
+         final start = DateTime(now.year, now.month, 1, 0, 0, 0); 
+         final end = DateTime(now.year, now.month + 1, 0, 23, 59, 59); 
+         return (start, end); 
+       case ReportPeriod.thisYear: 
+         final start = DateTime(now.year, 1, 1, 0, 0, 0); 
+         final end = DateTime(now.year, 12, 31, 23, 59, 59); 
+         return (start, end); 
+     } 
+   } 
 
   List<Transaction> _combineAndSortTransactions(
     List<Sale> sales,

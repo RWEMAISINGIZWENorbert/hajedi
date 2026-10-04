@@ -1,12 +1,17 @@
-  
 import 'package:flutter/material.dart';
 
 class DashboardCard extends StatelessWidget {
   final double height;
+  final double sales;
+  final double purchases;
+  final double expenses;
 
   const DashboardCard({
     super.key,
     this.height = 200,
+    this.sales = 0.0,
+    this.purchases = 0.0,
+    this.expenses = 0.0,
   });
 
   @override
@@ -15,6 +20,9 @@ class DashboardCard extends StatelessWidget {
       width: double.infinity,
       height: height,
       child: _cardLayer(
+        sales: sales,
+        purchases: purchases,
+        expenses: expenses,
         color: Colors.deepPurple,
         borderRadius: BorderRadius.circular(12),
         gradient: const LinearGradient(
@@ -37,9 +45,9 @@ Widget _cardLayer({
   required BorderRadius borderRadius,
   Gradient? gradient,
   double opacity = 1.0,
-  double sales = 0,
-  double purchases = 0,
-  double expenses = 0,
+  required double sales,
+  required double purchases,
+  required double expenses,
 }) {
   return Opacity(
     opacity: opacity,
