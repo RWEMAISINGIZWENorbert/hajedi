@@ -46,6 +46,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hajedi/bloc/product/product_bloc.dart';
+import 'dart:async';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -146,7 +147,9 @@ class MyApp extends StatelessWidget {
                       );
                       return isSupported ? locale : const Locale('en');
                     },
-                  home: const AuthGate(),
+                  home: const AuthChecker(
+                    child: AuthGate(),
+                  ),
                 );
 
             },
@@ -181,5 +184,62 @@ class AuthGate extends StatelessWidget {
         return const SignIn();
       },
     );
+  }
+}
+
+
+class AuthChecker extends StatefulWidget {
+  final Widget child;
+ 
+  const AuthChecker({super.key, required this.child});
+ 
+  @override
+  State<AuthChecker> createState() => _AuthCheckerState();
+}
+ 
+class _AuthCheckerState extends State<AuthChecker> with WidgetsBindingObserver {
+  Timer? _authCheckTimer;
+ 
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    
+    // Check authentication every 30 seconds
+    _authCheckTimer = Timer.periodic(const Duration(seconds: 2), (_) {
+      _checkAuthAndRedirect();
+    });
+  }
+ 
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _authCheckTimer?.cancel();
+    super.dispose();
+  }
+ 
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // Check auth when app resumes from background
+    if (state == AppLifecycleState.resumed) {
+      _checkAuthAndRedirect();
+    }
+  }
+ 
+  Future<void> _checkAuthAndRedirect() async {
+    final isAuthenticated = await AuthUtils.isAuthenticated();
+    
+    if (!isAuthenticated && mounted) {
+      // Navigate to sign-in if not authenticated
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        '/sign-in',
+        (route) => false,
+      );
+    }
+  }
+ 
+  @override
+  Widget build(BuildContext context) {
+    return widget.child;
   }
 }

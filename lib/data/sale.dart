@@ -150,6 +150,9 @@ class Sale extends HiveObject {
   }
 
   static DateTime _toDateTime(dynamic value) {
-    return DateTime.tryParse(value?.toString() ?? '') ?? DateTime.now();
+    final parsed = DateTime.tryParse(value?.toString() ?? '');
+    if (parsed == null) return DateTime.now();
+     // Convert UTC to local time
+     return parsed.toLocal();
   }
 }

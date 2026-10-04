@@ -1,3 +1,4 @@
+import 'package:hajedi/core/network/sync_metadata.dart';
 import 'package:hajedi/data/expense.dart';
 import 'package:hajedi/data/purchase.dart';
 import 'package:hajedi/data/purchase_item.dart';
@@ -57,6 +58,7 @@ class HiveRegistry {
     Hive.box<Expense>('expenses').clear(),
     Hive.box<Supplier>('suppliers').clear(),
     Hive.box<Customer>('customers').clear(),
+    SyncMetadata.clear(),
    ]);
   }
   

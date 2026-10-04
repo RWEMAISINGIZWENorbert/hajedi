@@ -115,9 +115,11 @@ class UserRepository {
       },
     );
 
+     print('Remove User Response: ${response.statusCode} - ${response.body}');
+      
     final data = jsonDecode(response.body);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 204) {
       return;
     }
 

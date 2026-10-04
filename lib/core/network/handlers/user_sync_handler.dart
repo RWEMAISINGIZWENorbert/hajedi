@@ -1,20 +1,28 @@
 import 'dart:convert';
 
 import 'package:hajedi/core/network/sync_handler.dart';
+import 'package:hajedi/core/network/sync_manager.dart';
 import 'package:hajedi/core/network/sync_metadata.dart';
 import 'package:hajedi/data/sync_queue_item.dart';
 import 'package:hajedi/data/user.dart';
 import 'package:hajedi/repository/user_repository.dart';
 import 'package:hive/hive.dart';
+import 'package:hajedi/utils/auth_utils.dart';
 
 class UserSyncHandler implements SyncHandler {
   final Box<User> userBox;
   final UserRepository userRepository;
+  SyncManager? syncManager;
 
   UserSyncHandler({
     required this.userBox,
     required this.userRepository,
+    this.syncManager,
   });
+
+  void setSyncManager(SyncManager manager) {
+    syncManager = manager;
+  }
 
   @override
   String get entityType => 'user';
@@ -109,6 +117,7 @@ class UserSyncHandler implements SyncHandler {
   @override
   Future<void> pullRemoteChanges() async {
     final cursor = await SyncMetadata.getUsersCursor();
+    print("User: pull Remote Changes");
 
     final response = await userRepository.getUserChanges(
       since: cursor,
@@ -134,11 +143,20 @@ class UserSyncHandler implements SyncHandler {
 
     for (final item in deleted) {
       final deletedData = Map<String, dynamic>.from(item as Map);
+      print("The DeletedData $deletedData");
       final clientId = deletedData['clientId']?.toString();
+      print("Te Deleted ClientId: $clientId");
+      final user = userBox.get(clientId);
+      print("The Deleted User: $user");
+      final deletedUserName = user?.name;
+      print("The Deleted User Name: $deletedUserName");
 
       if (clientId != null && clientId.isNotEmpty) {
-        await userBox.delete(clientId);
+         await userBox.delete(clientId);
       }
+        
+      // Check if deleted user is the currently authenticated user
+      await _logoutIfCurrentUserDeleted(deletedUserName);
     }
 
     final nextCursor = response['nextCursor']?.toString();
@@ -199,4 +217,26 @@ class UserSyncHandler implements SyncHandler {
 
     return clientId;
   }
+
+  Future<void> _logoutIfCurrentUserDeleted(String? deletedUserName) async {
+    print("=== _logoutIfCurrentUserDeleted called with: $deletedUserName ===");
+  if (deletedUserName == null || deletedUserName.isEmpty) {
+    return;
+  }
+
+  // Get current authenticated user
+  final currentUser = await AuthUtils.readUser();
+  
+  if (currentUser != null && currentUser.name == deletedUserName) {
+    // Clear auth data to logout the user
+    await AuthUtils.clearAuthData();
+    print("==================== User logged out due to deletion ====================");
+    await syncManager?.stop();
+    
+    // Note: The app will need to detect this on the next state check
+    // and navigate to login screen. This can be done in main.dart
+    // by checking AuthUtils.isAuthenticated() on app start/resume.
+  }
+}
+
 }

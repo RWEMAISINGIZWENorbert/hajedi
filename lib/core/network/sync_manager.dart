@@ -55,7 +55,7 @@ class SyncManager {
     required Box<Customer> customerBox,
     required Box<Supplier> supplierBox,
   }) {
-    return SyncManager(
+    final syncManager = SyncManager(
       queueBox: queueBox,
       handlers: [
         UserSyncHandler(
@@ -90,6 +90,14 @@ class SyncManager {
         ),
       ],
     );
+
+    // Set the syncManager reference for UserSyncHandler
+    final userHandler = syncManager.handlers.first as UserSyncHandler;
+    userHandler.syncManager = syncManager;
+
+    return syncManager;
+   
+
   }
 
   Future<void> start() async {

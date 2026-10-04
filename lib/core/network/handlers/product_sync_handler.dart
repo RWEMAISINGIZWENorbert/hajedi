@@ -5,6 +5,7 @@ import 'package:hajedi/core/network/sync_metadata.dart';
 import 'package:hajedi/data/product.dart';
 import 'package:hajedi/data/sync_queue_item.dart';
 import 'package:hajedi/repository/product_repository.dart';
+import 'package:hajedi/utils/auth_utils.dart';
 import 'package:hive/hive.dart';
 
 class ProductSyncHandler implements SyncHandler {
@@ -132,6 +133,12 @@ class ProductSyncHandler implements SyncHandler {
   @override
   Future<void> pullRemoteChanges() async {
     final cursor = await SyncMetadata.getProductsCursor();
+    
+    final token = await AuthUtils.getToken();
+
+    if(token == null || token.isEmpty) {
+      return;
+    }
 
     final response = await productRepository.getProductChanges(
       since: cursor,
