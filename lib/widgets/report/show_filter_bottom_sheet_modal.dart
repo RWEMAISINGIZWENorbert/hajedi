@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hajedi/bloc/transaction/transaction_bloc.dart';
+import 'package:hajedi/bloc/transaction/transaction_event.dart';
+import 'package:hajedi/bloc/transaction/transaction_state.dart';
 import 'package:hajedi/l10n/app_localizations.dart';
 import 'package:hajedi/widgets/primary_button.dart';
 import 'package:hajedi/widgets/report/date_range_picker.dart';
@@ -73,6 +77,8 @@ Future<dynamic> showFilterBottomSheetModal(
                         onTap: () {
                           setState(() {
                             currentSelection = 'today';
+                            startTime = null;
+                            endTime = null;
                           });
                         },
                       ),
@@ -83,6 +89,8 @@ Future<dynamic> showFilterBottomSheetModal(
                         onTap: () {
                           setState(() {
                             currentSelection = 'yesterday';
+                            startTime = null;
+                            endTime = null;
                           });
                         },
                       ),
@@ -93,6 +101,8 @@ Future<dynamic> showFilterBottomSheetModal(
                         onTap: () {
                           setState(() {
                             currentSelection = 'thisWeek';
+                            startTime = null;
+                            endTime = null;
                           });
                         },
                       ),
@@ -103,8 +113,9 @@ Future<dynamic> showFilterBottomSheetModal(
                         onTap: () {
                           setState(() {
                             currentSelection = 'thisMonth';
+                            startTime = null;
+                            endTime = null;
                           });
-                         
                         },
                       ),
                       const SizedBox(height: 8),
@@ -114,7 +125,9 @@ Future<dynamic> showFilterBottomSheetModal(
                         onTap: () {
                           setState(() {
                             currentSelection = 'thisYear';
-                          });                        
+                            startTime = null;
+                            endTime = null;
+                          });
                         },
                       ),
                     ],
@@ -125,25 +138,65 @@ Future<dynamic> showFilterBottomSheetModal(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: SimpleText(label: "Custom Dates"),
                 ),
+                const SizedBox(height: 8),
                 DateRangePicker(
                   startDate: startTime,
                   endDate: endTime,
-                  onStartDateChanged: (val) => setState(() => startTime = val),
-                  onEndDateChanged:(val) => setState(() => endTime = val),
+                  onStartDateChanged: (val) {
+                    setState(() {
+                      startTime = val;
+                      currentSelection = null;
+                    });
+                  },
+                  onEndDateChanged: (val) {
+                    setState(() {
+                      endTime = val;
+                      currentSelection = null;
+                    });
+                  },
                 ),
                 const SizedBox(height: 16),
                 PrimaryButton(
                   label: loc.apply,
                   onPressed: () {
-                    // Navigator.pop(context, {
-                    //   'period': currentSelection,
-                    //   'startDate': startTime,
-                    //   'endDate': endTime,
-                    // });
+                    final bloc = context.read<TransactionBloc>();
+                    
+                    if (startTime == null && endTime == null && currentSelection != null) {
+                      // Use period
+                      ReportPeriod? period;
+                      switch (currentSelection) {
+                        case 'today':
+                          period = ReportPeriod.today;
+                          break;
+                        case 'yesterday':
+                          period = ReportPeriod.yesterday;
+                          break;
+                        case 'thisWeek':
+                          period = ReportPeriod.thisWeek;
+                          break;
+                        case 'thisMonth':
+                          period = ReportPeriod.thisMonth;
+                          break;
+                        case 'thisYear':
+                          period = ReportPeriod.thisYear;
+                          break;
+                        default:
+                          period = null;
+                      }
+                      bloc.add(LoadReports(period: period));
+                    } else if (startTime != null || endTime != null) {
+                      // Use custom dates
+                      bloc.add(LoadReports(
+                        startDate: startTime,
+                        endDate: endTime,
+                      ));
+                    }
+                    
+                    Navigator.of(context).pop();
                   },
                 ),
                 const SizedBox(height: 16),
-               ],
+              ],
             ),
           ),
         ),
