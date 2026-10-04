@@ -112,5 +112,13 @@
   "purchase_info": "Purchase Info",
   "sell_info": "Sell Info",
   "per": "Per",
-  "logout": "logout"
+  "logout": "logout",
+  "filter": "Filter",
+  "date_range": "Date Range",
+  "today": "Today",
+  "this_week": "This Week",
+  "this_month": "This Month",
+  "this_year": "This Year",
+  "yesterday": "Yesterday",
+  "apply": "Apply"
 }

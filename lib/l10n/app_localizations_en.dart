@@ -69,10 +69,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get today => 'Today';
 
   @override
-  String get this_week => 'This week';
+  String get this_week => 'This Week';
 
   @override
-  String get this_year => 'This year';
+  String get this_year => 'This Year';
 
   @override
   String get all => 'All';
@@ -114,7 +114,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get select_sale_method => 'Select the sale method';
 
   @override
-  String get this_month => 'This month';
+  String get this_month => 'This Month';
 
   @override
   String get update_user => 'Update user';
@@ -340,4 +340,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get per => 'Per';
+
+  @override
+  String get filter => 'Filter';
+
+  @override
+  String get date_range => 'Date Range';
+
+  @override
+  String get yesterday => 'Yesterday';
+
+  @override
+  String get apply => 'Apply';
 }

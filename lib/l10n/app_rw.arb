@@ -113,5 +113,13 @@
   "purchase_info": "Amakuru yo kurangra",
   "sell_info": "Amakuru yo kugurisha",
   "per": "Ku",
-  "logout": "Sohoka"
+  "logout": "Sohoka",
+  "filter": "Hitamo",
+  "date_range": "Amatariki",
+  "today": "Uyu munsi",
+  "this_week": "Iki cyumweru",
+  "this_month": "Uku kwezi",
+  "this_year": "Uyu mwaka",
+  "yesterday": "Ejo hashize",
+  "apply": "Emeza"
 }

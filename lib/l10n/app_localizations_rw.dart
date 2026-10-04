@@ -69,10 +69,10 @@ class AppLocalizationsRw extends AppLocalizations {
   String get today => 'Uyu munsi';
 
   @override
-  String get this_week => 'Muri iki cyumweru';
+  String get this_week => 'Iki cyumweru';
 
   @override
-  String get this_year => 'Muri uyu mwaka';
+  String get this_year => 'Uyu mwaka';
 
   @override
   String get all => 'Byose';
@@ -114,7 +114,7 @@ class AppLocalizationsRw extends AppLocalizations {
   String get select_sale_method => 'Hitamo uburyo bwo kugurisha';
 
   @override
-  String get this_month => 'Muri uku kwezi';
+  String get this_month => 'Uku kwezi';
 
   @override
   String get update_user => 'Vugurura umukozi';
@@ -340,4 +340,16 @@ class AppLocalizationsRw extends AppLocalizations {
 
   @override
   String get per => 'Ku';
+
+  @override
+  String get filter => 'Hitamo';
+
+  @override
+  String get date_range => 'Amatariki';
+
+  @override
+  String get yesterday => 'Ejo hashize';
+
+  @override
+  String get apply => 'Emeza';
 }

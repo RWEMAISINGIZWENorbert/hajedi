@@ -221,13 +221,13 @@ abstract class AppLocalizations {
   /// No description provided for @this_week.
   ///
   /// In en, this message translates to:
-  /// **'This week'**
+  /// **'This Week'**
   String get this_week;
 
   /// No description provided for @this_year.
   ///
   /// In en, this message translates to:
-  /// **'This year'**
+  /// **'This Year'**
   String get this_year;
 
   /// No description provided for @all.
@@ -311,7 +311,7 @@ abstract class AppLocalizations {
   /// No description provided for @this_month.
   ///
   /// In en, this message translates to:
-  /// **'This month'**
+  /// **'This Month'**
   String get this_month;
 
   /// No description provided for @update_user.
@@ -757,6 +757,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Per'**
   String get per;
+
+  /// No description provided for @filter.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter'**
+  String get filter;
+
+  /// No description provided for @date_range.
+  ///
+  /// In en, this message translates to:
+  /// **'Date Range'**
+  String get date_range;
+
+  /// No description provided for @yesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get yesterday;
+
+  /// No description provided for @apply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get apply;
 }
 
 class _AppLocalizationsDelegate
