@@ -7,8 +7,20 @@ import 'package:hajedi/widgets/app_bar.dart';
 import 'package:hajedi/widgets/product/list_tile_product.dart';
 import 'package:hajedi/widgets/loading.dart';
 
-class Products extends StatelessWidget {
+class Products extends StatefulWidget {
   const Products({super.key});
+
+  @override
+  State<Products> createState() => _ProductsState();
+}
+
+class _ProductsState extends State<Products> {
+  
+  @override
+  void initState() {
+    super.initState();
+    context.read<ProductBloc>().add(LoadLocalProducts());
+  }
 
   @override
   Widget build(BuildContext context) {
