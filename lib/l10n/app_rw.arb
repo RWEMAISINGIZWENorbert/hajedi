@@ -128,5 +128,6 @@
   "no_credits": "Nta deni rihari",
   "select_payment_method": "Hitamo uburyo bwo kwishyura",
   "confirm": "Emeza",
-  "cancel": "Hagarika"
+  "cancel": "Hagarika",
+  "payedCredits": "Amadeni yishyuwe"
 }

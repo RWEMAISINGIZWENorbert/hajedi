@@ -23,6 +23,8 @@ class ReportsLoaded extends TransactionState {
   final double totalSales;
   final double totalPurchases;
   final double totalExpenses;
+  final double totalCredits;          
+  final double collectedCredits; 
   final DateTime startDate;
   final DateTime endDate;
 
@@ -30,6 +32,8 @@ class ReportsLoaded extends TransactionState {
     required this.totalSales,
     required this.totalPurchases,
     required this.totalExpenses,
+    required this.totalCredits,
+    required this.collectedCredits,
     required this.startDate,
     required this.endDate,
   });

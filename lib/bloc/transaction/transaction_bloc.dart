@@ -164,10 +164,15 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
       final totalSales = filteredSales.fold<double>( 0.0, (sum, sale) => sum + sale.totalAmount, ); 
       final totalPurchases = filteredPurchases.fold<double>( 0.0, (sum, purchase) => sum + purchase.totalCost, ); 
       final totalExpenses = filteredExpenses.fold<double>( 0.0, (sum, expense) => sum + expense.amount, ); 
+      final totalCredits = filteredSales.fold<double>(0.0, (sum, sale) => sale.paymentMethod.toLowerCase() == 'credit' ? sum + sale.totalAmount : sum);
+      final collectedCredits = filteredSales.fold<double>(0.0, (sum, sale) => sale.originalPaymentMethod.toLowerCase() == 'credit' && sale.paymentMethod.toLowerCase() != 'credit' ? sum + sale.totalAmount  : sum );
+
       emit(ReportsLoaded( 
          totalSales: totalSales, 
          totalPurchases: totalPurchases, 
          totalExpenses: totalExpenses, 
+         totalCredits: totalCredits,
+         collectedCredits: collectedCredits,
          startDate: startDate!, 
          endDate: endDate!, 
          )); 

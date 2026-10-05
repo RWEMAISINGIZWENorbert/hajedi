@@ -823,6 +823,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel'**
   String get cancel;
+
+  /// No description provided for @payedCredits.
+  ///
+  /// In en, this message translates to:
+  /// **'Payed Credits'**
+  String get payedCredits;
 }
 
 class _AppLocalizationsDelegate

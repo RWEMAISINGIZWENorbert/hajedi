@@ -80,6 +80,16 @@ class _ReportsState extends State<Reports> {
                   name: loc.expenses,
                   totalAmount: state.totalExpenses,
                 ),
+                const SizedBox(height: 16),
+                ReportCard(
+                  name: loc.credits,
+                  totalAmount: state.totalCredits,
+                ),
+                const SizedBox(height: 16),
+                ReportCard(
+                  name: loc.payedCredits,
+                  totalAmount: state.collectedCredits,
+                ),
               ],
             );
           }

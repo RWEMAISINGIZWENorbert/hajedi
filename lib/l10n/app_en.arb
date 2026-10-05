@@ -127,5 +127,6 @@
   "no_credits": "No credits found",
   "select_payment_method": "Select Payment Method",
   "confirm": "Confirm",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "payedCredits": "Payed Credits"
 }
