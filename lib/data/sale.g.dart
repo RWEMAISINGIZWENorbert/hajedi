@@ -26,18 +26,19 @@ class SaleAdapter extends TypeAdapter<Sale> {
       customerId: fields[6] as String?,
       customerClientId: fields[7] as String?,
       paymentMethod: fields[8] as String,
-      syncStatus: fields[9] as String,
-      createdAt: fields[10] as DateTime?,
-      updatedAt: fields[11] as DateTime?,
-      voidedAt: fields[12] as DateTime?,
-      failureReason: fields[13] as String?,
+      originalPaymentMethod: fields[9] as String,
+      syncStatus: fields[10] as String,
+      createdAt: fields[11] as DateTime?,
+      updatedAt: fields[12] as DateTime?,
+      voidedAt: fields[13] as DateTime?,
+      failureReason: fields[14] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Sale obj) {
     writer
-      ..writeByte(14)
+      ..writeByte(15)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -57,14 +58,16 @@ class SaleAdapter extends TypeAdapter<Sale> {
       ..writeByte(8)
       ..write(obj.paymentMethod)
       ..writeByte(9)
-      ..write(obj.syncStatus)
+      ..write(obj.originalPaymentMethod)
       ..writeByte(10)
-      ..write(obj.createdAt)
+      ..write(obj.syncStatus)
       ..writeByte(11)
-      ..write(obj.updatedAt)
+      ..write(obj.createdAt)
       ..writeByte(12)
-      ..write(obj.voidedAt)
+      ..write(obj.updatedAt)
       ..writeByte(13)
+      ..write(obj.voidedAt)
+      ..writeByte(14)
       ..write(obj.failureReason);
   }
 

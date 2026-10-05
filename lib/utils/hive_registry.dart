@@ -11,14 +11,24 @@ import 'package:hajedi/data/supplier.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hajedi/data/product.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 
 class HiveRegistry {
 
   static Future init() async {
-       await Hive.initFlutter();
-       registerAdapters();
-       await openAllBoxes();
-   } 
+  // Use Application Support directory (not synced by OneDrive)
+  final appDocDir = await getApplicationSupportDirectory();
+  final hiveDir = Directory('${appDocDir.path}/hive');
+  
+  if (!await hiveDir.exists()) {
+    await hiveDir.create(recursive: true);
+  }
+  
+  Hive.init(hiveDir.path);
+  registerAdapters();
+  await openAllBoxes();
+}
 
    static void registerAdapters() {
      Hive.registerAdapter(UserAdapter());

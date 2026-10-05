@@ -70,7 +70,7 @@
   "all_transactions": "Byose",
   "sales": "Ibyagurishijwe",
   "purchases": "Ibyaranguwe",
-  "expenses": "Ibyasohowe",
+  "expenses": "Ibyasohotse",
   "no_transactions_found": "Nta myitwarire iboneye",
   "transaction_details": "Ibisobanuro by'imyitwarire",
   "sync_status": "Imiterere yo guhuza",
@@ -121,5 +121,12 @@
   "this_month": "Uku kwezi",
   "this_year": "Uyu mwaka",
   "yesterday": "Ejo hashize",
-  "apply": "Emeza"
+  "apply": "Emeza",
+  "pay_credit": "Ishyura Ideni",
+  "items": "Ibintu",
+  "amount": "Amafaranga",
+  "no_credits": "Nta deni rihari",
+  "select_payment_method": "Hitamo uburyo bwo kwishyura",
+  "confirm": "Emeza",
+  "cancel": "Hagarika"
 }

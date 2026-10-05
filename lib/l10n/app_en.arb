@@ -120,5 +120,12 @@
   "this_month": "This Month",
   "this_year": "This Year",
   "yesterday": "Yesterday",
-  "apply": "Apply"
+  "apply": "Apply",
+  "pay_credit": "Pay Credit",
+  "items": "Items",
+  "amount": "Amount",
+  "no_credits": "No credits found",
+  "select_payment_method": "Select Payment Method",
+  "confirm": "Confirm",
+  "cancel": "Cancel"
 }

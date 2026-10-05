@@ -28,6 +28,8 @@ class SaleBloc extends Bloc<SaleEvent, SaleState> {
     on<LoadLocalSales>(_onLoadLocalSales);
     on<CreateSaleLocal>(_onCreateSaleLocal);
     on<RetrySaleSync>(_onRetrySaleSync);
+    on<PayCreditSaleLocal>(_onPayCreditSaleLocal);
+    on<LoadCreditSales>(_onLoadCreditSales);
 
     _saleBox.watch().listen((_) {
       add(LoadLocalSales());
@@ -40,6 +42,16 @@ class SaleBloc extends Bloc<SaleEvent, SaleState> {
     final sales = _saleBox.values.toList();
     emit(SalesLoadedState(sales));
   }
+
+  Future<void> _onLoadCreditSales(
+  LoadCreditSales event,
+  Emitter<SaleState> emit,
+) async {
+  final creditSales = _saleBox.values
+      .where((sale) => sale.paymentMethod == 'credit')
+      .toList();
+  emit(SalesLoadedState(creditSales));
+}
 
   Future<void> _onCreateSaleLocal(CreateSaleLocal event, Emitter<SaleState> emit) async {
     emit(SaleCreatingState());
@@ -71,6 +83,7 @@ class SaleBloc extends Bloc<SaleEvent, SaleState> {
         totalAmount: totalAmount,
         customerClientId: event.customerClientId,
         paymentMethod: event.paymentMethod,
+        originalPaymentMethod: event.paymentMethod,
         syncStatus: 'pending',
       );
 
@@ -93,6 +106,43 @@ class SaleBloc extends Bloc<SaleEvent, SaleState> {
       emit(SaleErrorState(error.toString()));
     }
   }
+
+  Future<void> _onPayCreditSaleLocal(
+  PayCreditSaleLocal event,
+  Emitter<SaleState> emit,
+) async {
+  try {
+    final sale = _saleBox.get(event.clientId);
+    
+    if (sale == null) {
+      emit(SaleErrorState('Sale not found'));
+      return;
+    }
+
+    // Update sale locally
+    final updatedSale = sale.copyWith(
+      paymentMethod: event.newPaymentMethod,
+      updatedAt: DateTime.now(),
+    );
+
+    await _saleBox.put(event.clientId, updatedSale);
+
+    // Enqueue for sync
+    await SyncQueue.enqueue(
+      entityType: 'sale',
+      operationType: 'payCredit',
+      payload: {
+        'clientId': event.clientId,
+        'newPaymentMethod': event.newPaymentMethod,
+      },
+    );
+
+    emit(SalesLoadedState(_saleBox.values.toList()));
+    await _syncManager.syncIfConnected();
+  } catch (error) {
+    emit(SaleErrorState(error.toString()));
+  }
+}
 
   Future<void> _projectLocalStockDecrement(List<CartItem> cartItems) async {
     for (final item in cartItems) {

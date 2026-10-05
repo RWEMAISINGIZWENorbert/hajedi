@@ -214,7 +214,7 @@ class AppLocalizationsRw extends AppLocalizations {
   String get purchases => 'Ibyaranguwe';
 
   @override
-  String get expenses => 'Ibyasohowe';
+  String get expenses => 'Ibyasohotse';
 
   @override
   String get no_transactions_found => 'Nta myitwarire iboneye';
@@ -352,4 +352,25 @@ class AppLocalizationsRw extends AppLocalizations {
 
   @override
   String get apply => 'Emeza';
+
+  @override
+  String get pay_credit => 'Ishyura Ideni';
+
+  @override
+  String get items => 'Ibintu';
+
+  @override
+  String get amount => 'Amafaranga';
+
+  @override
+  String get no_credits => 'Nta deni rihari';
+
+  @override
+  String get select_payment_method => 'Hitamo uburyo bwo kwishyura';
+
+  @override
+  String get confirm => 'Emeza';
+
+  @override
+  String get cancel => 'Hagarika';
 }

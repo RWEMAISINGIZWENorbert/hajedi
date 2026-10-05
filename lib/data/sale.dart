@@ -33,18 +33,21 @@ class Sale extends HiveObject {
   final String paymentMethod;
 
   @HiveField(9)
-  final String syncStatus;
+  final String originalPaymentMethod;
 
   @HiveField(10)
-  final DateTime createdAt;
+  final String syncStatus;
 
   @HiveField(11)
-  final DateTime updatedAt;
+  final DateTime createdAt;
 
   @HiveField(12)
-  final DateTime? voidedAt;
+  final DateTime updatedAt;
 
   @HiveField(13)
+  final DateTime? voidedAt;
+
+  @HiveField(14)
   final String? failureReason;
 
   Sale({
@@ -57,6 +60,7 @@ class Sale extends HiveObject {
     this.customerId,
     this.customerClientId,
     required this.paymentMethod,
+    required this.originalPaymentMethod,
     this.syncStatus = 'pending',
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -81,6 +85,7 @@ class Sale extends HiveObject {
       customerId: json['customerId']?.toString(),
       customerClientId: json['customerClientId']?.toString(),
       paymentMethod: json['paymentMethod']?.toString() ?? 'cash',
+      originalPaymentMethod: json['originalPaymentMethod']?.toString() ?? 'cash',
       syncStatus: json['syncStatus']?.toString() ?? 'synced',
       createdAt: _toDateTime(json['createdAt']),
       updatedAt: _toDateTime(json['updatedAt']),
@@ -102,6 +107,7 @@ class Sale extends HiveObject {
       'customerId': customerId,
       'customerClientId': customerClientId,
       'paymentMethod': paymentMethod,
+      'originalPaymentMethod': originalPaymentMethod,
       'syncStatus': syncStatus,
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),
@@ -120,6 +126,7 @@ class Sale extends HiveObject {
     String? customerId,
     String? customerClientId,
     String? paymentMethod,
+    String? originalPaymentMethod,
     String? syncStatus,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -136,6 +143,7 @@ class Sale extends HiveObject {
       customerId: customerId ?? this.customerId,
       customerClientId: customerClientId ?? this.customerClientId,
       paymentMethod: paymentMethod ?? this.paymentMethod,
+      originalPaymentMethod: originalPaymentMethod ?? this.originalPaymentMethod,
       syncStatus: syncStatus ?? this.syncStatus,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,

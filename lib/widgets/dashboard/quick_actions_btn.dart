@@ -61,12 +61,10 @@ class QuickActionsBtn extends StatelessWidget {
                           );
                           break;
                         case 5:
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const BalesScreen(),
-                          //   ),
-                          // );  
+                          Navigator.pushNamed(
+                            context,
+                            '/credits',
+                          );  
                           break;
                         // case 5:
                         //   context.read<AuthBloc>().add(const LogoutEvent());

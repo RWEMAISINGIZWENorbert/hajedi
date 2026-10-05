@@ -90,4 +90,25 @@ class SaleRepository {
       throw Exception(data['message'] ?? 'Failed to void sale');
     }
   }
+
+  Future<void> payCreditSale({
+    required String clientId,
+    required String newPaymentMethod,
+  }) async {
+    final url = Uri.parse('$_baseUrl/transaction/sales/$clientId/pay-credit');
+    final headers = await _headers();
+ 
+    final response = await http.post(
+      url,
+      headers: headers,
+      body: jsonEncode({
+        'newPaymentMethod': newPaymentMethod,
+      }),
+    );
+ 
+    if (response.statusCode != 200) {
+      final data = await _decodeResponse(response);
+      throw Exception(data['message'] ?? 'Failed to pay credit sale');
+    }
+  }
 }

@@ -352,4 +352,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get apply => 'Apply';
+
+  @override
+  String get pay_credit => 'Pay Credit';
+
+  @override
+  String get items => 'Items';
+
+  @override
+  String get amount => 'Amount';
+
+  @override
+  String get no_credits => 'No credits found';
+
+  @override
+  String get select_payment_method => 'Select Payment Method';
+
+  @override
+  String get confirm => 'Confirm';
+
+  @override
+  String get cancel => 'Cancel';
 }

@@ -29,6 +29,7 @@ import 'package:hajedi/l10n/app_localizations.dart';
 import 'package:hajedi/l10n/fallback_localizations.dart';
 import 'package:hajedi/repository/auth_repository.dart';
 import 'package:hajedi/screens/actions/Sale.dart' as sale_screen;
+import 'package:hajedi/screens/actions/credits.dart';
 import 'package:hajedi/screens/actions/customers.dart';
 import 'package:hajedi/screens/actions/purchase.dart' as purchase_screen;
 import 'package:hajedi/screens/actions/suppliers.dart';
@@ -52,11 +53,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: kIsWeb
-        ? HydratedStorageDirectory.web
-        : HydratedStorageDirectory(
-            (await getApplicationDocumentsDirectory()).path,
-          ),
-  );
+      ? HydratedStorageDirectory.web
+      : HydratedStorageDirectory(
+          (await getApplicationSupportDirectory()).path,
+        ),
+   );
   await HiveRegistry.init();
   // await HiveRegistry.clearALlBoxes();
   await dotenv.load(fileName: ".env");
@@ -127,6 +128,7 @@ class MyApp extends StatelessWidget {
                      '/transactions': (context) => const Transactions(),
                      '/customers': (context) => const Customers(),
                      '/suppliers': (context) => const Suppliers(),
+                     '/credits': (context) => const Credits(),
                   },
                   theme: lightTheme,
                   darkTheme: darkTheme,

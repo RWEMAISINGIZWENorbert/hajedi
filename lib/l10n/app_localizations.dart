@@ -781,6 +781,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Apply'**
   String get apply;
+
+  /// No description provided for @pay_credit.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay Credit'**
+  String get pay_credit;
+
+  /// No description provided for @items.
+  ///
+  /// In en, this message translates to:
+  /// **'Items'**
+  String get items;
+
+  /// No description provided for @amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get amount;
+
+  /// No description provided for @no_credits.
+  ///
+  /// In en, this message translates to:
+  /// **'No credits found'**
+  String get no_credits;
+
+  /// No description provided for @select_payment_method.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Payment Method'**
+  String get select_payment_method;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
 }
 
 class _AppLocalizationsDelegate

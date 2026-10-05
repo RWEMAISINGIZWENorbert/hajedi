@@ -29,6 +29,8 @@ class SaleSyncHandler implements SyncHandler {
     switch (item.operationType) {
       case 'create':
         return _createSale(payload);
+      case 'payCredit':
+        return _payCredit(payload);
       default:
         return false;
     }
@@ -85,6 +87,52 @@ class SaleSyncHandler implements SyncHandler {
 
       // Restore local stock
       await _restoreLocalStock(items);
+
+      return false;
+    }
+  }
+
+  Future<bool> _payCredit(Map<String, dynamic> payload) async {
+    final clientId = payload['clientId']?.toString();
+    final newPaymentMethod = payload['newPaymentMethod']?.toString();
+
+    if (clientId == null || newPaymentMethod == null) {
+      return false;
+    }
+
+    try {
+      await saleRepository.payCreditSale(
+        clientId: clientId,
+        newPaymentMethod: newPaymentMethod,
+      );
+
+      final storedSale = saleBox.get(clientId);
+
+      if (storedSale != null) {
+        await saleBox.put(
+          clientId,
+          storedSale.copyWith(
+            syncStatus: 'synced',
+            updatedAt: DateTime.now(),
+          ),
+        );
+      }
+
+      return true;
+    } catch (error) {
+      // Mark sale as rejected
+      final storedSale = saleBox.get(clientId);
+
+      if (storedSale != null) {
+        await saleBox.put(
+          clientId,
+          storedSale.copyWith(
+            syncStatus: 'rejected',
+            failureReason: error.toString(),
+            updatedAt: DateTime.now(),
+          ),
+        );
+      }
 
       return false;
     }
