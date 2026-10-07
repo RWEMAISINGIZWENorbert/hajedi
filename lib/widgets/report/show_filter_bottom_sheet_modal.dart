@@ -9,17 +9,18 @@ import 'package:hajedi/widgets/text.dart';
 import 'package:hajedi/widgets/report/date_period_selector.dart';
 import 'package:iconly/iconly.dart';
 
-Future<dynamic> showFilterBottomSheetModal(
+Future<Map<String, dynamic>?> showFilterBottomSheetModal(
   BuildContext context,
   AppLocalizations loc,
-  {String? selectedPeriod}
+  {String? selectedPeriod,
+  DateTime? startDate,
+  DateTime? endDate}
 ) {
   String? currentSelection = selectedPeriod;
+  DateTime? startTime = startDate;
+  DateTime? endTime = endDate;
 
-  DateTime? startTime;
-  DateTime? endTime;
-
-  return showModalBottomSheet(
+  return showModalBottomSheet<Map<String, dynamic>>(
     context: context,
     isScrollControlled: true,
     builder: (context) => StatefulBuilder(
@@ -183,15 +184,20 @@ Future<dynamic> showFilterBottomSheetModal(
                           period = null;
                       }
                       bloc.add(LoadReports(period: period));
+                      Navigator.of(context).pop({'period': currentSelection});
                     } else if (startTime != null || endTime != null) {
                       // Use custom dates
                       bloc.add(LoadReports(
                         startDate: startTime,
                         endDate: endTime,
                       ));
+                      Navigator.of(context).pop({
+                        'startDate': startTime,
+                        'endDate': endTime,
+                      });
+                    } else {
+                      Navigator.of(context).pop();
                     }
-                    
-                    Navigator.of(context).pop();
                   },
                 ),
                 const SizedBox(height: 16),

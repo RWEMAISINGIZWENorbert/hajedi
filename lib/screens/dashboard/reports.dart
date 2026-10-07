@@ -8,7 +8,9 @@ import 'package:hajedi/widgets/app_bar.dart';
 import 'package:hajedi/widgets/loading.dart';
 import 'package:hajedi/widgets/report/report_card.dart';
 import 'package:hajedi/widgets/report/show_filter_bottom_sheet_modal.dart';
+import 'package:hajedi/widgets/text.dart';
 import 'package:iconly/iconly.dart';
+import 'package:intl/intl.dart';
 
 class Reports extends StatefulWidget {
   const Reports({super.key});
@@ -19,6 +21,8 @@ class Reports extends StatefulWidget {
 
 class _ReportsState extends State<Reports> {
   String? selectedPeriod;
+  DateTime? startDate;
+  DateTime? endDate;
 
   @override
   void initState() {
@@ -32,6 +36,31 @@ class _ReportsState extends State<Reports> {
     });
   }
 
+  String _getDisplayText(AppLocalizations loc) {
+    if (startDate != null && endDate != null) {
+      // Display date range
+      final formatter = DateFormat('dd/MM/yyyy');
+      return '${formatter.format(startDate!)} - ${formatter.format(endDate!)}';
+    } else if (selectedPeriod != null) {
+      // Display localized period text
+      switch (selectedPeriod) {
+        case 'today':
+          return loc.today;
+        case 'yesterday':
+          return loc.yesterday;
+        case 'thisWeek':
+          return loc.this_week;
+        case 'thisMonth':
+          return loc.this_month;
+        case 'thisYear':
+          return loc.this_year;
+        default:
+          return '';
+      }
+    }
+    return loc.today;
+  }
+
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
@@ -41,12 +70,28 @@ class _ReportsState extends State<Reports> {
         title: loc.reports,
         actions: [
           InkWell(
-            onTap: () {
-              showFilterBottomSheetModal(
+            onTap: () async {
+              final result = await showFilterBottomSheetModal(
                 context,
                 loc,
                 selectedPeriod: selectedPeriod,
+                startDate: startDate,
+                endDate: endDate,
               );
+              
+              if (result != null) {
+                setState(() {
+                  if (result['period'] != null) {
+                    selectedPeriod = result['period'];
+                    startDate = null;
+                    endDate = null;
+                  } else {
+                    selectedPeriod = null;
+                    startDate = result['startDate'];
+                    endDate = result['endDate'];
+                  }
+                });
+              }
             },
             child: const Icon(IconlyLight.filter),
           ),
@@ -63,9 +108,14 @@ class _ReportsState extends State<Reports> {
 
           if (state is ReportsLoaded) {
             return ListView(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
               shrinkWrap: true,
               children: [
+                Center(
+                  child: SimpleText(
+                    label: _getDisplayText(loc),
+                  ),
+                ),
                 ReportCard(
                   name: loc.sales,
                   totalAmount: state.totalSales,
