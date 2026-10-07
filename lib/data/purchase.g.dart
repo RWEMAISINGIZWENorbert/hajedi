@@ -23,7 +23,7 @@ class PurchaseAdapter extends TypeAdapter<Purchase> {
       supplierId: fields[3] as String?,
       supplierClientId: fields[4] as String?,
       items: (fields[5] as List).cast<PurchaseItem>(),
-      totalItems: fields[6] as int,
+      totalItems: fields[6] as num,
       totalCost: fields[7] as double,
       paymentMethod: fields[8] as String,
       syncStatus: fields[9] as String,

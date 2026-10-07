@@ -82,7 +82,7 @@ class _PurchaseState extends State<Purchase> {
                                     productClientId: product.clientId,
                                     productName: product.name,
                                     unitPrice: product.purchaseCost, // Use purchase cost for purchases
-                                    quantity: 1,
+                                    quantity: product.purchaseMethod == "sack" ? 0.5 : 1 ,
                                   ),
                                 ),
                               );

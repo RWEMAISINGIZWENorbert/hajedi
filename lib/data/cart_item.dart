@@ -1,7 +1,7 @@
 class CartItem {
   final String productClientId;
   final String productName;
-  final int quantity;
+  final num quantity;
   final double unitPrice;
 
   const CartItem({
@@ -16,7 +16,7 @@ class CartItem {
   CartItem copyWith({
     String? productClientId,
     String? productName,
-    int? quantity,
+    num? quantity,
     double? unitPrice,
   }) {
     return CartItem(
@@ -40,7 +40,7 @@ class CartItem {
     return CartItem(
       productClientId: json['productClientId']?.toString() ?? '',
       productName: json['productName']?.toString() ?? '',
-      quantity: json['quantity'] as int? ?? 0,
+      quantity: json['quantity'] as num? ?? 0,
       unitPrice: (json['unitPrice'] as num?)?.toDouble() ?? 0.0,
     );
   }

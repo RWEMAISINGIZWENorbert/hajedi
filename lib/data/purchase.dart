@@ -24,7 +24,7 @@ class Purchase extends HiveObject {
   final List<PurchaseItem> items;
 
   @HiveField(6)
-  final int totalItems;
+  final num totalItems;
 
   @HiveField(7)
   final double totalCost;
@@ -78,7 +78,7 @@ class Purchase extends HiveObject {
       supplierId: json['supplierId']?.toString(),
       supplierClientId: json['supplierClientId']?.toString(),
       items: itemsList,
-      totalItems: json['totalItems'] as int? ?? 0,
+      totalItems: json['totalItems'] as num? ?? 0,
       totalCost: _toDouble(json['totalCost']),
       paymentMethod: json['paymentMethod']?.toString() ?? 'cash',
       syncStatus: json['syncStatus']?.toString() ?? 'synced',
@@ -117,7 +117,7 @@ class Purchase extends HiveObject {
     String? supplierId,
     String? supplierClientId,
     List<PurchaseItem>? items,
-    int? totalItems,
+    num? totalItems,
     double? totalCost,
     String? paymentMethod,
     String? syncStatus,

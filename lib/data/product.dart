@@ -32,7 +32,7 @@ class Product extends HiveObject {
   int unitsPerPackage;
 
   @HiveField(9)
-  int quantityInStock;
+  num quantityInStock;
 
   @HiveField(10)
   bool isSynced;
@@ -78,7 +78,8 @@ class Product extends HiveObject {
       purchaseCost: _toDouble(json['purchaseCost']),
       sellingPrice: _toDouble(json['sellingPrice']),
       unitsPerPackage: _toInt(json['unitsPerPackage'], fallback: 1),
-      quantityInStock: _toInt(json['quantityInStock']),
+      // quantityInStock: _toInt(json['quantityInStock']),
+      quantityInStock: json['quantityInStock'],
       isSynced: json['isSynced'] as bool? ?? true,
       createdAt: _toDateTime(json['createdAt']),
       updatedAt: _toDateTime(json['updatedAt']),
@@ -117,7 +118,7 @@ class Product extends HiveObject {
     double? purchaseCost,
     double? sellingPrice,
     int? unitsPerPackage,
-    int? quantityInStock,
+    num? quantityInStock,
     bool? isSynced,
     DateTime? createdAt,
     DateTime? updatedAt,

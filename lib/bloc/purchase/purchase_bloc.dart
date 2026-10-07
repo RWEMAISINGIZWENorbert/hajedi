@@ -52,7 +52,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState> {
     // Create modified cart items with adjusted quantities
     final modifiedCartItems = event.cartItems.map((cartItem) {
       final product = _productBox.get(cartItem.productClientId);
-      if((product?.purchaseMethod == "packet") || (product?.purchaseMethod == "crate")){
+      if((product?.purchaseMethod == "packet") || (product?.purchaseMethod == "crate") || (product?.purchaseMethod == "sack")){
         final adjustedQuantity = cartItem.quantity * product!.unitsPerPackage;
         return cartItem.copyWith(quantity: adjustedQuantity);
       }
@@ -70,7 +70,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState> {
       );
     }).toList();
 
-    final totalItems = purchaseItems.fold(0, (sum, item) => sum + item.quantity);
+    final totalItems = purchaseItems.fold(0.0, (sum, item) => sum + item.quantity);
     final totalCost = purchaseItems.fold(0.0, (sum, item) => sum + item.totalCost);
 
     final purchase = Purchase(

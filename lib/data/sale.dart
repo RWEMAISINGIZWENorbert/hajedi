@@ -18,7 +18,7 @@ class Sale extends HiveObject {
   final List<SaleItem> items;
 
   @HiveField(4)
-  final int totalItems;
+  final num totalItems;
 
   @HiveField(5)
   final double totalAmount;
@@ -80,7 +80,7 @@ class Sale extends HiveObject {
       clientId: json['clientId']?.toString() ?? '',
       userId: json['userId']?.toString() ?? '',
       items: itemsList,
-      totalItems: json['totalItems'] as int? ?? 0,
+      totalItems: json['totalItems'] as num? ?? 0,
       totalAmount: _toDouble(json['totalAmount']),
       customerId: json['customerId']?.toString(),
       customerClientId: json['customerClientId']?.toString(),

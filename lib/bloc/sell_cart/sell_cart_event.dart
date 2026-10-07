@@ -16,7 +16,7 @@ class RemoveFromSellCart extends SellCartEvent {
 
 class UpdateSellCartQuantity extends SellCartEvent {
   final String productClientId;
-  final int quantity;
+  final num quantity;
 
   UpdateSellCartQuantity(this.productClientId, this.quantity);
 }

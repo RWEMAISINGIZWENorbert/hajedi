@@ -19,7 +19,7 @@ class PurchaseItemAdapter extends TypeAdapter<PurchaseItem> {
     return PurchaseItem(
       productId: fields[0] as String,
       productClientId: fields[1] as String,
-      quantity: fields[2] as int,
+      quantity: fields[2] as num,
       purchaseCost: fields[3] as double,
       totalCost: fields[4] as double,
     );

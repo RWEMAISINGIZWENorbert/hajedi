@@ -11,7 +11,7 @@ class PurchaseItem extends HiveObject {
   final String productClientId;
 
   @HiveField(2)
-  final int quantity;
+  final num quantity;
 
   @HiveField(3)
   final double purchaseCost;
@@ -31,7 +31,7 @@ class PurchaseItem extends HiveObject {
     return PurchaseItem(
       productId: json['productId']?.toString() ?? json['_id']?.toString() ?? '',
       productClientId: json['productClientId']?.toString() ?? '',
-      quantity: json['quantity'] as int? ?? 0,
+      quantity: json['quantity'] as num? ?? 0,
       purchaseCost: _toDouble(json['purchaseCost']),
       totalCost: _toDouble(json['totalCost']),
     );

@@ -16,7 +16,7 @@ class RemoveFromPurchaseCart extends PurchaseCartEvent {
 
 class UpdatePurchaseCartQuantity extends PurchaseCartEvent {
   final String productClientId;
-  final int quantity;
+  final num quantity;
 
   UpdatePurchaseCartQuantity(this.productClientId, this.quantity);
 }

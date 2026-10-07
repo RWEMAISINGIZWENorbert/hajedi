@@ -19,7 +19,7 @@ class SaleItemAdapter extends TypeAdapter<SaleItem> {
     return SaleItem(
       productId: fields[0] as String,
       productClientId: fields[1] as String,
-      quantity: fields[2] as int,
+      quantity: fields[2] as num,
       price: fields[3] as double,
       totalAmount: fields[4] as double,
     );

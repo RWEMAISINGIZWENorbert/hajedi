@@ -26,7 +26,7 @@ class ProductAdapter extends TypeAdapter<Product> {
       purchaseCost: fields[6] as double,
       sellingPrice: fields[7] as double,
       unitsPerPackage: fields[8] as int,
-      quantityInStock: fields[9] as int,
+      quantityInStock: fields[9] as num,
       isSynced: fields[10] as bool,
       createdAt: fields[11] as DateTime?,
       updatedAt: fields[12] as DateTime?,

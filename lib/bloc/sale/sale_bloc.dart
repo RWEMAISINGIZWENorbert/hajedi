@@ -71,7 +71,7 @@ class SaleBloc extends Bloc<SaleEvent, SaleState> {
         );
       }).toList();
 
-      final totalItems = saleItems.fold(0, (sum, item) => sum + item.quantity);
+      final totalItems = saleItems.fold(0.0, (sum, item) => sum + item.quantity);
       final totalAmount = saleItems.fold(0.0, (sum, item) => sum + item.totalAmount);
 
       final sale = Sale(

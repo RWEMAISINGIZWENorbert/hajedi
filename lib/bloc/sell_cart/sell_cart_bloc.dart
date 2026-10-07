@@ -50,7 +50,7 @@ class SellCartBloc extends Bloc<SellCartEvent, SellCartState> {
     final items = _getItemsFromState();
     final updatedItems = items.map((item) {
       if (item.productClientId == event.productClientId) {
-        return item.copyWith(quantity: event.quantity);
+        return item.copyWith(quantity: event.quantity.toDouble());
       }
       return item;
     }).toList();

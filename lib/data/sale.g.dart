@@ -21,7 +21,7 @@ class SaleAdapter extends TypeAdapter<Sale> {
       clientId: fields[1] as String,
       userId: fields[2] as String,
       items: (fields[3] as List).cast<SaleItem>(),
-      totalItems: fields[4] as int,
+      totalItems: fields[4] as num,
       totalAmount: fields[5] as double,
       customerId: fields[6] as String?,
       customerClientId: fields[7] as String?,
