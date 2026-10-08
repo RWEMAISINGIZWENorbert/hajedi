@@ -4,6 +4,7 @@ import 'package:hajedi/bloc/transaction/transaction_bloc.dart';
 import 'package:hajedi/bloc/transaction/transaction_event.dart';
 import 'package:hajedi/bloc/transaction/transaction_state.dart';
 import 'package:hajedi/l10n/app_localizations.dart';
+import 'package:hajedi/screens/dashboard/report_details.dart';
 import 'package:hajedi/widgets/app_bar.dart';
 import 'package:hajedi/widgets/loading.dart';
 import 'package:hajedi/widgets/report/report_card.dart';
@@ -61,6 +62,25 @@ class _ReportsState extends State<Reports> {
     return loc.today;
   }
 
+  ReportPeriod? _getReportPeriod() {
+  if (selectedPeriod == null) return null;
+  
+  switch (selectedPeriod) {
+    case 'today':
+      return ReportPeriod.today;
+    case 'yesterday':
+      return ReportPeriod.yesterday;
+    case 'thisWeek':
+      return ReportPeriod.thisWeek;
+    case 'thisMonth':
+      return ReportPeriod.thisMonth;
+    case 'thisYear':
+      return ReportPeriod.thisYear;
+    default:
+      return null;
+  }
+}
+
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
@@ -116,14 +136,44 @@ class _ReportsState extends State<Reports> {
                     label: _getDisplayText(loc),
                   ),
                 ),
-                ReportCard(
-                  name: loc.sales,
-                  totalAmount: state.totalSales,
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ReportDetails(
+                          reportType: ReportType.sales,
+                          period: _getReportPeriod(),
+                          startDate: startDate,
+                          endDate: endDate,
+                        ),
+                      ),
+                    );
+                  },
+                  child: ReportCard(
+                    name: loc.sales,
+                    totalAmount: state.totalSales,
+                  ),
                 ),
                 const SizedBox(height: 16),
-                ReportCard(
-                  name: loc.purchases,
-                  totalAmount: state.totalPurchases,
+                InkWell(
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ReportDetails(
+                          reportType: ReportType.purchases,
+                          period: _getReportPeriod(),
+                          startDate: startDate,
+                          endDate: endDate,
+                        ),
+                      ),
+                    );
+                  },
+                  child: ReportCard(
+                    name: loc.purchases,
+                    totalAmount: state.totalPurchases,
+                  ),
                 ),
                 const SizedBox(height: 16),
                 ReportCard(
@@ -131,14 +181,44 @@ class _ReportsState extends State<Reports> {
                   totalAmount: state.totalExpenses,
                 ),
                 const SizedBox(height: 16),
-                ReportCard(
-                  name: loc.credits,
-                  totalAmount: state.totalCredits,
+                InkWell(
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ReportDetails(
+                          reportType: ReportType.credits,
+                          period: _getReportPeriod(),
+                          startDate: startDate,
+                          endDate: endDate,
+                        ),
+                      ),
+                    );
+                  },
+                  child: ReportCard(
+                    name: loc.credits,
+                    totalAmount: state.totalCredits,
+                  ),
                 ),
                 const SizedBox(height: 16),
-                ReportCard(
-                  name: loc.payedCredits,
-                  totalAmount: state.collectedCredits,
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ReportDetails(
+                          reportType: ReportType.creditsCollected,
+                          period: _getReportPeriod(),
+                          startDate: startDate,
+                          endDate: endDate,
+                        ),
+                      ),
+                    );
+                  },
+                  child: ReportCard(
+                    name: loc.payedCredits,
+                    totalAmount: state.collectedCredits,
+                  ),
                 ),
               ],
             );

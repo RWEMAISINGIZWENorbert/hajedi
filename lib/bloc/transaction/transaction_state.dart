@@ -39,6 +39,22 @@ class ReportsLoaded extends TransactionState {
   });
 }
 
+class ReportDetailsLoading extends TransactionState {}
+ 
+class ReportDetailsLoaded extends TransactionState {
+  final List<Transaction> transactions;
+  final ReportType reportType;
+  final DateTime startDate;
+  final DateTime endDate;
+ 
+  ReportDetailsLoaded({
+    required this.transactions,
+    required this.reportType,
+    required this.startDate,
+    required this.endDate,
+  });
+}
+
 class TransactionsError extends TransactionState {
   final String message;
 

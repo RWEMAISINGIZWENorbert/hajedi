@@ -44,6 +44,7 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
     on<FilterTransactions>(_onFilterTransactions);
     on<RefreshTransactions>(_onRefreshTransactions);
     on<LoadReports>(_onLoadReports);
+    on<LoadReportDetails>(_onLoadReportDetails);
 
     add(LoadTransactions());
   }
@@ -180,6 +181,103 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
          emit(TransactionsError(e.toString())); 
       } 
    } 
+
+  Future<void> _onLoadReportDetails(
+  LoadReportDetails event,
+  Emitter<TransactionState> emit,
+) async {
+  emit(ReportDetailsLoading());
+  try {
+    DateTime? startDate = event.startDate;
+    DateTime? endDate = event.endDate;
+    
+    if (event.period != null) {
+      final (start, end) = _getDateRangeForPeriod(event.period!);
+      startDate = start;
+      endDate = end;
+    } else if (startDate == null && endDate == null) {
+      final now = DateTime.now();
+      startDate = DateTime(now.year, now.month, now.day, 0, 0, 0);
+      endDate = DateTime(now.year, now.month, now.day, 23, 59, 59);
+    } else if (startDate != null && endDate == null) {
+      endDate = DateTime(startDate.year, startDate.month, startDate.day, 23, 59, 59);
+    } else if (startDate == null && endDate != null) {
+      startDate = DateTime(endDate.year, endDate.month, endDate.day, 0, 0, 0);
+    }
+ 
+    final saleState = _saleBloc.state;
+    final purchaseState = _purchaseBloc.state;
+    final expenseState = _expenseBloc.state;
+    
+    List<Sale> sales = [];
+    List<Purchase> purchases = [];
+    List<Expense> expenses = [];
+    
+    if (saleState is SalesLoadedState) {
+      sales = saleState.sales;
+    }
+    if (purchaseState is PurchasesLoadedState) {
+      purchases = purchaseState.purchases;
+    }
+    if (expenseState is ExpensesLoadedState) {
+      expenses = expenseState.expenses;
+    }
+ 
+    // Filter by date range
+    final filteredSales = sales.where((sale) {
+      return sale.createdAt.isAfter(startDate!) && sale.createdAt.isBefore(endDate!);
+    }).toList();
+    
+    final filteredPurchases = purchases.where((purchase) {
+      return purchase.createdAt.isAfter(startDate!) && purchase.createdAt.isBefore(endDate!);
+    }).toList();
+    
+    final filteredExpenses = expenses.where((expense) {
+      return expense.createdAt.isAfter(startDate!) && expense.createdAt.isBefore(endDate!);
+    }).toList();
+ 
+    // Filter by report type
+    List<Transaction> reportTransactions = [];
+    
+    switch (event.reportType) {
+      case ReportType.sales:
+        reportTransactions = filteredSales.map(_saleToTransaction).toList();
+        break;
+      case ReportType.purchases:
+        reportTransactions = filteredPurchases.map(_purchaseToTransaction).toList();
+        break;
+      case ReportType.expenses:
+        reportTransactions = filteredExpenses.map(_expenseToTransaction).toList();
+        break;
+      case ReportType.credits:
+        reportTransactions = filteredSales
+            .where((sale) => sale.paymentMethod.toLowerCase() == 'credit')
+            .map(_saleToTransaction)
+            .toList();
+        break;
+      case ReportType.creditsCollected:
+        reportTransactions = filteredSales
+            .where((sale) => 
+                sale.originalPaymentMethod.toLowerCase() == 'credit' && 
+                sale.paymentMethod.toLowerCase() != 'credit')
+            .map(_saleToTransaction)
+            .toList();
+        break;
+    }
+ 
+    // Sort by createdAt descending (newest first)
+    reportTransactions.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+ 
+    emit(ReportDetailsLoaded(
+      transactions: reportTransactions,
+      reportType: event.reportType,
+      startDate: startDate!,
+      endDate: endDate!,
+    ));
+  } catch (e) {
+    emit(TransactionsError(e.toString()));
+  }
+} 
 
   (DateTime, DateTime) _getDateRangeForPeriod(ReportPeriod period) {
      final now = DateTime.now();

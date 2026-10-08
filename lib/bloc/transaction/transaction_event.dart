@@ -8,6 +8,14 @@ enum ReportPeriod {
   thisYear,
 }
 
+enum ReportType {
+  sales,
+  purchases,
+  expenses,
+  credits,
+  creditsCollected,
+}
+
 abstract class TransactionEvent {}
 
 class LoadTransactions extends TransactionEvent {}
@@ -26,6 +34,20 @@ class LoadReports extends TransactionEvent {
   final ReportPeriod? period;
  
   LoadReports({
+    this.startDate,
+    this.endDate,
+    this.period,
+  });
+}
+
+class LoadReportDetails extends TransactionEvent {
+  final ReportType reportType;
+  final DateTime? startDate;
+  final DateTime? endDate;
+  final ReportPeriod? period;
+
+  LoadReportDetails({
+    required this.reportType,
     this.startDate,
     this.endDate,
     this.period,
