@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hajedi/data/transaction.dart';
 import 'package:hajedi/l10n/app_localizations.dart';
+import 'package:hajedi/screens/actions/transaction_detail.dart';
 import 'package:intl/intl.dart';
 import 'package:iconly/iconly.dart';
 
@@ -14,93 +15,120 @@ class TransactionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {    
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Top row: Icon + Transaction Type + Customer Name | Amount + Date
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Left side: Icon + Transaction Type + Customer Name
-                Expanded(
-                  child: Row(
-                    children: [
-                      // Icon
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: _getTypeColor().withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(8),
+    return InkWell(
+      onTap: () {
+         Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => TransactionDetail(transaction: transaction),
+          ),
+        );
+      },
+      child: Card(
+        elevation: 0,
+        color: Colors.transparent,
+        margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Top row: Icon + Transaction Type + Customer Name | Amount + Date
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Left side: Icon + Transaction Type + Customer Name
+                  Expanded(
+                    child: Row(
+                      children: [
+                        // Icon
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: _getTypeColor().withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Icon(
+                            _getTypeIcon(),
+                            color: _getTypeColor(),
+                            size: 20,
+                          ),
                         ),
-                        child: Icon(
-                          _getTypeIcon(),
-                          color: _getTypeColor(),
-                          size: 20,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      // Transaction Type + Customer Name
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              transaction.typeLabel,
-                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: _getTypeColor(),
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              transaction.displayTitle,
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        const SizedBox(width: 12),
+                        // Transaction Type + Customer Name
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                transaction.typeLabel,
+                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                      color: _getTypeColor(),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                '${transaction.displayTitle} • ${transaction.amount.toStringAsFixed(2)} frw',
+                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                     fontWeight: FontWeight.w500,
                                   ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
                         ),
+                      ],
+                    ),
+                  ),
+                  // Right side: Amount + Date
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      // Amount
+                      // Text(
+                      //   '${transaction.amount.toStringAsFixed(2)} frw',
+                      //   style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      //         color: _getAmountColor(),
+                      //         fontWeight: FontWeight.bold,
+                      //       ),
+                      // ),
+      
+                      const SizedBox(height: 4),
+                      // Date
+                      Row(
+                        children: [
+                          Text(
+                            _formatDate(transaction.createdAt),
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                  color: Colors.grey,
+                                ),
+                          ),
+                          Column(
+                        children: [
+                          const SizedBox(height: 25, width:10 ),
+                          Icon(
+                              Icons.arrow_forward_ios,
+                              size: 16,
+                              color: Colors.grey.withValues(alpha: 0.3),
+                            ),
+                        ],
+                      ),
+                        ],
                       ),
                     ],
                   ),
-                ),
-                // Right side: Amount + Date
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    // Amount
-                    Text(
-                      '${transaction.amount.toStringAsFixed(2)} frw',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: _getAmountColor(),
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
-                    const SizedBox(height: 4),
-                    // Date
-                    Text(
-                      _formatDate(transaction.createdAt),
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: Colors.grey,
-                          ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            // Bottom row: Status
-            Row(
-              children: [
-                _buildStatusChip(context),
-              ],
-            ),
-          ],
+                ],
+              ),
+              // const SizedBox(height: 12),
+              // Bottom row: Status
+              // Row(
+              //   children: [
+              //     _buildStatusChip(context),
+              //   ],
+              // ),
+            ],
+          ),
         ),
       ),
     );
