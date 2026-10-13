@@ -96,6 +96,7 @@ class _ReportDetailsState extends State<ReportDetails> {
         icon: InkWell(
           onTap: () {
             Navigator.pop(context);
+            context.read<TransactionBloc>().add(LoadReports(period: widget.period));
           },
           child: const Icon(IconlyLight.arrow_left_circle),
         ),

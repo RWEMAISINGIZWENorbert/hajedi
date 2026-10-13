@@ -182,7 +182,7 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
       } 
    } 
 
-  Future<void> _onLoadReportDetails(
+Future<void> _onLoadReportDetails(
   LoadReportDetails event,
   Emitter<TransactionState> emit,
 ) async {
@@ -204,7 +204,7 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
     } else if (startDate == null && endDate != null) {
       startDate = DateTime(endDate.year, endDate.month, endDate.day, 0, 0, 0);
     }
- 
+
     final saleState = _saleBloc.state;
     final purchaseState = _purchaseBloc.state;
     final expenseState = _expenseBloc.state;
@@ -222,7 +222,7 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
     if (expenseState is ExpensesLoadedState) {
       expenses = expenseState.expenses;
     }
- 
+
     // Filter by date range
     final filteredSales = sales.where((sale) {
       return sale.createdAt.isAfter(startDate!) && sale.createdAt.isBefore(endDate!);
@@ -235,16 +235,24 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
     final filteredExpenses = expenses.where((expense) {
       return expense.createdAt.isAfter(startDate!) && expense.createdAt.isBefore(endDate!);
     }).toList();
- 
+
     // Filter by report type
     List<Transaction> reportTransactions = [];
     
     switch (event.reportType) {
       case ReportType.sales:
-        reportTransactions = filteredSales.map(_saleToTransaction).toList();
+        final salesTransactions = filteredSales.map(_saleToTransaction).toList();
+        // Consolidate items by productClientId
+        if (salesTransactions.isNotEmpty) {
+          reportTransactions = [_createConsolidatedTransaction(salesTransactions, event.reportType)];
+        }
         break;
       case ReportType.purchases:
-        reportTransactions = filteredPurchases.map(_purchaseToTransaction).toList();
+        final purchasesTransactions = filteredPurchases.map(_purchaseToTransaction).toList();
+        // Consolidate items by productClientId
+        if (purchasesTransactions.isNotEmpty) {
+          reportTransactions = [_createConsolidatedTransaction(purchasesTransactions, event.reportType)];
+        }
         break;
       case ReportType.expenses:
         reportTransactions = filteredExpenses.map(_expenseToTransaction).toList();
@@ -264,10 +272,10 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
             .toList();
         break;
     }
- 
+
     // Sort by createdAt descending (newest first)
     reportTransactions.sort((a, b) => b.createdAt.compareTo(a.createdAt));
- 
+
     emit(ReportDetailsLoaded(
       transactions: reportTransactions,
       reportType: event.reportType,
@@ -277,7 +285,7 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
   } catch (e) {
     emit(TransactionsError(e.toString()));
   }
-} 
+}
 
   (DateTime, DateTime) _getDateRangeForPeriod(ReportPeriod period) {
      final now = DateTime.now();
@@ -403,4 +411,102 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
     await _expenseSubscription?.cancel();
     return super.close();
   }
+  
+
+/// Consolidates items from multiple transactions by productClientId
+/// Returns a map where key is productClientId and value is consolidated item data
+Map<String, Map<String, dynamic>> _consolidateItems(List<Transaction> transactions) {
+  final Map<String, Map<String, dynamic>> consolidated = {};
+  
+  for (final transaction in transactions) {
+    final items = transaction.rawData['items'] as List?;
+    if (items == null) continue;
+    
+    for (final item in items) {
+      if (item is! Map<String, dynamic>) continue;
+      
+      final productClientId = item['productClientId']?.toString();
+      if (productClientId == null || productClientId.isEmpty) continue;
+      
+      final quantity = (item['quantity'] as num?)?.toDouble() ?? 0.0;
+      final price = transaction.type == TransactionType.purchase
+          ? (item['purchaseCost'] as num?)?.toDouble() ?? 0.0
+          : (item['price'] as num?)?.toDouble() ?? 0.0;
+      final totalAmount = (item['totalAmount'] as num?)?.toDouble() ?? (price * quantity);
+      
+      if (consolidated.containsKey(productClientId)) {
+        // Sum quantities and amounts
+        final existing = consolidated[productClientId]!;
+        existing['quantity'] = (existing['quantity'] as num) + quantity;
+        existing['totalAmount'] = (existing['totalAmount'] as num) + totalAmount;
+        // Keep the price from the first occurrence or calculate average
+        existing['price'] = price;
+        existing['purchaseCost'] = price;
+      } else {
+        // Add new item
+        consolidated[productClientId] = {
+          'productClientId': productClientId,
+          'productId': item['productId']?.toString() ?? '',
+          'quantity': quantity,
+          'price': price,
+          'purchaseCost': price,
+          'totalAmount': totalAmount,
+        };
+      }
+    }
+  }
+  
+  return consolidated;
+}
+
+/// Creates a consolidated transaction from multiple transactions
+Transaction _createConsolidatedTransaction(List<Transaction> transactions, ReportType reportType) {
+  if (transactions.isEmpty) {
+    // Return empty transaction if no transactions
+    return Transaction(
+      clientId: '',
+      type: reportType == ReportType.sales ? TransactionType.sale : TransactionType.purchase,
+      createdAt: DateTime.now(),
+      amount: 0.0,
+      status: 'synced',
+      rawData: {'items': []},
+    );
+  }
+  
+  // Consolidate items
+  final consolidatedItems = _consolidateItems(transactions);
+  final itemsList = consolidatedItems.values.toList();
+  
+  // Calculate total amount
+  final totalAmount = transactions.fold<double>(
+    0.0,
+    (sum, t) => sum + t.amount,
+  );
+  
+  // Use the most recent transaction's data for common fields
+  final mostRecent = transactions.reduce((a, b) => 
+    a.createdAt.isAfter(b.createdAt) ? a : b
+  );
+  
+  // Create consolidated rawData
+  final consolidatedRawData = Map<String, dynamic>.from(mostRecent.rawData);
+  consolidatedRawData['items'] = itemsList;
+  consolidatedRawData['totalItems'] = itemsList.fold<int>(
+    0,
+    (sum, item) => sum + ((item['quantity'] as num).toInt()),
+  );
+  
+  return Transaction(
+    clientId: mostRecent.clientId,
+    type: mostRecent.type,
+    createdAt: mostRecent.createdAt,
+    amount: totalAmount,
+    status: mostRecent.status,
+    rawData: consolidatedRawData,
+    userId: mostRecent.userId,
+    paymentMethod: mostRecent.paymentMethod,
+    customerName: mostRecent.customerName,
+    supplierName: mostRecent.supplierName,
+  );
+}
 }

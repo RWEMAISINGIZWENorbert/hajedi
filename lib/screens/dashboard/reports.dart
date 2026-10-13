@@ -32,7 +32,7 @@ class _ReportsState extends State<Reports> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<TransactionBloc>().add(LoadReports(period: ReportPeriod.today));
       setState(() {
-        selectedPeriod = 'today';
+        selectedPeriod = selectedPeriod ?? 'today';
       });
     });
   }
@@ -122,7 +122,7 @@ class _ReportsState extends State<Reports> {
         builder: (context, state) {
           if (state is ReportsLoading) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: Loading(),
             );
           }
 
