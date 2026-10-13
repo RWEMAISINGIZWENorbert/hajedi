@@ -90,74 +90,79 @@ class _ReportDetailsState extends State<ReportDetails> {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      appBar: AppBarComponent(
-        title: '',
-        icon: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-            context.read<TransactionBloc>().add(LoadReports(period: widget.period));
-          },
-          child: const Icon(IconlyLight.arrow_left_circle),
+    return PopScope(
+      onPopInvokedWithResult: (didPop, result){
+         context.read<TransactionBloc>().add(LoadReports(period: widget.period));
+      },
+      child: Scaffold(
+        appBar: AppBarComponent(
+          title: '',
+          icon: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+              context.read<TransactionBloc>().add(LoadReports(period: widget.period));
+            },
+            child: const Icon(IconlyLight.arrow_left_circle),
+          ),
         ),
-      ),
-      body: BlocBuilder<TransactionBloc, TransactionState>(
-        builder: (context, state) {
-          if (state is ReportDetailsLoading) {
-            return const Center(child: Loading());
-          }
-
-          if (state is ReportDetailsLoaded) {
-            return SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  children: [
-                    // Section 2: Report type and date range/period
-                    Center(
-                      child: SimpleText(
-                        label: '${_getReportTypeLabel(loc)}\n${_getDisplayText(loc)}',
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-                    
-                    // Section 3: Table
-                    if (state.transactions.isEmpty)
+        body: BlocBuilder<TransactionBloc, TransactionState>(
+          builder: (context, state) {
+            if (state is ReportDetailsLoading) {
+              return const Center(child: Loading());
+            }
+      
+            if (state is ReportDetailsLoaded) {
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      // Section 2: Report type and date range/period
                       Center(
-                        child: Text(
-                          'No transactions found',
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: Colors.grey,
-                              ),
+                        child: SimpleText(
+                          label: '${_getReportTypeLabel(loc)}\n${_getDisplayText(loc)}',
                         ),
-                      )
-                    else
-                      _buildTable(context, state.transactions),
+                      ),
+                      const SizedBox(height: 24),
+                      
+                      // Section 3: Table
+                      if (state.transactions.isEmpty)
+                        Center(
+                          child: Text(
+                            'No transactions found',
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: Colors.grey,
+                                ),
+                          ),
+                        )
+                      else
+                        _buildTable(context, state.transactions),
+                    ],
+                  ),
+                ),
+              );
+            }
+      
+            if (state is TransactionsError) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(IconlyLight.danger, size: 48, color: Colors.red),
+                    const SizedBox(height: 16),
+                    Text(
+                      state.message,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                      textAlign: TextAlign.center,
+                    ),
                   ],
                 ),
-              ),
-            );
-          }
-
-          if (state is TransactionsError) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(IconlyLight.danger, size: 48, color: Colors.red),
-                  const SizedBox(height: 16),
-                  Text(
-                    state.message,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            );
-          }
-
-          return const Center(child: Loading());
-        },
+              );
+            }
+      
+            return const Center(child: Loading());
+          },
+        ),
       ),
     );
   }
