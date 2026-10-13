@@ -36,13 +36,15 @@ class _DashboardState extends State<Dashboard> {
           body: FutureBuilder(
             future: AuthUtils.readUser(),
             builder: (context, snapshot) {
+              final user = snapshot.data;
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
               }
 
-              final userName = snapshot.data?.name ?? '';
+              final userName = user?.name ?? '';
+              final role = user?.role ?? '';
 
               return SingleChildScrollView(
                 child: Container(
@@ -66,8 +68,8 @@ class _DashboardState extends State<Dashboard> {
                       ),
                       const SizedBox(height: 12,),
                       SimpleText(label: loc.today),
-                      BlocBuilder<TransactionBloc, TransactionState>(
-                        builder: (context, state) {
+                      role == 'admin' ? BlocBuilder<TransactionBloc, TransactionState>(
+                          builder: (context, state) {
                           if (state is ReportsLoading) {
                             return const SizedBox(
                               height: 200,
@@ -96,7 +98,7 @@ class _DashboardState extends State<Dashboard> {
 
                           return const DashboardCard();
                         },
-                      ),
+                      ): const SizedBox(),
                       const SizedBox(height: 12),
                       SimpleText(label: "Actions"),
                       QuickActionsBtn()
